@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aslm.model.features.feature_container.DataNode &mdash; ASLM 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ASLM
+              <img src="../_static/mic.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../software_installation.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations.html">Microscope Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software_configuration.html">Software Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ASLM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">aslm.model.features.feature_container.DataNode</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/aslm.model.features.feature_container.DataNode.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aslm-model-features-feature-container-datanode">
+<h1>aslm.model.features.feature_container.DataNode<a class="headerlink" href="#aslm-model-features-feature-container-datanode" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="aslm.model.features.feature_container.DataNode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aslm.model.features.feature_container.</span></span><span class="sig-name descname"><span class="pre">DataNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'one-step'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_related</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">need_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.feature_container.DataNode" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aslm.model.features.feature_container.TreeNode.html#aslm.model.features.feature_container.TreeNode" title="aslm.model.features.feature_container.TreeNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">TreeNode</span></code></a></p>
+<p>DataNode class for representing a data-processing node in a control sequence tree.</p>
+<p>This class represents a data-processing node in a control sequence tree used for
+controlling the behavior of a microscope or similar device. It inherits from the
+TreeNode class and adds data processing capabilities.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>feature_name<span class="classifier">str</span></dt><dd><p>The name or identifier of the feature associated with this node.</p>
+</dd>
+<dt>func_dict<span class="classifier">dict</span></dt><dd><p>A dictionary containing functions associated with this node. The dictionary
+should include keys for different data processing steps and corresponding
+function references to be executed during those steps.</p>
+</dd>
+<dt>node_type<span class="classifier">str, optional</span></dt><dd><p>The type of the node, which can be ‘one-step’ or ‘multi-step’. Default is
+‘one-step’.</p>
+</dd>
+<dt>device_related<span class="classifier">bool, optional</span></dt><dd><p>A boolean indicating whether the node is related to device control. Default
+is False.</p>
+</dd>
+<dt>need_response<span class="classifier">bool, optional</span></dt><dd><p>A boolean indicating whether a response is needed from this node. Default is
+False.</p>
+</dd>
+<dt>is_marked<span class="classifier">bool, optional</span></dt><dd><p>A boolean indicating whether the node is marked. Default is False.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h2>Attributes:<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>node_name<span class="classifier">str</span></dt><dd><p>The name or identifier of the feature associated with this node.</p>
+</dd>
+<dt>node_funcs<span class="classifier">dict</span></dt><dd><p>A dictionary containing functions associated with this node.</p>
+</dd>
+<dt>node_type<span class="classifier">str</span></dt><dd><p>The type of the node, which can be ‘one-step’ or ‘multi-step’.</p>
+</dd>
+<dt>device_related<span class="classifier">bool</span></dt><dd><p>A boolean indicating whether the node is related to device control.</p>
+</dd>
+<dt>need_response<span class="classifier">bool</span></dt><dd><p>A boolean indicating whether a response is needed from this node.</p>
+</dd>
+<dt>is_initialized<span class="classifier">bool</span></dt><dd><p>A boolean indicating whether the node has been initialized.</p>
+</dd>
+<dt>is_marked<span class="classifier">bool</span></dt><dd><p>A boolean indicating whether the node is marked.</p>
+</dd>
+<dt>child<span class="classifier">TreeNode or None</span></dt><dd><p>A reference to the child node if one exists, otherwise None.</p>
+</dd>
+<dt>sibling<span class="classifier">TreeNode or None</span></dt><dd><p>A reference to the sibling node if one exists, otherwise None.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args):</dt><dd><p>Execute the data processing functions associated with this node.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h2>Notes:<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>This class is used to represent data-processing nodes in a control sequence tree
+where each node corresponds to a data processing step in the control sequence.</p></li>
+<li><p>The <cite>node_funcs</cite> attribute contains a dictionary of functions associated with this
+node, which are executed during different data processing steps.</p></li>
+<li><p>The <cite>node_type</cite> attribute specifies whether the node is a ‘one-step’ node or a
+‘multi-step’ node.</p></li>
+<li><p>The <cite>device_related</cite> attribute indicates whether the node is related to device
+control.</p></li>
+<li><p>The <cite>need_response</cite> attribute indicates whether a response is expected from this
+node when it is executed.</p></li>
+<li><p>The <cite>is_marked</cite> attribute can be used to mark the node for special handling or
+to indicate its status.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.features.feature_container.DataNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feature_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'one-step'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_related</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">need_response</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.feature_container.DataNode.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.features.feature_container.DataNode.__init__" title="aslm.model.features.feature_container.DataNode.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(feature_name, func_dict, *[, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.features.feature_container.DataNode.run" title="aslm.model.features.feature_container.DataNode.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>(*args)</p></td>
+<td><p>Execute the data processing functions associated with this node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.features.feature_container.DataNode.set_property" title="aslm.model.features.feature_container.DataNode.set_property"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_property</span></code></a>(**kwargs)</p></td>
+<td><p>Set the properties of the TreeNode object using keyword arguments.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.features.feature_container.DataNode.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.feature_container.DataNode.run" title="Link to this definition"></a></dt>
+<dd><p>Execute the data processing functions associated with this node.</p>
+<p>This method is used to execute the data processing functions associated with
+this node during the control sequence. It initializes the node if not already
+initialized and determines whether the current frame meets the criteria to
+execute the main data processing function.</p>
+<section id="id3">
+<h3>Parameters:<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt><a href="#id4"><span class="problematic" id="id5">*</span></a>args<span class="classifier">any</span></dt><dd><p>Additional arguments to pass to the data processing functions.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>tuple</dt><dd><p>A tuple containing the result of executing the main data processing
+function and a boolean indicating whether the node execution is complete
+(True if complete, otherwise False).</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.features.feature_container.DataNode.set_property">
+<span class="sig-name descname"><span class="pre">set_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.feature_container.DataNode.set_property" title="Link to this definition"></a></dt>
+<dd><p>Set the properties of the TreeNode object using keyword arguments.</p>
+<p>This method allows setting or updating the properties of the TreeNode object
+using keyword arguments. The method iterates through the provided keyword-
+argument pairs and updates the corresponding attributes of the TreeNode
+object.</p>
+<section id="id6">
+<h3>Parameters:<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt><a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs<span class="classifier">dict</span></dt><dd><p>Keyword arguments with attribute names as keys and values to set as
+values.</p>
+</dd>
+</dl>
+</section>
+<section id="id9">
+<h3>Returns:<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dean Lab, UT Southwestern Medical Center.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

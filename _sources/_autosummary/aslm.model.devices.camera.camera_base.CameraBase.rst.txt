@@ -1,0 +1,37 @@
+aslm.model.devices.camera.camera\_base.CameraBase
+=================================================
+
+.. currentmodule:: aslm.model.devices.camera.camera_base
+
+.. autoclass:: CameraBase
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~CameraBase.__init__
+      ~CameraBase.calculate_light_sheet_exposure_time
+      ~CameraBase.close_camera
+      ~CameraBase.get_line_interval
+      ~CameraBase.get_offset_variance_maps
+      ~CameraBase.set_readout_direction
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~CameraBase.offset
+      ~CameraBase.variance
+   
+   

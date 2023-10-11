@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata &mdash; ASLM 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ASLM
+              <img src="../_static/mic.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../software_installation.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations.html">Microscope Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software_configuration.html">Software Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ASLM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aslm-model-metadata-sources-ome-tiff-metadata-ometiffmetadata">
+<h1>aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata<a class="headerlink" href="#aslm-model-metadata-sources-ome-tiff-metadata-ometiffmetadata" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aslm.model.metadata_sources.ome_tiff_metadata.</span></span><span class="sig-name descname"><span class="pre">OMETIFFMetadata</span></span><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="aslm.model.metadata_sources.metadata.XMLMetadata.html#aslm.model.metadata_sources.metadata.XMLMetadata" title="aslm.model.metadata_sources.metadata.XMLMetadata"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLMetadata</span></code></a></p>
+<p>Metadata for OME-TIFF files. OME-XML spec at
+<a class="reference external" href="https://docs.openmicroscopy.org/ome-model/6.3.1/ome-xml/index.html">https://docs.openmicroscopy.org/ome-model/6.3.1/ome-xml/index.html</a>.</p>
+<p>Store and convert internal representation of metadata (configuration,
+experiment, etc.) to alternative file types.</p>
+<p>Concept and some of the code borrowed from python-microscopy
+(<a class="reference external" href="https://github.com/python-microscopy/python-microscopy/">https://github.com/python-microscopy/python-microscopy/</a>).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.__init__" title="Link to this definition"></a></dt>
+<dd><p>Store and convert internal representation of metadata (configuration,
+experiment, etc.) to alternative file types.</p>
+<p>Concept and some of the code borrowed from python-microscopy
+(<a class="reference external" href="https://github.com/python-microscopy/python-microscopy/">https://github.com/python-microscopy/python-microscopy/</a>).</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.__init__" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
+<td><p>Store and convert internal representation of metadata (configuration, experiment, etc.) to alternative file types.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.ome_tiff_xml_dict" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.ome_tiff_xml_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ome_tiff_xml_dict</span></code></a>([c, t, file_name, uid, views])</p></td>
+<td><p>Generates dictionary with same heirarchical structure as OME-XML.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_from_configuration_experiment</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_shape_from_configuration_experiment</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_stack_order_from_configuration_experiment</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.to_xml" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.to_xml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_xml</span></code></a>([file_type, root])</p></td>
+<td><p>Convert stored metadata to XML</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.write_xml" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.write_xml"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_xml</span></code></a>(file_name[, file_type, root])</p></td>
+<td><p>Write to XML file.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">configuration</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">per_stack</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.shape" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
+<td><p>Return shape as XYCZT.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.voxel_size" title="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.voxel_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voxel_size</span></code></a></p></td>
+<td><p>Return voxel size</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.ome_tiff_xml_dict">
+<span class="sig-name descname"><span class="pre">ome_tiff_xml_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">views</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.ome_tiff_xml_dict" title="Link to this definition"></a></dt>
+<dd><p>Generates dictionary with same heirarchical structure as OME-XML. Useful for
+OME-TIFF and OME-XML.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>OME TIFF metadata dictionary</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ome_dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.to_xml">
+<span class="sig-name descname"><span class="pre">to_xml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OME-TIFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OME'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.to_xml" title="Link to this definition"></a></dt>
+<dd><p>Convert stored metadata to XML</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.write_xml">
+<span class="sig-name descname"><span class="pre">write_xml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OME-TIFF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'OME'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.write_xml" title="Link to this definition"></a></dt>
+<dd><p>Write to XML file. Assumes we do not include the XML header in our nested
+metadata dictionary.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.shape">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.shape" title="Link to this definition"></a></dt>
+<dd><p>Return shape as XYCZT.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.voxel_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">voxel_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#aslm.model.metadata_sources.ome_tiff_metadata.OMETIFFMetadata.voxel_size" title="Link to this definition"></a></dt>
+<dd><p>Return voxel size</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dean Lab, UT Southwestern Medical Center.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

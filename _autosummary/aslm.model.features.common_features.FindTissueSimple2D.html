@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>aslm.model.features.common_features.FindTissueSimple2D &mdash; ASLM 0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2709fde1"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ASLM
+              <img src="../_static/mic.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../software_installation.html">Software Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations.html">Microscope Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../software_configuration.html">Software Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ASLM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">aslm.model.features.common_features.FindTissueSimple2D</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/_autosummary/aslm.model.features.common_features.FindTissueSimple2D.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aslm-model-features-common-features-findtissuesimple2d">
+<h1>aslm.model.features.common_features.FindTissueSimple2D<a class="headerlink" href="#aslm-model-features-common-features-findtissuesimple2d" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="aslm.model.features.common_features.FindTissueSimple2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aslm.model.features.common_features.</span></span><span class="sig-name descname"><span class="pre">FindTissueSimple2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Nanoscale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N/A'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.common_features.FindTissueSimple2D" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>FindTissueSimple2D class for detecting tissue and gridding out the imaging space in
+2D.</p>
+<p>This class is responsible for detecting tissue, thresholding, and gridding out the
+space for 2D imaging. It processes acquired frames to determine regions of
+interest (tissue), calculates offsets, and generates grid positions for imaging.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>model<span class="classifier">MicroscopeModel</span></dt><dd><p>The microscope model object used for tissue detection and gridding.</p>
+</dd>
+<dt>overlap<span class="classifier">float, optional</span></dt><dd><p>The overlap percentage between grid tiles. Default is 0.1 (10%).</p>
+</dd>
+<dt>target_resolution<span class="classifier">str, optional</span></dt><dd><p>The target resolution for imaging (e.g., “Nanoscale”). Default is
+“Nanoscale”.</p>
+</dd>
+<dt>target_zoom<span class="classifier">str, optional</span></dt><dd><p>The target zoom level for imaging. Default is “N/A”.</p>
+</dd>
+</dl>
+</section>
+<section id="attributes">
+<h2>Attributes:<a class="headerlink" href="#attributes" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>model<span class="classifier">MicroscopeModel</span></dt><dd><p>The microscope model associated with tissue detection and gridding.</p>
+</dd>
+<dt>config_table<span class="classifier">dict</span></dt><dd><p>A dictionary defining the configuration for the tissue detection and
+gridding process. It contains the following keys:
+- “signal”: An empty dictionary for signal-related configurations.
+- “data”: Configuration for the main data processing function.</p>
+</dd>
+<dt>overlap<span class="classifier">float</span></dt><dd><p>The overlap percentage between grid tiles.</p>
+</dd>
+<dt>target_resolution<span class="classifier">str</span></dt><dd><p>The target resolution for imaging.</p>
+</dd>
+<dt>target_zoom<span class="classifier">str</span></dt><dd><p>The target zoom level for imaging.</p>
+</dd>
+</dl>
+</section>
+<section id="methods">
+<h2>Methods:<a class="headerlink" href="#methods" title="Link to this heading"></a></h2>
+<dl class="simple">
+<dt>data_func(frame_ids):</dt><dd><p>Process acquired frames for tissue detection, thresholding, and grid
+calculation.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h2>Notes:<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>This class is used for preprocessing images acquired during microscopy</p></li>
+</ul>
+<p>experiments.It detects tissue regions, applies thresholding, and calculates grid
+positions for imaging.</p>
+<ul class="simple">
+<li><p>The <cite>config_table</cite> attribute defines the configuration for data processing,</p></li>
+</ul>
+<p>including the main data processing function.</p>
+<ul class="simple">
+<li><p>The <cite>overlap</cite> parameter controls the overlap between grid tiles, affecting the</p></li>
+</ul>
+<p>grid layout for imaging.</p>
+<p>Detect tissue and grid out the space to image.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.features.common_features.FindTissueSimple2D.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Nanoscale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N/A'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.common_features.FindTissueSimple2D.__init__" title="Link to this definition"></a></dt>
+<dd><p>Detect tissue and grid out the space to image.</p>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.features.common_features.FindTissueSimple2D.__init__" title="aslm.model.features.common_features.FindTissueSimple2D.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model[, overlap, ...])</p></td>
+<td><p>Detect tissue and grid out the space to image.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.features.common_features.FindTissueSimple2D.data_func" title="aslm.model.features.common_features.FindTissueSimple2D.data_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_func</span></code></a>(frame_ids)</p></td>
+<td><p>Process acquired frames for tissue detection, thresholding, and grid calculation.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.features.common_features.FindTissueSimple2D.data_func">
+<span class="sig-name descname"><span class="pre">data_func</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.features.common_features.FindTissueSimple2D.data_func" title="Link to this definition"></a></dt>
+<dd><p>Process acquired frames for tissue detection, thresholding, and grid
+calculation.</p>
+<p>This method processes acquired frames to detect tissue regions, apply
+thresholding, and calculate grid positions for imaging. It performs the
+following steps:
+- Downsamples the acquired image based on desired magnification change.
+- Applies thresholding using Otsu’s method.
+- Calculates the bounding box of the tissue region.
+- Computes offsets for gridding based on acquired and target resolutions.
+- Grids out the 2D imaging space based on the specified overlap percentage.</p>
+<section id="id1">
+<h3>Parameters:<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="simple">
+<dt>frame_ids<span class="classifier">list</span></dt><dd><p>A list of frame IDs corresponding to acquired frames.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns:<a class="headerlink" href="#returns" title="Link to this heading"></a></h3>
+<p>None</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Dean Lab, UT Southwestern Medical Center.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+aslm.model.devices.lasers
+=========================
+
+.. automodule:: aslm.model.devices.lasers
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :template: custom_module.rst
+   :recursive:
+
+   aslm.model.devices.lasers.laser_base
+   aslm.model.devices.lasers.laser_ni
+   aslm.model.devices.lasers.laser_synthetic
+
