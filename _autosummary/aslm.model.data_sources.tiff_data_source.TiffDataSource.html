@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>aslm.model.data_sources.tiff_data_source.TiffDataSource &mdash; ASLM 0.1 documentation</title>
+  <title>aslm.model.data_sources.tiff_data_source.TiffDataSource &mdash; Autonomous Software for Light Microscopy 0.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -30,7 +30,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            ASLM
+            Autonomous Software for Light Microscopy
               <img src="../_static/mic.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
@@ -56,7 +56,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ASLM</a>
+          <a href="../index.html">Autonomous Software for Light Microscopy</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -147,7 +147,10 @@
 <dd><p>Close the file.</p>
 </dd></dl>
 
-<p>Base class for data sources, which can be of arbitrary file type.
+<dl class="py method">
+<dt class="sig sig-object py" id="aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_bigtiff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__" title="Link to this definition"></a></dt>
+<dd><p>Base class for data sources, which can be of arbitrary file type.
 This implements read and write methods for accessing each data source.</p>
 <p>We expect to open the file for read or write during initialization.</p>
 <p>file_name  stores the name of the file to read/write from
@@ -340,8 +343,8 @@ metdata    stores a pointer to the metadata.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="aslm.model.data_sources.tiff_data_source.TiffDataSource.size">
-<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.data_sources.tiff_data_source.TiffDataSource.size" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="aslm.model.data_sources.tiff_data_source.TiffDataSource.nbytes">
+<span class="sig-name descname"><span class="pre">nbytes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.data_sources.tiff_data_source.TiffDataSource.nbytes" title="Link to this definition"></a></dt>
 <dd><p>Return the size of the data source in bytes.</p>
 </dd></dl>
 
@@ -387,249 +390,6 @@ metdata    stores a pointer to the metadata.</p>
 <dd><p>Clean up any leftover file pointers, etc.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_bigtiff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__" title="Link to this definition"></a></dt>
-<dd><p>Base class for data sources, which can be of arbitrary file type.
-This implements read and write methods for accessing each data source.</p>
-<p>We expect to open the file for read or write during initialization.</p>
-<p>file_name  stores the name of the file to read/write from
-data       stores a pointer to the actual data in the data source and
-metdata    stores a pointer to the metadata.</p>
-<p>Concept and some of the code borrowed from python-microscopy
-(<a class="reference external" href="https://github.com/python-microscopy/python-microscopy/">https://github.com/python-microscopy/python-microscopy/</a>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_name</strong> (<em>str</em>) – Name of the file to read/write from.</p></li>
-<li><p><strong>mode</strong> (<em>str</em>) – Mode to open the file in. Can be ‘r’ or ‘w’.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">logger</span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
-<dd><p>Logger for this class.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>logging.Logger</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">file_name</span></span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
-<dd><p>Name of the file to read/write from.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id7">
-<span class="sig-name descname"><span class="pre">metadata</span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
-<dd><p>Pointer to the metadata.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>npt.ArrayLike</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id8">
-<span class="sig-name descname"><span class="pre">bits</span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
-<dd><p>Number of bits per pixel.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id9">
-<span class="sig-name descname"><span class="pre">dx</span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
-<dd><p>Pixel size in x dimension (microns).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id10">
-<span class="sig-name descname"><span class="pre">dy</span></span><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
-<dd><p>Pixel size in y dimension (microns).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id11">
-<span class="sig-name descname"><span class="pre">dz</span></span><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
-<dd><p>Pixel size in z dimension (microns).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id12">
-<span class="sig-name descname"><span class="pre">dt</span></span><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
-<dd><p>Time displacement (seconds).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id13">
-<span class="sig-name descname"><span class="pre">dc</span></span><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
-<dd><p>Step size between channels (always 1)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id14">
-<span class="sig-name descname"><span class="pre">shape_x</span></span><a class="headerlink" href="#id14" title="Link to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id15">
-<span class="sig-name descname"><span class="pre">shape_y</span></span><a class="headerlink" href="#id15" title="Link to this definition"></a></dt>
-<dd><p>Size of the data source in y dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id16">
-<span class="sig-name descname"><span class="pre">shape_z</span></span><a class="headerlink" href="#id16" title="Link to this definition"></a></dt>
-<dd><p>Size of the data source in z dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id17">
-<span class="sig-name descname"><span class="pre">shape_t</span></span><a class="headerlink" href="#id17" title="Link to this definition"></a></dt>
-<dd><p>Size of the data source in t dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id18">
-<span class="sig-name descname"><span class="pre">shape_c</span></span><a class="headerlink" href="#id18" title="Link to this definition"></a></dt>
-<dd><p>Size of the data source in c dimension.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id19">
-<span class="sig-name descname"><span class="pre">positions</span></span><a class="headerlink" href="#id19" title="Link to this definition"></a></dt>
-<dd><p>Number of positions in the data source.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id20">
-<span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#id20" title="Link to this definition"></a></dt>
-<dd><p>Mode to open the file in. Can be ‘r’ or ‘w’.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id21">
-<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id21" title="Link to this definition"></a></dt>
-<dd><p>Return the size of the data source in bytes.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id22">
-<span class="sig-name descname"><span class="pre">mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id22" title="Link to this definition"></a></dt>
-<dd><p>Return the mode of the data source.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id23">
-<span class="sig-name descname"><span class="pre">voxel_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id23" title="Link to this definition"></a></dt>
-<dd><p>Return the voxel size in x, y, z dimensions.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id24">
-<span class="sig-name descname"><span class="pre">shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id24" title="Link to this definition"></a></dt>
-<dd><p>Return the shape of the data source in XYCZT format.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id25">
-<span class="sig-name descname"><span class="pre">set_metadata_from_configuration_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id25" title="Link to this definition"></a></dt>
-<dd><p>Set the metadata from the microscope configuration.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id26">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id26" title="Link to this definition"></a></dt>
-<dd><p>Read data from file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id27">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">\*\*kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id27" title="Link to this definition"></a></dt>
-<dd><p>Write data to file.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="id28">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#id28" title="Link to this definition"></a></dt>
-<dd><p>Clean up any leftover file pointers, etc.</p>
-</dd></dl>
-
 </dd></dl>
 
 <p class="rubric">Methods</p>
@@ -638,22 +398,25 @@ metdata    stores a pointer to the metadata.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([file_name, mode, is_bigtiff])</p></td>
 <td><p>Base class for data sources, which can be of arbitrary file type.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id29" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>([internal])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id5" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>([internal])</p></td>
 <td><p>Clean up any leftover file pointers, etc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id30" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.generate_image_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_image_name</span></code></a>(current_channel, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id6" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.generate_image_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_image_name</span></code></a>(current_channel, ...)</p></td>
 <td><p>#  Generates a string for the filename #  e.g., CH00_000000.tif</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id31" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>()</p></td>
-<td><p>Read data from file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_bigtiff</span></code>(is_bigtiff)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_shape_from_metadata</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id32" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.set_metadata_from_configuration_experiment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata_from_configuration_experiment</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id7" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>()</p></td>
+<td><p>Read data from file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_bigtiff</span></code>(is_bigtiff)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id8" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.set_metadata_from_configuration_experiment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata_from_configuration_experiment</span></code></a>(...)</p></td>
 <td><p>Sets the metadata from according to the microscope configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id33" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(data, **kw)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id9" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(data, **kw)</p></td>
 <td><p>Write data to a tiff file.</p></td>
 </tr>
 </tbody>
@@ -670,36 +433,36 @@ metdata    stores a pointer to the metadata.</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ome</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id34" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mode</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id10" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mode</span></code></a></p></td>
 <td><p>Getter for the mode of the data source.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id35" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
-<td><p>Getter for the shape as XYCZT.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id36" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">size</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id11" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.nbytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nbytes</span></code></a></p></td>
 <td><p>Getter for the size of this data source in bytes.&quot;</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#id37" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.voxel_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voxel_size</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id12" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
+<td><p>Getter for the shape as XYCZT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id13" title="aslm.model.data_sources.tiff_data_source.TiffDataSource.voxel_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">voxel_size</span></code></a></p></td>
 <td><p>Getter for the voxel size</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="id29">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">internal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#id29" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">internal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
 <dd><p>Clean up any leftover file pointers, etc.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id30">
-<span class="sig-name descname"><span class="pre">generate_image_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time_point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id30" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">generate_image_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_time_point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
 <dd><p>#  Generates a string for the filename
 #  e.g., CH00_000000.tif</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id31">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#id31" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
 <dd><p>Read data from file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
@@ -709,8 +472,8 @@ metdata    stores a pointer to the metadata.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id32">
-<span class="sig-name descname"><span class="pre">set_metadata_from_configuration_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#id32" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">set_metadata_from_configuration_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
 <dd><p>Sets the metadata from according to the microscope configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -720,8 +483,8 @@ metdata    stores a pointer to the metadata.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="id33">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.html#aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None" title="aslm.model.devices.galvo.galvo_synthetic.SyntheticGalvo.None"><span class="pre">None</span></a></span></span><a class="headerlink" href="#id33" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
 <dd><p>Write data to a tiff file.</p>
 <p>One channel, all z-position, one timepoint = one stack.
 N channels are opened simultaneously for writing.
@@ -760,8 +523,8 @@ At each time point, a new file is opened for each channel.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id34">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id34" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id10">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
 <dd><p>Getter for the mode of the data source.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -774,8 +537,15 @@ At each time point, a new file is opened for each channel.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id35">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#id35" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id11">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nbytes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id11" title="Link to this definition"></a></dt>
+<dd><p>Getter for the size of this data source in bytes.”</p>
+<p>Does not account for pyramidal data sources.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id12">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#id12" title="Link to this definition"></a></dt>
 <dd><p>Getter for the shape as XYCZT.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -788,15 +558,8 @@ At each time point, a new file is opened for each channel.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="id36">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id36" title="Link to this definition"></a></dt>
-<dd><p>Getter for the size of this data source in bytes.”</p>
-<p>Does not account for pyramidal data sources.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="id37">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">voxel_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#id37" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="id13">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">voxel_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span></em><a class="headerlink" href="#id13" title="Link to this definition"></a></dt>
 <dd><p>Getter for the voxel size</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
