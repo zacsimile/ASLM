@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../case_studies/acquire_mesospimbt.html">Case Study: Imaging on the mesoSPIM BT</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="aslm.config.html">aslm.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aslm.controller.html">aslm.controller</a></li>
@@ -169,23 +170,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.sample_rate" title="aslm.model.devices.daq.daq_base.DAQBase.sample_rate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_rate</span></code></a></p></td>
 <td><p>Sample rate of the DAQ</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.sweep_time" title="aslm.model.devices.daq.daq_base.DAQBase.sweep_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_time</span></code></a></p></td>
-<td><p>Sweep time of the DAQ</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.sweep_times" title="aslm.model.devices.daq.daq_base.DAQBase.sweep_times"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sweep_times</span></code></a></p></td>
+<td><p>Sweep times for different channels</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.remote_focus_ramp_falling" title="aslm.model.devices.daq.daq_base.DAQBase.remote_focus_ramp_falling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remote_focus_ramp_falling</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.exposure_times" title="aslm.model.devices.daq.daq_base.DAQBase.exposure_times"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exposure_times</span></code></a></p></td>
+<td><p>exposure times for different channels</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.remote_focus_ramp_falling" title="aslm.model.devices.daq.daq_base.DAQBase.remote_focus_ramp_falling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remote_focus_ramp_falling</span></code></a></p></td>
 <td><p>Dictionary of remote focus ramp falling percentages</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent" title="aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camera_delay_percent</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent" title="aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camera_delay_percent</span></code></a></p></td>
 <td><p>Camera delay percentage</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_pulse_percent" title="aslm.model.devices.daq.daq_base.DAQBase.camera_pulse_percent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camera_pulse_percent</span></code></a></p></td>
-<td><p>Camera pulse percentage</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_high_time" title="aslm.model.devices.daq.daq_base.DAQBase.camera_high_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camera_high_time</span></code></a></p></td>
-<td><p>Camera high time</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_delay" title="aslm.model.devices.daq.daq_base.DAQBase.camera_delay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">camera_delay</span></code></a></p></td>
-<td><p>Camera delay time</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_base.DAQBase.waveform_dict" title="aslm.model.devices.daq.daq_base.DAQBase.waveform_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">waveform_dict</span></code></a></p></td>
 <td><p>Dictionary of waveforms.</p></td>
@@ -233,42 +228,9 @@ display purposes.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.camera_delay">
-<span class="sig-name descname"><span class="pre">camera_delay</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_delay" title="Permalink to this definition"></a></dt>
-<dd><p>Camera delay time</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent">
 <span class="sig-name descname"><span class="pre">camera_delay_percent</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_delay_percent" title="Permalink to this definition"></a></dt>
 <dd><p>Camera delay percentage</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.camera_high_time">
-<span class="sig-name descname"><span class="pre">camera_high_time</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_high_time" title="Permalink to this definition"></a></dt>
-<dd><p>Camera high time</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.camera_pulse_percent">
-<span class="sig-name descname"><span class="pre">camera_pulse_percent</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.camera_pulse_percent" title="Permalink to this definition"></a></dt>
-<dd><p>Camera pulse percentage</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -291,6 +253,17 @@ display purposes.</p>
 <dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.daq_parameters">
 <span class="sig-name descname"><span class="pre">daq_parameters</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.daq_parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Dictionary of DAQ parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.exposure_times">
+<span class="sig-name descname"><span class="pre">exposure_times</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.exposure_times" title="Permalink to this definition"></a></dt>
+<dd><p>exposure times for different channels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -332,12 +305,12 @@ display purposes.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.sweep_time">
-<span class="sig-name descname"><span class="pre">sweep_time</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.sweep_time" title="Permalink to this definition"></a></dt>
-<dd><p>Sweep time of the DAQ</p>
+<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_base.DAQBase.sweep_times">
+<span class="sig-name descname"><span class="pre">sweep_times</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_base.DAQBase.sweep_times" title="Permalink to this definition"></a></dt>
+<dd><p>Sweep times for different channels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>

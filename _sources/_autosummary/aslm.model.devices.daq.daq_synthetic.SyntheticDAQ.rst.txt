@@ -51,12 +51,10 @@ aslm.model.devices.daq.daq\_synthetic.SyntheticDAQ
       ~SyntheticDAQ.microscope_name
       ~SyntheticDAQ.daq_parameters
       ~SyntheticDAQ.sample_rate
-      ~SyntheticDAQ.sweep_time
+      ~SyntheticDAQ.sweep_times
+      ~SyntheticDAQ.exposure_times
       ~SyntheticDAQ.remote_focus_ramp_falling
       ~SyntheticDAQ.camera_delay_percent
-      ~SyntheticDAQ.camera_pulse_percent
-      ~SyntheticDAQ.camera_high_time
-      ~SyntheticDAQ.camera_delay
       ~SyntheticDAQ.waveform_dict
       ~SyntheticDAQ.waveform_repeat_num
       ~SyntheticDAQ.waveform_expand_num

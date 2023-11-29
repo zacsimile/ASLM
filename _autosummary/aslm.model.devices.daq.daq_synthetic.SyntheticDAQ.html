@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../case_studies/acquire_mesospimbt.html">Case Study: Imaging on the mesoSPIM BT</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="aslm.config.html">aslm.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aslm.controller.html">aslm.controller</a></li>
@@ -164,7 +165,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.enable_microscope" title="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.enable_microscope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">enable_microscope</span></code></a>(microscope_name)</p></td>
 <td><p>Enables the microscope.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition" title="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_acquisition</span></code></a>(channel_key, exposure_time)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition" title="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_acquisition</span></code></a>(channel_key)</p></td>
 <td><p>Prepare the acquisition.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.run_acquisition" title="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.run_acquisition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_acquisition</span></code></a>()</p></td>
@@ -284,14 +285,11 @@ display purposes.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition">
-<span class="sig-name descname"><span class="pre">prepare_acquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exposure_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prepare_acquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.prepare_acquisition" title="Permalink to this definition"></a></dt>
 <dd><p>Prepare the acquisition.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>channel_key</strong> (<em>int</em>) – Index of channel to be imaged.</p></li>
-<li><p><strong>exposure_time</strong> (<em>float</em>) – Camera exposure duration.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>channel_key</strong> (<em>str</em>) – Channel key for current channel.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -377,42 +375,9 @@ run_tasks() is called.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_delay">
-<span class="sig-name descname"><span class="pre">camera_delay</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_delay" title="Permalink to this definition"></a></dt>
-<dd><p>Camera delay time</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_delay_percent">
 <span class="sig-name descname"><span class="pre">camera_delay_percent</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_delay_percent" title="Permalink to this definition"></a></dt>
 <dd><p>Camera delay percentage</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_high_time">
-<span class="sig-name descname"><span class="pre">camera_high_time</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_high_time" title="Permalink to this definition"></a></dt>
-<dd><p>Camera high time</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_pulse_percent">
-<span class="sig-name descname"><span class="pre">camera_pulse_percent</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.camera_pulse_percent" title="Permalink to this definition"></a></dt>
-<dd><p>Camera pulse percentage</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
@@ -435,6 +400,17 @@ run_tasks() is called.</p>
 <dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.daq_parameters">
 <span class="sig-name descname"><span class="pre">daq_parameters</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.daq_parameters" title="Permalink to this definition"></a></dt>
 <dd><p>Dictionary of DAQ parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.exposure_times">
+<span class="sig-name descname"><span class="pre">exposure_times</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.exposure_times" title="Permalink to this definition"></a></dt>
+<dd><p>exposure times for different channels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
@@ -487,12 +463,12 @@ run_tasks() is called.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.sweep_time">
-<span class="sig-name descname"><span class="pre">sweep_time</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.sweep_time" title="Permalink to this definition"></a></dt>
-<dd><p>Sweep time of the DAQ</p>
+<dt class="sig sig-object py" id="aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.sweep_times">
+<span class="sig-name descname"><span class="pre">sweep_times</span></span><a class="headerlink" href="#aslm.model.devices.daq.daq_synthetic.SyntheticDAQ.sweep_times" title="Permalink to this definition"></a></dt>
+<dd><p>Sweep times for different channels</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>

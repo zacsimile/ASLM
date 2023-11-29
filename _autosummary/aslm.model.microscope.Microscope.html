@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../case_studies/acquire_mesospimbt.html">Case Study: Imaging on the mesoSPIM BT</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="aslm.config.html">aslm.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aslm.controller.html">aslm.controller</a></li>
@@ -170,7 +171,7 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.microscope.Microscope.prepare_acquisition" title="aslm.model.microscope.Microscope.prepare_acquisition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_acquisition</span></code></a>()</p></td>
 <td><p>Prepare the acquisition.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.microscope.Microscope.prepare_next_channel" title="aslm.model.microscope.Microscope.prepare_next_channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_next_channel</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.microscope.Microscope.prepare_next_channel" title="aslm.model.microscope.Microscope.prepare_next_channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_next_channel</span></code></a>([update_daq_task_flag])</p></td>
 <td><p>Prepare the next channel.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.microscope.Microscope.stop_stage" title="aslm.model.microscope.Microscope.stop_stage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stop_stage</span></code></a>()</p></td>
@@ -434,7 +435,7 @@ This is needed in daq.calculate_all_waveforms()</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="aslm.model.microscope.Microscope.prepare_next_channel">
-<span class="sig-name descname"><span class="pre">prepare_next_channel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.microscope.Microscope.prepare_next_channel" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">prepare_next_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_daq_task_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#aslm.model.microscope.Microscope.prepare_next_channel" title="Permalink to this definition"></a></dt>
 <dd><p>Prepare the next channel.</p>
 <p>This function, <cite>prepare_next_channel</cite>, is responsible for configuring various
 hardware components for the next imaging channel in an experimental setup.
@@ -443,6 +444,11 @@ camera exposure time, laser power, and other parameters based on the selected
 channel’s configuration. Additionally, it stops data acquisition, prepares the
 data acquisition system for the new channel, and adjusts the focus position as
 necessary, ensuring the hardware is ready for imaging the selected channel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>update_daq_task_flag</strong> (<em>bool</em>) – whether to override waveforms in the DAQ (create new tasks)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../supported_hardware.html">Supported Hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_home.html">Contributing to ASLM</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../feature_container/feature_container_home.html">Feature Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../case_studies/acquire_mesospimbt.html">Case Study: Imaging on the mesoSPIM BT</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="aslm.config.html">aslm.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="aslm.controller.html">aslm.controller</a></li>
@@ -246,6 +247,12 @@ Default is False.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.features.common_features.ZStackAcquisition.channels" title="aslm.model.features.common_features.ZStackAcquisition.channels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">channels</span></code></a></p></td>
 <td><p>The number of channels in the z-stack.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.features.common_features.ZStackAcquisition.has_ni_galvo_stage" title="aslm.model.features.common_features.ZStackAcquisition.has_ni_galvo_stage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_ni_galvo_stage</span></code></a></p></td>
+<td><p>Flag to determine whether there is a NIGalvo Stage</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#aslm.model.features.common_features.ZStackAcquisition.need_to_update_waveform" title="aslm.model.features.common_features.ZStackAcquisition.need_to_update_waveform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">need_to_update_waveform</span></code></a></p></td>
+<td><p>Flag to determine whether to override waveforms in the DAQ</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#aslm.model.features.common_features.ZStackAcquisition.image_writer" title="aslm.model.features.common_features.ZStackAcquisition.image_writer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">image_writer</span></code></a></p></td>
 <td><p>An image writer object for saving z-stack images.</p></td>
@@ -441,6 +448,17 @@ cycling through channels.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="aslm.model.features.common_features.ZStackAcquisition.has_ni_galvo_stage">
+<span class="sig-name descname"><span class="pre">has_ni_galvo_stage</span></span><a class="headerlink" href="#aslm.model.features.common_features.ZStackAcquisition.has_ni_galvo_stage" title="Permalink to this definition"></a></dt>
+<dd><p>Flag to determine whether there is a NIGalvo Stage</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="aslm.model.features.common_features.ZStackAcquisition.image_writer">
 <span class="sig-name descname"><span class="pre">image_writer</span></span><a class="headerlink" href="#aslm.model.features.common_features.ZStackAcquisition.image_writer" title="Permalink to this definition"></a></dt>
 <dd><p>An image writer object for saving z-stack images.</p>
@@ -477,6 +495,17 @@ cycling through channels.</p>
 <dt class="sig sig-object py" id="aslm.model.features.common_features.ZStackAcquisition.need_to_move_z_position">
 <span class="sig-name descname"><span class="pre">need_to_move_z_position</span></span><a class="headerlink" href="#aslm.model.features.common_features.ZStackAcquisition.need_to_move_z_position" title="Permalink to this definition"></a></dt>
 <dd><p>Flag to determine whether to move the z position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aslm.model.features.common_features.ZStackAcquisition.need_to_update_waveform">
+<span class="sig-name descname"><span class="pre">need_to_update_waveform</span></span><a class="headerlink" href="#aslm.model.features.common_features.ZStackAcquisition.need_to_update_waveform" title="Permalink to this definition"></a></dt>
+<dd><p>Flag to determine whether to override waveforms in the DAQ</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
