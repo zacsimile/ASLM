@@ -32,10 +32,8 @@
 
 # Standard Library Imports
 import tkinter as tk
-from pathlib import Path
 
 # Third Party Imports
-from PIL import Image, ImageTk
 
 # Local Imports
 
@@ -87,4 +85,3 @@ class SplashScreen(tk.Toplevel):
         self.geometry("%dx%d+%d+%d" % (w, h, x, y))
         self.resizable(0, 0)
         self.update()
-

@@ -325,22 +325,26 @@ class OtherAxisFrame(ttk.Labelframe):
 
         #: tk.PhotoImage: Image for the up button.
         self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup.png")
+            file=image_directory.joinpath("images", "greyup.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the down button.
         self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown.png")
+            file=image_directory.joinpath("images", "greydown.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled up button.
         self.d_up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup_disabled.png")
+            file=image_directory.joinpath("images", "greyup_disabled.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled down button.
         self.d_down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown_disabled.png")
+            file=image_directory.joinpath("images", "greydown_disabled.png"),
+            master=stage_control_tab,
         )
 
         self.up_image = self.up_image.subsample(2, 2)
@@ -626,42 +630,50 @@ class XYFrame(ttk.Labelframe):
 
         #: tk.PhotoImage: Image for the up button.
         self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup.png")
+            file=image_directory.joinpath("images", "greyup.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the down button.
         self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown.png")
+            file=image_directory.joinpath("images", "greydown.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the left button.
         self.left_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyleft.png")
+            file=image_directory.joinpath("images", "greyleft.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the right button.
         self.right_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyright.png")
+            file=image_directory.joinpath("images", "greyright.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled up button.
         self.d_up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup_disabled.png")
+            file=image_directory.joinpath("images", "greyup_disabled.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled down button.
         self.d_down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown_disabled.png")
+            file=image_directory.joinpath("images", "greydown_disabled.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled left button.
         self.d_left_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyleft_disabled.png")
+            file=image_directory.joinpath("images", "greyleft_disabled.png"),
+            master=stage_control_tab,
         )
 
         #: tk.PhotoImage: Image for the disabled right button.
         self.d_right_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyright_disabled.png")
+            file=image_directory.joinpath("images", "greyright_disabled.png"),
+            master=stage_control_tab,
         )
 
         self.right_image = self.right_image.subsample(2, 2)

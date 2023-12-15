@@ -31,20 +31,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 # Standard Library Imports
-import tkinter as tk
 import platform
 import os
 
 # Third Party Imports
 
 # Local Imports
-from navigate.controller.controller import Controller
-from navigate.log_files.log_functions import log_setup
-from navigate.view.splash_screen import SplashScreen
-from navigate.tools.main_functions import (
-    evaluate_parser_input_arguments,
-    create_parser,
-)
+
 
 # Proxy Configuration
 os.environ["http_proxy"] = ""
@@ -77,18 +70,24 @@ def main():
     --------
     >>> python main.py --synthetic_hardware
     """
+    import tkinter as tk
+    from navigate.controller.controller import Controller
+    from navigate.log_files.log_functions import log_setup
+    from navigate.view.splash_screen import SplashScreen
+    from navigate.tools.main_functions import (
+        evaluate_parser_input_arguments,
+        create_parser,
+    )
+
     # Start the GUI, withdraw main screen, and show splash screen.
     root = tk.Tk()
     root.withdraw()
 
     # Splash Screen
     current_directory = os.path.dirname(os.path.realpath(__file__))
-    splash_screen = SplashScreen(root, os.path.join(
-        current_directory,
-        "view",
-        "icon",
-        "splash_screen_image.png"
-    ))
+    splash_screen = SplashScreen(
+        root, os.path.join(current_directory, "view", "icon", "splash_screen_image.png")
+    )
 
     # Parse command line arguments
     parser = create_parser()
@@ -116,6 +115,69 @@ def main():
         args,
     )
     root.mainloop()
+
+
+def main_ipython(**kwargs):
+    import threading
+
+    class ThreadedAppWrapper(threading.Thread):
+        def __init__(self, group=None, target=None, name=None, args=(), kwargs=None):
+            # import tkinter as tk
+            from IPython import get_ipython
+
+            from types import SimpleNamespace
+
+            from navigate.controller.controller import Controller
+            from navigate.log_files.log_functions import log_setup
+            from navigate.config import get_configuration_paths
+            from navigate.view.splash_screen import SplashScreen
+
+            super().__init__(group, target, name, args, kwargs, daemon=True)
+
+            # self.app = tk._default_root
+            self.app = get_ipython().kernel.app_wrapper.app
+
+            current_directory = os.path.dirname(os.path.realpath(__file__))
+            splash_screen = SplashScreen(
+                self.app,
+                os.path.join(
+                    current_directory, "view", "icon", "splash_screen_image.png"
+                ),
+            )
+
+            (
+                configuration_path,
+                experiment_path,
+                waveform_constants_path,
+                rest_api_path,
+                waveform_templates_path,
+            ) = get_configuration_paths()
+            logging_path = None
+            args = SimpleNamespace(**kwargs)
+
+            log_setup("logging.yml", logging_path)
+
+            self.controller = Controller(
+                self.app,
+                splash_screen,
+                configuration_path,
+                experiment_path,
+                waveform_constants_path,
+                rest_api_path,
+                waveform_templates_path,
+                args,
+            )
+
+        def run(self):
+            # self.app.mainloop()
+            pass
+
+        def get_controller(self):
+            return self.controller
+
+    app = ThreadedAppWrapper(kwargs=kwargs)
+    app.start()
+    return app.get_controller()
 
 
 if __name__ == "__main__":

@@ -33,7 +33,7 @@
 
 #  Standard Library Imports
 from multiprocessing import Manager
-import tkinter
+from _tkinter import TclError
 from tkinter import messagebox
 import multiprocessing as mp
 import threading
@@ -982,7 +982,7 @@ class Controller:
                     camera_view_controller.try_to_display_image(
                         image_id=image_id,
                     )
-                except tkinter._tkinter.TclError:
+                except TclError:
                     print("Can't show images for the additional microscope!")
                     break
                 images_received += 1
