@@ -17,7 +17,6 @@ navigate.log\_files.log\_functions
       find_filename
       log_setup
       main_process_listener
-      update_nested_dict
    
    
 
