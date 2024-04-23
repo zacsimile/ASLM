@@ -49,11 +49,13 @@
               <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick Start Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Example Microscopes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../software_installation.html">Software Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../i_want_to.html">I Want To…</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/hardware_overview.html">Supported Hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/gui_walkthrough.html">User Interface Walkthrough</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/setup_microscope.html">Setting Up A Microscope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user_guide/acquiring_home.html">Acquiring Data</a></li>
@@ -61,6 +63,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../contributing/software_architecture.html">Software Architecture</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/contributing_guidelines.html">Contributing Guidelines</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../contributing/feature_container.html">Feature Container</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../contributing/feature_container.html#currently-implemented-features">Currently Implemented Features</a><ul class="current">
@@ -83,9 +86,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../contributing/feature_container.html#custom-feature-lists">Custom Feature Lists</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/restapi.html">REST-API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../plugin/plugin_home.html">Plugin Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
         </div>
@@ -118,13 +124,13 @@
 <h1>navigate.model.features.restful_features.IlastikSegmentation<a class="headerlink" href="#navigate-model-features-restful-features-ilastiksegmentation" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.features.restful_features.IlastikSegmentation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.restful_features.</span></span><span class="sig-name descname"><span class="pre">IlastikSegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.restful_features.</span></span><span class="sig-name descname"><span class="pre">IlastikSegmentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Nanoscale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N/A'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Ilastik segmentation class.</p>
 <p>Uses Ilastik REST API to perform segmentation in a separate process.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.restful_features.IlastikSegmentation.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Nanoscale'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N/A'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize Ilastik segmentation class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -136,7 +142,7 @@
 <p class="rubric">Methods</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.__init__" title="navigate.model.features.restful_features.IlastikSegmentation.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.__init__" title="navigate.model.features.restful_features.IlastikSegmentation.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(model[, microscope_name, zoom_value])</p></td>
 <td><p>Initialize Ilastik segmentation class.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.data_func" title="navigate.model.features.restful_features.IlastikSegmentation.data_func"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_func</span></code></a>(frame_ids)</p></td>
@@ -176,6 +182,12 @@
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.pieces_size" title="navigate.model.features.restful_features.IlastikSegmentation.pieces_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pieces_size</span></code></a></p></td>
 <td><p>size of pieces</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.high_res_microscope_name" title="navigate.model.features.restful_features.IlastikSegmentation.high_res_microscope_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">high_res_microscope_name</span></code></a></p></td>
+<td><p>high resolution microscope name</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.high_res_zoom_value" title="navigate.model.features.restful_features.IlastikSegmentation.high_res_zoom_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">high_res_zoom_value</span></code></a></p></td>
+<td><p>zoom value</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.features.restful_features.IlastikSegmentation.config_table" title="navigate.model.features.restful_features.IlastikSegmentation.config_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_table</span></code></a></p></td>
 <td><p>configuration table</p></td>
@@ -228,6 +240,28 @@
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.restful_features.IlastikSegmentation.high_res_microscope_name">
+<span class="sig-name descname"><span class="pre">high_res_microscope_name</span></span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation.high_res_microscope_name" title="Permalink to this definition"></a></dt>
+<dd><p>high resolution microscope name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="navigate.model.features.restful_features.IlastikSegmentation.high_res_zoom_value">
+<span class="sig-name descname"><span class="pre">high_res_zoom_value</span></span><a class="headerlink" href="#navigate.model.features.restful_features.IlastikSegmentation.high_res_zoom_value" title="Permalink to this definition"></a></dt>
+<dd><p>zoom value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
