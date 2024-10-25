@@ -52,7 +52,7 @@ class TestZStack:
             self.config["end_position"] - self.config["start_position"]
         ) / self.config["number_z_steps"]
 
-        position_list = self.model.configuration["experiment"]["MultiPositions"]
+        position_list = self.model.configuration["multi_positions"]
         if len(position_list) < 5:
             for i in range(5):
                 pos = [0] * 5
@@ -94,7 +94,7 @@ class TestZStack:
         mode = self.config["stack_cycling_mode"]  # per_z/pre_stack
         is_multiposition = self.config["is_multiposition"]
         if is_multiposition:
-            positions = self.model.configuration["experiment"]["MultiPositions"]
+            positions = self.model.configuration["multi_positions"]
         else:
             pos_dict = self.model.configuration["experiment"]["StageParameters"]
             positions = [

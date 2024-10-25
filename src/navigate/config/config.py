@@ -108,6 +108,7 @@ def get_configuration_paths():
         "rest_api_config.yml",
         "waveform_templates.yml",
         "gui_configuration.yml",
+        "multi_positions.yml"
     ]
 
     base_directory = Path(__file__).resolve().parent
@@ -520,7 +521,6 @@ def verify_experiment_config(manager, configuration):
         "timepoint_interval": 0,
         "experiment_duration": 1.03,
         "is_multiposition": False,
-        "multiposition_count": 1,
         "selected_channels": 0,
         "stack_z_origin": 0,
         "stack_focus_origin": 0,
@@ -657,26 +657,26 @@ def verify_experiment_config(manager, configuration):
     microscope_setting_dict["selected_channels"] = selected_channel_num
 
     # MultiPositions
-    if (
-        "MultiPositions" not in configuration["experiment"]
-        or type(configuration["experiment"]["MultiPositions"]) is not ListProxy
-    ):
-        update_config_dict(manager, configuration["experiment"], "MultiPositions", [])
-    position_ids = []
-    multipositions = configuration["experiment"]["MultiPositions"]
-    for i, position in enumerate(multipositions):
-        try:
-            for j in range(5):
-                float(position[j])
-        except (ValueError, KeyError):
-            position_ids.append(i)
+    # if (
+    #     "MultiPositions" not in configuration["experiment"]
+    #     or type(configuration["experiment"]["MultiPositions"]) is not ListProxy
+    # ):
+    #     update_config_dict(manager, configuration["experiment"], "MultiPositions", [])
+    # position_ids = []
+    # multipositions = configuration["experiment"]["MultiPositions"]
+    # for i, position in enumerate(multipositions):
+    #     try:
+    #         for j in range(5):
+    #             float(position[j])
+    #     except (ValueError, KeyError):
+    #         position_ids.append(i)
 
-    for idx in position_ids[::-1]:
-        del multipositions[idx]
-    if len(multipositions) < 1:
-        multipositions.append([10.0, 10.0, 10.0, 10.0, 10.0])
+    # for idx in position_ids[::-1]:
+    #     del multipositions[idx]
+    # if len(multipositions) < 1:
+    #     multipositions.append([10.0, 10.0, 10.0, 10.0, 10.0])
 
-    microscope_setting_dict["multiposition_count"] = len(multipositions)
+    # microscope_setting_dict["multiposition_count"] = len(multipositions)
 
 
 def verify_waveform_constants(manager, configuration):

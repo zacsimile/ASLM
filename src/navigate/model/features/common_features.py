@@ -36,6 +36,7 @@ import ast
 from functools import reduce
 from threading import Lock
 import logging
+from multiprocessing.managers import ListProxy
 
 # Third party imports
 
@@ -463,21 +464,41 @@ class LoopByCount:
             try:
                 parameters = steps.split(".")
                 config_ref = reduce((lambda pre, n: f"{pre}['{n}']"), parameters, "")
-                exec(f"self.steps = int(self.model.configuration{config_ref})")
+                exec(f"self.steps = self.model.configuration{config_ref}")
             except:  # noqa
                 self.steps = 1
 
         #: int: The remaining number of steps.
-        self.signals = self.steps
+        self.signals = 1
 
         #: int: The remaining number of frames.
-        self.data_frames = self.steps
+        self.data_frames = 1
+
+        #: bool: Initialization flag
+        self.initialized = False
 
         #: dict: A dictionary defining the configuration for the loop control process.
         self.config_table = {
-            "signal": {"main": self.signal_func},
+            "signal": {
+                "init": self.pre_signal_func,
+                "main": self.signal_func,
+            },
             "data": {"main": self.data_func},
         }
+
+    def pre_signal_func(self):
+        """Initialize loop parameters
+        """
+        if self.initialized:
+            return
+        self.initialized = True
+        if type(self.steps) in [list, ListProxy]:
+            self.steps = len(self.steps)
+        else:
+            self.steps = int(self.steps)
+
+        self.signals = self.steps
+        self.data_frames = self.steps
 
     def signal_func(self):
         """Control the signal acquisition loop and update the remaining steps.
@@ -638,14 +659,10 @@ class MoveToNextPositionInMultiPositionTable:
         self.current_idx = 0
 
         #: dict: A dictionary defining the configuration for the position control
-        self.multiposition_table = self.model.configuration["experiment"][
-            "MultiPositions"
-        ]
+        self.multiposition_table = []
 
         #: int: The total number of positions in the multi-position table.
-        self.position_count = self.model.configuration["experiment"]["MicroscopeState"][
-            "multiposition_count"
-        ]
+        self.position_count = 0
 
         #: int: The stage distance threshold for pausing the data thread.
         self.stage_distance_threshold = 1000
@@ -664,6 +681,8 @@ class MoveToNextPositionInMultiPositionTable:
         if self.initialized:
             return
         self.initialized = True
+        self.multiposition_table = self.model.configuration["multi_positions"]
+        self.position_count = len(self.multiposition_table)
         if type(self.offset) is str:
             try:
                 self.offset = ast.literal_eval(self.offset)
@@ -1044,7 +1063,7 @@ class ZStackAcquisition:
 
         # position: x, y, z, theta, f
         if bool(microscope_state["is_multiposition"]):
-            self.positions = self.model.configuration["experiment"]["MultiPositions"]
+            self.positions = self.model.configuration["multi_positions"]
         else:
             self.positions = [
                 [

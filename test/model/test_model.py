@@ -219,8 +219,8 @@ def test_multiposition_acquisition(model):
     model.configuration["experiment"]["MicroscopeState"]["is_multiposition"] = True
     update_config_dict(
         model.__test_manager,  # noqa
-        model.configuration["experiment"],
-        "MultiPositions",
+        model.configuration,
+        "multi_positions",
         [[10.0, 10.0, 10.0, 10.0, 10.0]],
     )
     model.configuration["experiment"]["MicroscopeState"]["image_mode"] = "z-stack"
@@ -245,8 +245,8 @@ def test_multiposition_acquisition(model):
     # Multiposition is selected but not actually  True
     update_config_dict(
         model.__test_manager,
-        model.configuration["experiment"],
-        "MultiPositions",
+        model.configuration,
+        "multi_positions",
         [],  # noqa
     )
 

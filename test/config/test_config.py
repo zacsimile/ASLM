@@ -366,7 +366,6 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             "CameraParameters": camera_parameters_dict_sample,
             "StageParameters": stage_parameters_dict_sample,
             "MicroscopeState": microscope_parameters_dict_sample,
-            "MultiPositions": multipositions_sample,
         }
 
     def tearDown(self):
@@ -420,9 +419,9 @@ class TestVerifyExperimentConfig(unittest.TestCase):
             experiement_config["MicroscopeState"],
         )
 
-        # MultiPositions
-        for i, position in enumerate(self.experiment_sample["MultiPositions"]):
-            assert position == experiement_config["MultiPositions"][i]
+        # # MultiPositions
+        # for i, position in enumerate(self.experiment_sample["MultiPositions"]):
+        #     assert position == experiement_config["MultiPositions"][i]
 
     def test_load_experiment_file_with_missing_parameters(self):
         experiment = load_yaml_file(os.path.join(self.config_path, "experiment.yml"))

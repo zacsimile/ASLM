@@ -83,7 +83,12 @@ from navigate.config.config import (
     verify_configuration,
     get_navigate_path,
 )
-from navigate.tools.file_functions import create_save_path, save_yaml_file, get_ram_info
+from navigate.tools.file_functions import (
+    create_save_path,
+    load_yaml_file,
+    save_yaml_file,
+    get_ram_info,
+)
 from navigate.tools.common_dict_tools import update_stage_dict
 from navigate.tools.multipos_table_tools import update_table
 from navigate.tools.common_functions import combine_funcs
@@ -108,6 +113,7 @@ class Controller:
         rest_api_path,
         waveform_templates_path,
         gui_configuration_path,
+        multi_positions_path,
         args,
     ):
         """Initialize the Navigate Controller.
@@ -197,6 +203,12 @@ class Controller:
         verify_configuration(self.manager, self.configuration)
         verify_experiment_config(self.manager, self.configuration)
         verify_waveform_constants(self.manager, self.configuration)
+
+        positions = load_yaml_file(multi_positions_path)
+        # TODO: verify multipositions
+        if not positions:
+            positions = [[1, 2, 3, 4, 5]]
+        self.configuration["multi_positions"] = positions
 
         total_ram, available_ram = get_ram_info()
         logger.info(
@@ -460,7 +472,7 @@ class Controller:
         self.acquire_bar_controller.populate_experiment_values()
         # self.stage_controller.populate_experiment_values()
         self.multiposition_tab_controller.set_positions(
-            self.configuration["experiment"]["MultiPositions"]
+            self.configuration["multi_positions"]
         )
         self.channels_tab_controller.populate_experiment_values()
         self.camera_setting_controller.populate_experiment_values()
@@ -510,10 +522,7 @@ class Controller:
 
         # update multi-positions
         positions = self.multiposition_tab_controller.get_positions()
-        self.configuration["experiment"]["MultiPositions"] = positions
-        self.configuration["experiment"]["MicroscopeState"][
-            "multiposition_count"
-        ] = len(positions)
+        self.configuration["multi_positions"] = positions
 
         if (
             self.configuration["experiment"]["MicroscopeState"]["is_multiposition"]
@@ -848,6 +857,13 @@ class Controller:
                 filename="waveform_constants.yml",
             )
 
+            # Save multi_positions.yml file
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
+            )
+
             self.camera_setting_controller.solvent = self.configuration["experiment"][
                 "Saving"
             ]["solvent"]
@@ -952,6 +968,12 @@ class Controller:
                 content_dict=self.configuration["experiment"],
                 filename="experiment.yml",
             )
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
+            )
+
             if hasattr(self, "waveform_popup_controller"):
                 self.waveform_popup_controller.save_waveform_constants()
 
