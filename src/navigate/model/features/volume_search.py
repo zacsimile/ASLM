@@ -473,7 +473,9 @@ class VolumeSearch3D:
         target_zoom="N/A",
         position_id=0,
         z_step_size=0.1,
-        overlap=0.5,
+        x_direction="x",
+        y_direction="y",
+        overlap=0.05,
         analysis_function=None,
     ):
         """Initialize VolumeSearch
@@ -511,6 +513,11 @@ class VolumeSearch3D:
 
         #: float: The Z step size
         self.z_step = z_step_size
+        #: string
+        self.x_direction = x_direction
+
+        #: string
+        self.y_direction = y_direction
 
         #: float: The overlap ratio
         self.overlap = overlap
@@ -547,11 +554,11 @@ class VolumeSearch3D:
         # map labeled cells
         z_start = microscope_state_config["start_position"]
         z_step = microscope_state_config["step_size"]
-        
+
         if microscope_state_config["multiposition_count"] == 0:
             pos_dict = self.model.get_stage_position()
             position = [
-                pos_dict[f"{axis}_pos"] for axis in ["x", 'y', "z", "theta", "f"]
+                pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
             ]
         else:
             position = self.model.configuration["experiment"]["MultiPositions"][
@@ -562,14 +569,17 @@ class VolumeSearch3D:
         current_zoom_value = self.model.active_microscope.zoom.zoomvalue
         # offset
         if self.target_resolution != current_microscope_name:
-            current_stage_offset = self.model.configuration["configuration"]["microscopes"][
-                current_microscope_name
-            ]["stage"]
-            target_stage_offset = self.model.configuration["configuration"]["microscopes"][
-                self.target_resolution
-            ]["stage"]
+            current_stage_offset = self.model.configuration["configuration"][
+                "microscopes"
+            ][current_microscope_name]["stage"]
+            target_stage_offset = self.model.configuration["configuration"][
+                "microscopes"
+            ][self.target_resolution]["stage"]
             for i, axis in enumerate(["x", "y", "z", "theta", "f"]):
-                position[i] += target_stage_offset[f"{axis}_offset"] - current_stage_offset[f"{axis}_offset"]
+                position[i] += (
+                    target_stage_offset[f"{axis}_offset"]
+                    - current_stage_offset[f"{axis}_offset"]
+                )
         else:
             solvent = self.model.configuration["experiment"]["Saving"]["solvent"]
             stage_solvent_offsets = self.model.active_microscope.zoom.stage_offsets
@@ -588,7 +598,7 @@ class VolumeSearch3D:
                             f"not implemented! There is not enough information in the "
                             f"configuration.yaml file!"
                         )
-        
+
         current_pixel_size = self.model.configuration["configuration"]["microscopes"][
             current_microscope_name
         ]["zoom"]["pixel_size"][current_zoom_value]
@@ -614,6 +624,8 @@ class VolumeSearch3D:
             position,
             z_start,
             z_step,
+            self.x_direction,
+            self.y_direction,
             current_pixel_size,
             current_image_width,
             current_image_height,
@@ -634,8 +646,10 @@ class VolumeSearch3D:
         microscope_state_config["step_size"] = self.z_step
         microscope_state_config["number_z_steps"] = z_range * z_step // self.z_step
 
-        self.model.logger.info(f"New Z range would be {microscope_state_config['end_position']}"
-                               f" with step_size {self.z_step}")
+        self.model.logger.info(
+            f"New Z range would be {microscope_state_config['end_position']}"
+            f" with step_size {self.z_step}"
+        )
 
         self.model.image_writer.initialize_saving(sub_dir=str(self.target_resolution))
 

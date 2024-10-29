@@ -478,6 +478,8 @@ def map_labels(
     position,
     z_start,
     z_step,
+    x_direction,
+    y_direction,
     current_pixel_size,
     current_image_width,
     current_image_height,
@@ -524,10 +526,23 @@ def map_labels(
         return 1, [position]
     if overlap < 0:
         overlap = 0
+    if x_direction not in ["x", "-x", "y", "-y"]:
+        x_direction = "x"
+    if y_direction not in ["x", "-x", "y", "-y"]:
+        y_direction = "y"
+
+    assert x_direction[-1] != y_direction[-1]
+
+    x_direction_alignment = -1 if x_direction[0] == "-" else 1
+    y_direction_alignment = -1 if y_direction[0] == "-" else 1
+
+    x_direction_index = 0 if x_direction[-1] == "x" else 1
+    y_direction_index = 1 - x_direction_index
 
     target_num = np.max(labeled_image)
     position_table = []
     x, y, z, theta, f = position
+
     center_x = current_image_width // 2
     center_y = current_image_height // 2
 
@@ -540,10 +555,10 @@ def map_labels(
     for i in range(target_num):
         min_z, min_y, min_x, max_z, max_y, max_x = regionprops[i].bbox
 
-        num_x = math.ceil((max_x - min_x) / (x_pixel * (1 - overlap))) + 1
+        num_x = math.ceil((max_x - min_x) / (x_pixel * (1 - overlap)))
         shift_x = (num_x * x_pixel - (max_x - min_x)) // 2
 
-        num_y = math.ceil((max_y - min_y) / (y_pixel * (1 - overlap))) + 1
+        num_y = math.ceil((max_y - min_y) / (y_pixel * (1 - overlap)))
         shift_y = (num_y * y_pixel - (max_y - min_y)) // 2
 
         z_range = max(z_range, (max_z - min_z))
@@ -553,19 +568,41 @@ def map_labels(
 
         z_pos = z + z_start + min_z * z_step
 
-        x_start = x + (min_x + x_pixel / 2 - center_x) * current_pixel_size
+        x_start = (
+            position[x_direction_index]
+            + x_direction_alignment
+            * (min_x + x_pixel / 2 - center_x)
+            * current_pixel_size
+        )
         x_positions = [x_start]
         for _ in range(1, num_x):
-            x_positions.append(x_start + (x_pixel * (1 - overlap) * current_pixel_size))
+            x_positions.append(
+                x_start
+                + x_direction_alignment * (x_pixel * (1 - overlap) * current_pixel_size)
+            )
 
-        y_start = y + (min_y + y_pixel / 2 - center_y) * current_pixel_size
+        y_start = (
+            position[y_direction_index]
+            + y_direction_alignment
+            * (min_y + y_pixel / 2 - center_y)
+            * current_pixel_size
+        )
         y_positions = [y_start]
         for _ in range(1, num_y):
-            y_positions.append(y_start + (y_pixel * (1 - overlap) * current_pixel_size))
+            y_positions.append(
+                y_start
+                + y_direction_alignment * (y_pixel * (1 - overlap) * current_pixel_size)
+            )
 
-        position_table += [
-            [x_pos, y_pos] + [z_pos, theta, f]
-            for x_pos, y_pos in product(x_positions, y_positions)
-        ]
+        if x_direction_index == 0:
+            position_table += [
+                [x_pos, y_pos] + [z_pos, theta, f]
+                for x_pos, y_pos in product(x_positions, y_positions)
+            ]
+        else:
+            position_table += [
+                [y_pos, x_pos] + [z_pos, theta, f]
+                for x_pos, y_pos in product(x_positions, y_positions)
+            ]
 
     return z_range, position_table
