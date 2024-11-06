@@ -553,6 +553,7 @@ class VolumeSearch3D:
 
         # map labeled cells
         z_start = microscope_state_config["start_position"]
+        z_end = microscope_state_config["end_position"]
         z_step = microscope_state_config["step_size"]
 
         if microscope_state_config["multiposition_count"] == 0:
@@ -560,6 +561,8 @@ class VolumeSearch3D:
             position = [
                 pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
             ]
+            # current stage position is the end of z
+            position[2] -= z_end
         else:
             position = self.model.configuration["experiment"]["MultiPositions"][
                 self.position_id
@@ -647,7 +650,7 @@ class VolumeSearch3D:
         microscope_state_config["number_z_steps"] = z_range * z_step // self.z_step
 
         self.model.logger.info(
-            f"New Z range would be {microscope_state_config['end_position']}"
+            f"New Z range would be 0 to {microscope_state_config['end_position']}"
             f" with step_size {self.z_step}"
         )
 
