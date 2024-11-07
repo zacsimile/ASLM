@@ -46,6 +46,7 @@ from navigate.tools.common_functions import VariableWithLock
 # Logger Setup
 p = __name__.split(".")[1]
 logger = logging.getLogger(p)
+
 class Snap:
     """Snap class for capturing data frames using a microscope.
 
@@ -84,7 +85,7 @@ class Snap:
         #: dict: A dictionary defining the configuration for the data capture process.
         self.config_table = {"data": {"main": self.data_func}}
 
-    def data_func(self, frame_ids):
+    def data_func(self, frame_ids: list) -> bool:
         """Capture data frames and log camera information.
 
         This method captures data frames using the microscope and logs information
@@ -102,9 +103,7 @@ class Snap:
         """
         if self.saving_flag:
             self.model.mark_saving_flags(frame_ids)
-        logger.info(
-            f"the camera is:{self.model.active_microscope_name}, {frame_ids}"
-        )
+        logger.info(f"the camera is:{self.model.active_microscope_name}, {frame_ids}")
         return True
 
 
@@ -270,9 +269,7 @@ class WaitToContinue:
         """
         with self.first_enter_node as first_enter_node:
             if first_enter_node.value == "":
-                logger.debug(
-                    "*** wait to continue enters data " "node first!"
-                )
+                logger.debug("*** wait to continue enters data " "node first!")
                 first_enter_node.value = "data"
                 if not self.pause_data_lock.locked():
                     self.pause_data_lock.acquire()

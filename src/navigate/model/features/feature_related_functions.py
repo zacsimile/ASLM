@@ -34,6 +34,8 @@
 import os
 import inspect
 import importlib
+from collections.abc import Iterable
+from typing import Optional, Union
 
 # Third-party imports
 
@@ -89,15 +91,15 @@ class SharedList(list):
       name for easier identification.
     """
 
-    def __init__(self, value, name=None):
+    def __init__(self, value: Iterable, name: Optional[str] = None) -> None:
         """
         Initialize a SharedList object.
 
         Parameters:
         ----------
-        value : iterable, optional
+        value : Iterable
             Initial values for the list (default is an empty list).
-        name : str, optional
+        name : Optional[str]
             A name to identify the shared list (default is 'shared_list__').
         """
         super().__init__(value)
@@ -105,7 +107,7 @@ class SharedList(list):
             name = "shared_list__"
         self.__name__ = name
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return a string representation of the shared list.
 
         Returns:
@@ -123,7 +125,7 @@ class SharedList(list):
         return str({"type": "shared_list", "name": self.__name__, "value": self})
 
 
-def convert_str_to_feature_list(content: str):
+def convert_str_to_feature_list(content: str) -> Union[list, str, None]:
     """Convert string to a feature list
 
     Parameters
@@ -133,12 +135,15 @@ def convert_str_to_feature_list(content: str):
 
     Returns
     -------
-    feature_list : List
-        A list: If the string value can be converted to a valid feature list
-        None: If can not.
+    feature_list : Union[list, str, None]
+
+        - List : If the string value can be converted to a valid feature list
+        - None : If the string value cannot be converted to a valid feature list
+        - "break" : If the string value is "break"
+        - "continue" : If the string value is "continue"
     """
 
-    def convert_args_to_tuple(feature_list):
+    def convert_args_to_tuple(feature_list: list) -> None:
         """Recursively convert 'args' within a feature list to tuples.
 
         This function takes a feature list, which is typically used for specifying
@@ -193,7 +198,7 @@ def convert_str_to_feature_list(content: str):
         return None
 
 
-def convert_feature_list_to_str(feature_list):
+def convert_feature_list_to_str(feature_list: list) -> str:
     """Convert a feature list to its string representation.
 
     This function takes a feature list, which is typically used for specifying
@@ -234,7 +239,7 @@ def convert_feature_list_to_str(feature_list):
         {"name": func1, "args": (arg1, arg2)},
         {"name": func2},
         [
-            {"name": func3, "args": (arg3,)},
+            {"name": func3, "args": (arg3),},
             {"name": func4}
         ]
     ]
@@ -244,7 +249,7 @@ def convert_feature_list_to_str(feature_list):
 
     ```
     "[{'name': 'func1', 'args': ('arg1', 'arg2')}, {'name': 'func2'},
-    [{'name': 'func3', 'args': ('arg3',)}, {'name': 'func4'}]]"
+    [{'name': 'func3', 'args': ('arg3'),}, {'name': 'func4'}]]"
     ```
     """
     if feature_list == "break" or feature_list == "continue":
@@ -252,7 +257,7 @@ def convert_feature_list_to_str(feature_list):
 
     result = "["
 
-    def f(feature_list):
+    def f(feature_list: list):
         """Recursively convert a feature list to its string representation."""
         if not feature_list:
             return
@@ -305,7 +310,7 @@ def convert_feature_list_to_str(feature_list):
 
 def load_dynamic_parameter_functions(
     feature_list: list, feature_parameter_setting_path: str
-):
+) -> None:
     """Load dynamic parameter functions into a feature list.
 
     This function takes a feature list and a path to the parameter setting files
@@ -346,7 +351,7 @@ def load_dynamic_parameter_functions(
           {"name": func1, "args": (arg1, arg2)},
           {"name": func2},
           [
-              {"name": func3, "args": (arg3,)},
+              {"name": func3, "args": (arg3),},
               {"name": func4}
           ]
       ]
@@ -363,7 +368,7 @@ def load_dynamic_parameter_functions(
         {"name": func1, "args": ("value1", "value2")},
         {"name": func2},
         [
-            {"name": func3, "args": (arg3,)},
+            {"name": func3, "args": (arg3),},
             {"name": func4}
         ]
     ]
