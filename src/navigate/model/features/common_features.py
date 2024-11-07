@@ -184,7 +184,16 @@ class Snap:
         self.saving_flag = saving_flag
 
         #: dict: A dictionary defining the configuration for the data capture process.
-        self.config_table = {"data": {"main": self.data_func}}
+        self.config_table = {
+            "signal":{"main": self.signal_func},
+            "data": {"main": self.data_func}
+        }
+
+    def signal_func(self) -> bool:
+        """Mark saving flags in the signal function"""
+        if self.saving_flag:
+            self.model.mark_saving_flags([self.model.frame_id])
+        return True
 
     def data_func(self, frame_ids: list) -> bool:
         """Capture data frames and log camera information.
@@ -202,8 +211,6 @@ class Snap:
         bool
             A boolean value indicating the success of the data capture process.
         """
-        if self.saving_flag:
-            self.model.mark_saving_flags(frame_ids)
         logger.info(f"the camera is:{self.model.active_microscope_name}, {frame_ids}")
         return True
 
