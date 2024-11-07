@@ -212,7 +212,7 @@ class WaitForExternalTrigger:
     """WaitForExternalTrigger class to time features using external input.
 
     This class waits for either an external trigger (or the timeout) before continuing
-    on to the next feature block in the list. Useful when combined with LoopByCounts
+    on to the next feature block in the list. Useful when combined with LoopByCount
     when each iteration may depend on some external event happening.
 
     Notes:
@@ -452,18 +452,10 @@ class LoopByCount:
         self.model = model
 
         #: bool: A boolean value indicating whether to step by frame or by step.
-        self.step_by_frame = True
+        self.step_by_frame = False if type(steps) is str else True
 
         #: int: The remaining number of steps or frames.
         self.steps = steps
-        if type(steps) is str:
-            self.step_by_frame = False
-            try:
-                parameters = steps.split(".")
-                config_ref = reduce((lambda pre, n: f"{pre}['{n}']"), parameters, "")
-                exec(f"self.steps = self.model.configuration{config_ref}")
-            except:  # noqa
-                self.steps = 1
 
         #: int: The remaining number of steps.
         self.signals = 1
@@ -489,10 +481,8 @@ class LoopByCount:
         if self.initialized:
             return
         self.initialized = True
-        if type(self.steps) in [list, ListProxy]:
-            self.steps = len(self.steps)
-        else:
-            self.steps = int(self.steps)
+
+        self.get_steps()
 
         self.signals = self.steps
         self.data_frames = self.steps
@@ -540,6 +530,34 @@ class LoopByCount:
             self.data_frames = self.steps
             return False
         return True
+    
+    def get_steps(self):
+        """Get number of steps
+        
+        Returns:
+        --------
+        int
+            Number of steps.
+        """
+        if type(self.steps) is int:
+            return self.steps
+        if self.steps == "channels":
+            self.steps = len(self.model.active_microscope.available_channels)
+        elif self.steps == "positions":
+            self.steps = len(self.model.configuration["multi_positions"])
+        else:
+            try:
+                parameters = self.steps.split(".")
+                config_ref = reduce((lambda pre, n: f"{pre}['{n}']"), parameters, "")
+                exec(f"self.steps = self.model.configuration{config_ref}")
+            except:  # noqa
+                self.steps = 1
+
+            if type(self.steps) in [list, ListProxy]:
+                self.steps = len(self.steps)
+            else:
+                self.steps = int(self.steps)
+        return self.steps
 
 
 class PrepareNextChannel:
@@ -1030,7 +1048,7 @@ class ZStackAcquisition:
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
 
         # get available channels
-        self.channels = microscope_state["selected_channels"]
+        self.channels = len(self.model.active_microscope.available_channels)
         #: int: The current channel being acquired in the z-stack
         self.current_channel_in_list = 0
 

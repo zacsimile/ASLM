@@ -526,8 +526,8 @@ class BaseViewController(GUIController, ABaseViewController):
         self.slice_index = 0
         self.image_mode = microscope_state["image_mode"]
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
-        self.number_of_channels = int(microscope_state["selected_channels"])
         self.get_selected_channels(microscope_state)
+        self.number_of_channels = len(self.selected_channels)
         self.number_of_slices = int(microscope_state["number_z_steps"])
         self.total_images_per_volume = self.number_of_channels * self.number_of_slices
         self.original_image_width = int(camera_parameters["img_x_pixels"])

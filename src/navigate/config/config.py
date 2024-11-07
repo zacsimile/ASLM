@@ -521,7 +521,6 @@ def verify_experiment_config(manager, configuration):
         "timepoint_interval": 0,
         "experiment_duration": 1.03,
         "is_multiposition": False,
-        "selected_channels": 0,
         "stack_z_origin": 0,
         "stack_focus_origin": 0,
         "start_focus": 0.0,
@@ -654,7 +653,6 @@ def verify_experiment_config(manager, configuration):
             if channel_value[k] < 0:
                 channel_value[k] = temp[k]
 
-    microscope_setting_dict["selected_channels"] = selected_channel_num
 
     # MultiPositions
     # if (
