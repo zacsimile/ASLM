@@ -39,6 +39,8 @@ from navigate.model.analysis.boundary_detect import (
     map_labels,
 )
 import numpy as np
+from tifffile import imwrite
+from os import path
 
 
 def draw_box(img, xl, yl, xu, yu, fill=65535):
@@ -477,6 +479,8 @@ class VolumeSearch3D:
         y_direction="y",
         overlap=0.05,
         analysis_function=None,
+        current_pixel_size=1.0,
+        filter_pixel_number=10,
     ):
         """Initialize VolumeSearch
 
@@ -497,6 +501,10 @@ class VolumeSearch3D:
             The overlap ratio
         analysis_function : callable
             An analysis function return a labeled object
+        current_pixel_size : float
+            The current pixel size
+        filter_pixel_number : int
+            The pixel number to filter a label
         """
 
         #: navigate.model.model.Model: Navigate Model
@@ -527,6 +535,12 @@ class VolumeSearch3D:
             analysis_function if analysis_function else find_cell_boundary_3d
         )
 
+        #: float: The current pixel size
+        self.current_pixel_size = current_pixel_size
+
+        #: int: The filter pixel number
+        self.filter_pixel_number = 10
+
         #: dict: Feature configuration
         self.config_table = {
             "data": {
@@ -550,6 +564,15 @@ class VolumeSearch3D:
             position=self.position_id
         )
         labeled_image = self.analysis_function(z_stack_data)
+
+        # save labels
+        imwrite(
+            file=path.join(
+                self.model.configuration["experiment"]["Saving"]["save_directory"],
+                "labels.tiff",
+            ),
+            data=labeled_image.astype(np.uint16),
+        )
 
         # map labeled cells
         z_start = microscope_state_config["start_position"]
@@ -586,7 +609,10 @@ class VolumeSearch3D:
         else:
             solvent = self.model.configuration["experiment"]["Saving"]["solvent"]
             stage_solvent_offsets = self.model.active_microscope.zoom.stage_offsets
-            if solvent in stage_solvent_offsets.keys():
+            if (
+                stage_solvent_offsets is not None
+                and solvent in stage_solvent_offsets.keys()
+            ):
                 stage_offset = stage_solvent_offsets[solvent]
                 for i, axis in enumerate(["x", "y", "z", "theta", "f"]):
                     if axis not in stage_offset.keys():
@@ -629,13 +655,14 @@ class VolumeSearch3D:
             z_step,
             self.x_direction,
             self.y_direction,
-            current_pixel_size,
+            self.current_pixel_size,
             current_image_width,
             current_image_height,
             target_pixel_size,
             target_image_width,
             target_image_height,
             overlap=self.overlap,
+            filter_pixel_number=self.filter_pixel_number,
         )
 
         self.model.event_queue.put(("multiposition", positions))

@@ -487,6 +487,7 @@ def map_labels(
     target_image_width,
     target_image_height,
     overlap=0.05,
+    filter_pixel_number=10,
 ):
     """Map labels to positions
 
@@ -514,6 +515,8 @@ def map_labels(
         Target image height
     overlap : float
         Overlap ratio
+    filter_pixel_number : int
+        The pixel number to filter a label
 
     Returns
     -------
@@ -554,6 +557,13 @@ def map_labels(
 
     for i in range(target_num):
         min_z, min_y, min_x, max_z, max_y, max_x = regionprops[i].bbox
+
+        # do not need to calculate the position
+        # if the label area is smaller than filter_pixel_number in x or y.
+        if (max_x - min_x) < filter_pixel_number or (
+            max_y - min_y
+        ) < filter_pixel_number:
+            continue
 
         num_x = math.ceil((max_x - min_x) / (x_pixel * (1 - overlap)))
         shift_x = (num_x * x_pixel - (max_x - min_x)) // 2
