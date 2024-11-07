@@ -1470,9 +1470,7 @@ class MIPViewController(BaseViewController):
         self.render_widgets["perspective"].set("XY")
 
         self.get_selected_channels()
-        if isinstance(
-                self.selected_channels, list) and len(
-            self.selected_channels) > 0:
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
             self.render_widgets["channel"].set(self.selected_channels[0])
 
         # event binding
@@ -1567,9 +1565,7 @@ class MIPViewController(BaseViewController):
             Camera parameters.
         """
         super().initialize_non_live_display(microscope_state, camera_parameters)
-        if isinstance(
-                self.selected_channels, list) and len(
-            self.selected_channels) > 0:
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
             self.render_widgets["channel"].set(self.selected_channels[0])
         self.perspective = self.render_widgets["perspective"].get()
         self.XY_image_width = self.original_image_width
