@@ -425,6 +425,8 @@ class Microscope:
         waveform : dict
             Dictionary of all the waveforms.
         """
+        self.current_channel = 0
+        self.central_focus = None
         self.get_available_channels()
 
         self.report_camera_settings()
@@ -451,8 +453,6 @@ class Microscope:
         This function gets the available channels for imaging by identifying which
         channels are selected for imaging in the configuration file.
         """
-        self.current_channel = 0
-        self.central_focus = None
         self.channels = self.configuration["experiment"]["MicroscopeState"]["channels"]
         self.available_channels = list(
             map(
