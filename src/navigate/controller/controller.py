@@ -488,6 +488,16 @@ class Controller:
         microscope_name = self.configuration["experiment"]["MicroscopeState"][
             "microscope_name"
         ]
+        zoom_value = self.configuration["experiment"]["MicroscopeState"]["zoom"]
+        resolution_value = self.menu_controller.resolution_value.get()
+
+        # set microscope and zoom value according to GUI
+        if f"{microscope_name} {zoom_value}" != resolution_value:
+            microscope_name, zoom_value = resolution_value.split()
+            self.configuration["experiment"]["MicroscopeState"][
+                "microscope_name"
+            ] = microscope_name
+            self.configuration["experiment"]["MicroscopeState"]["zoom"] = zoom_value
 
         # set waveform template
         if self.acquire_bar_controller.mode in ["live", "single", "z-stack"]:
