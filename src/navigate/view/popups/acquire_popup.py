@@ -37,12 +37,14 @@ import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 import platform
 
+from navigate.view.custom_widgets.hover import HoverCheckButton
 # Third Party Imports
 
 # Local Imports
 from navigate.view.custom_widgets.popup import PopUp
 from navigate.view.custom_widgets.LabelInputWidgetFactory import LabelInput
-from navigate.view.custom_widgets.validation import ValidatedCombobox
+from navigate.view.custom_widgets.validation import ValidatedCombobox, \
+    ValidatedSpinbox
 from navigate.model.data_sources import FILE_TYPES
 from navigate.view.custom_widgets.common import CommonMethods
 
@@ -78,7 +80,7 @@ class AcquirePopUp(CommonMethods):
         #: PopUp: The popup window
         if platform.system() == "Windows":
             self.popup = PopUp(
-                root, "File Saving Dialog", "450x450+320+180", transient=True
+                root, "File Saving Dialog", "450x500+320+180", transient=True
             )
         else:
             self.popup = PopUp(
@@ -91,12 +93,11 @@ class AcquirePopUp(CommonMethods):
         #: dict: Input dictionary.
         self.inputs = {}
 
-        # Storing the content frame of the popup, this will be the parent of the widgets
         content_frame = self.popup.get_frame()
 
-        path_entries = ttk.Frame(content_frame, padding=(0, 0, 0, 0))
-        tab_frame = ttk.Frame(content_frame, padding=(0, 0, 0, 0))
-        button_frame = ttk.Frame(content_frame, padding=(0, 0, 0, 0))
+        path_entries = ttk.Frame(content_frame, padding=(5, 5, 5, 5))
+        tab_frame = ttk.Frame(content_frame, padding=(5, 5, 5, 5))
+        button_frame = ttk.Frame(content_frame, padding=(5, 5, 5, 5))
         separator1 = ttk.Separator(content_frame, orient="horizontal")
         separator2 = ttk.Separator(content_frame, orient="horizontal")
 
@@ -212,54 +213,20 @@ class EntryFrame:
 
             # Widgets
             parent.inputs[entry_names[i]].grid(
-                row=i + 1, column=0, columnspan=1, sticky=tk.NSEW
+                row=i + 1, column=0, columnspan=1,
+                sticky=tk.NSEW, padx=(0, 0), pady=(1, 1)
             )
 
             # Labels
-            parent.inputs[entry_names[i]].label.grid(padx=(5, 0))
+            parent.inputs[entry_names[i]].label.grid(padx=(5, 5))
             parent.inputs[entry_names[i]].label.config(width=parent.column1_width)
 
         # Formatting
-        parent.inputs["user"].widget.grid(padx=(0, 0))
-        parent.inputs["tissue"].widget.grid(padx=(0, 0))
-        parent.inputs["celltype"].widget.grid(padx=(0, 0))
-        parent.inputs["prefix"].widget.grid(padx=(0, 0))
-        parent.inputs["label"].widget.grid(padx=(0, 0))
-
-
-class MiscInputTab:
-    def __init__(self, parent):
-        """Initialize the MiscInputTab
-
-        Parameters
-        ----------
-        parent : AcquirePopUp
-            The AcquirePopup window.
-        """
-        frame = ttk.Frame(parent, padding=(0, 0, 0, 0))
-        frame.grid_columnconfigure(0, weight=1)
-        frame.grid_columnconfigure(1, weight=1)
-
-        parent.inputs["misc"] = LabelInput(
-            parent=frame,
-            label="Notes",
-            input_class=ScrolledText,
-            input_args={
-                "wrap": tk.WORD,
-                "width": parent.column2_width + 10,
-                "height": 10,
-            },
-        )
-
-        # LabelInput
-        parent.inputs["misc"].grid(row=0, column=1, columnspan=2, sticky=tk.NSEW)
-
-        # Label
-        parent.inputs["misc"].label.grid(padx=(5, 0))
-        parent.inputs["misc"].label.config(width=parent.column1_width)
-
-        # Widget
-        parent.inputs["misc"].widget.grid(padx=(0, 0), sticky=tk.NSEW)
+        parent.inputs["user"].widget.grid(padx=(0, 0), pady=(1, 1))
+        parent.inputs["tissue"].widget.grid(padx=(0, 0), pady=(1, 1))
+        parent.inputs["celltype"].widget.grid(padx=(0, 0), pady=(1, 1))
+        parent.inputs["prefix"].widget.grid(padx=(0, 0), pady=(1, 1))
+        parent.inputs["label"].widget.grid(padx=(0, 0), pady=(1, 1))
 
 
 class TabFrame:
@@ -273,56 +240,187 @@ class TabFrame:
         frame : ttk.Frame
             The TabFrame Window.
         """
-        notebook = ttk.Notebook(frame, padding=(0, 0, 0, 0))
+        notebook = ttk.Notebook(frame, padding=(5, 2, 5, 2))
         notebook.grid(row=0, column=0, sticky=tk.NSEW)
 
         tab1 = tk.Frame(notebook)
+        # tab1.columnconfigure(index=0, weight=1)
+
         tab2 = tk.Frame(notebook)
-        tab1.columnconfigure(0, weight=1)
-        tab1.columnconfigure(1, weight=1)
+        tab2.columnconfigure(index=0, weight=1)
+        tab2.columnconfigure(index=1, weight=1)
+        tab2.columnconfigure(index=2, weight=1)
 
-        notebook.add(tab1, text="Tab 1")
-        notebook.add(tab2, text="Tab 2")
+        notebook.add(tab1, text="Misc. Notes")
+        notebook.add(tab2, text="BDV Settings")
 
-        tk.Label(tab1, text="This is Tab 1").pack()
-        tk.Button(tab2, text="Button on Tab 2").pack()
+        # Tab 1 Widgets
+        self.inputs = {"misc": ScrolledText(
+            tab1,
+            wrap=tk.WORD,
+            height=10,
+            width=parent.column2_width + parent.column2_width - 35,
+        )
+        }
 
-        # frame = ttk.Frame(parent, padding=(0, 0, 0, 0))
-        # frame.grid_columnconfigure(0, weight=1)
-        # frame.grid_columnconfigure(1, weight=1)
-        #
-        # parent.inputs["misc"] = LabelInput(
-        #     parent=frame,
-        #     label="Notes",
-        #     input_class=ScrolledText,
-        #     input_args={
-        #         "wrap": tk.WORD,
-        #         "width": parent.column2_width + 10,
-        #         "height": 10,
-        #     },
-        # )
-        #
-        # # LabelInput
-        # parent.inputs["misc"].grid(row=0, column=1, columnspan=2, sticky=tk.NSEW)
-        #
-        # # Label
-        # parent.inputs["misc"].label.grid(padx=(5, 0))
-        # parent.inputs["misc"].label.config(width=parent.column1_width)
-        #
-        # # Widget
-        # parent.inputs["misc"].widget.grid(padx=(0, 0), sticky=tk.NSEW)
+        self.inputs["misc"].grid(row=0, column=0, columnspan=1, sticky=tk.W)
 
-        # Init notebook
+        # Tab 2 Widgets
+        total_width = tab2.winfo_width()
+        column_width = int(total_width // 3)
 
-        # self.misc_input_tab = MiscInputTab(parent)
+        row_index = 0
+        text = ("HDF5/N5/Zarr files are saved with BDV metadata, "
+                "enabling immediate visualization with BigDataViewer.")
+        tk.Label(tab2, text=text, wraplength=400, justify=tk.LEFT).grid(
+            row=row_index, column=0, columnspan=2, pady=(5, 5)
+        )
 
-        #: CameraSettingsTab: Camera settings tab
-        # self.camera_settings_tab = CameraSettingsTab(self)
+        row_index += 1
+        self.inputs["shear_data"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Shear Data",
+            input_class=ttk.Checkbutton,
+            input_var=tk.BooleanVar(),
+            input_args={"width": column_width - 10,
+                        "onvalue": True,
+                        "offvalue": False}
+        )
+        self.inputs["shear_data"].grid(row=row_index,
+                                       column=0,
+                                       columnspan=1,
+                                       sticky=tk.W,
+                                       padx=(5, 0),
+                                       pady=(1, 1))
 
-        # self.add(self.misc_input_tab, text="Misc Input")
+        values = ["XZ", "YZ", "XY"]
+        self.inputs["shear_dimension"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Dimension",
+            input_class=ttk.Combobox,
+            input_var=tk.StringVar(),
+            input_args={"width": column_width - 10,
+                        "values": values,
+                        "state": "readonly"}
+        )
 
-        # Adding tabs to settings notebook
-        # self.add(self.misc_input_tab, text="Text", sticky=tk.NSEW)
-        # self.add(self.camera_settings_tab, text="Camera Settings", sticky=tk.NSEW)
-        # self.add(self.stage_control_tab, text="Stage Control", sticky=tk.NSEW)
-        # self.add(self.multiposition_tab, text="Multiposition", sticky=tk.NSEW)
+        self.inputs["shear_dimension"].grid(row=row_index,
+                                            column=1,
+                                            columnspan=1,
+                                            sticky=tk.W,
+                                            padx=(0, 0),
+                                            pady=(1, 1)
+                                            )
+
+        self.inputs["shear_angle"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Angle (\u00B0)",
+            input_class=ValidatedSpinbox,
+            input_var=tk.StringVar(),
+            input_args={"width": column_width - 10,
+                        "from_": 0,
+                        "to": 360,
+                        "increment": 1,
+                        }
+        )
+        self.inputs["shear_angle"].grid(row=row_index,
+                                        column=2,
+                                        columnspan=1,
+                                        sticky=tk.W,
+                                        padx=(0, 0),
+                                        pady=(1, 1)
+                                        )
+
+        row_index += 1
+        separator1 = ttk.Separator(tab2, orient="horizontal")
+        separator1.grid(row=row_index, column=0, columnspan=3,
+                        sticky=tk.NSEW, padx=0, pady=3)
+
+        row_index += 1
+        self.inputs["rotate_data"] = LabelInput(
+            parent=tab2,
+            label_pos="left",
+            label="Rotate Data",
+            input_class=ttk.Checkbutton,
+            input_var=tk.BooleanVar(),
+            input_args={"width": column_width - 10,
+                        "onvalue": True,
+                        "offvalue": False}
+        )
+
+        self.inputs["rotate_data"].grid(
+            row=row_index, column=0, columnspan=1, sticky=tk.W,
+            padx=(5, 0), pady=(1, 1))
+
+        values = ["X", "Y", "Z"]
+        self.inputs["rotate_axis"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Dimension",
+            input_class=ttk.Combobox,
+            input_var=tk.StringVar(),
+            input_args={"width": column_width - 10,
+                        "values": values,
+                        "state": "readonly"}
+        )
+
+        self.inputs["rotate_axis"].grid(
+            row=row_index,
+            column=1,
+            columnspan=1,
+            sticky=tk.W,
+            padx=(0, 0),
+            pady=(1, 1)
+        )
+
+        self.inputs["rotate_angle"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Angle (\u00B0)",
+            input_class=ValidatedSpinbox,
+            input_var=tk.StringVar(),
+            input_args={"width": column_width - 10,
+                        "from_": 0,
+                        "to": 360,
+                        "increment": 1,
+                        }
+        )
+        self.inputs["rotate_angle"].grid(row=row_index,
+                                        column=2,
+                                        columnspan=1,
+                                        sticky=tk.W,
+                                        padx=(0, 0),
+                                        pady=(1, 1)
+                                        )
+
+        row_index += 1
+        separator1 = ttk.Separator(tab2, orient="horizontal")
+        separator1.grid(row=row_index, column=0, columnspan=3,
+                        sticky=tk.NSEW, padx=0, pady=3)
+
+        row_index += 1
+        separator2 = ttk.Separator(tab2, orient="horizontal")
+        separator2.grid(row=row_index, column=0, columnspan=3,
+                        sticky=tk.NSEW, padx=0, pady=3)
+
+        row_index += 1
+        self.inputs["down_sample_data"] = LabelInput(
+            parent=tab2,
+            label_pos="top",
+            label="Downsample Data",
+            input_class=ttk.Checkbutton,
+            input_var=tk.BooleanVar(),
+            input_args={"width": column_width - 10,
+                        "onvalue": True,
+                        "offvalue": False}
+        )
+
+        self.inputs["down_sample_data"].grid(
+            row=row_index, column=0, columnspan=1, sticky=tk.NSEW,
+            padx=(5, 0), pady=(1, 1))
+
+        #   "Down-sampling is accompanied with additional computational "
+        #   "overhead and slows data write operations.")
