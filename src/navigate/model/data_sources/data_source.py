@@ -298,13 +298,12 @@ class DataSource:
                 z = (frame_id // self.shape_c) % self.shape_z
 
             # NOTE: Uncomment this if we want time to vary faster than positions
-            # t = (frame_id // (self.shape_c * self.shape_z)) % self.shape_t
-            # p = frame_id // (self.shape_c * self.shape_z * self.shape_t)
+            t = (frame_id // (self.shape_c * self.shape_z)) % self.shape_t
+            p = frame_id // (self.shape_c * self.shape_z * self.shape_t)
 
-            # TODO: current ZStack positions vary faster than time
             # NOTE: Uncomment this if we want positions to vary faster than time
-            t = frame_id // (self.shape_c * self.shape_z * self.positions)
-            p = (frame_id // (self.shape_c * self.shape_z)) % self.positions
+            # t = frame_id // (self.shape_c * self.shape_z * self.positions)
+            # p = (frame_id // (self.shape_c * self.shape_z)) % self.positions
 
         else:
             # Timepoint acquisition, only c varies faster than t
