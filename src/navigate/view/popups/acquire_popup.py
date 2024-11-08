@@ -66,6 +66,9 @@ class AcquirePopUp(CommonMethods):
         root : tk.Tk
             The root window
         """
+        #: tk.Tk: The root window
+        self.tk = root
+
         #: int: Width of the first column
         self.column1_width = 20
 
@@ -224,18 +227,16 @@ class EntryFrame:
         parent.inputs["label"].widget.grid(padx=(0, 0))
 
 
-class TabFrame:
-    def __init__(self, parent: AcquirePopUp, frame: ttk.Frame) -> None:
-        """Initialize the TabFrame
+class MiscInputTab:
+    def __init__(self, parent):
+        """Initialize the MiscInputTab
 
         Parameters
         ----------
         parent : AcquirePopUp
             The AcquirePopup window.
-        frame : ttk.Frame
-            The TabFrame Window.
         """
-
+        frame = ttk.Frame(parent, padding=(0, 0, 0, 0))
         frame.grid_columnconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
 
@@ -259,3 +260,69 @@ class TabFrame:
 
         # Widget
         parent.inputs["misc"].widget.grid(padx=(0, 0), sticky=tk.NSEW)
+
+
+class TabFrame:
+    def __init__(self, parent: AcquirePopUp, frame: ttk.Frame) -> None:
+        """Initialize the TabFrame
+
+        Parameters
+        ----------
+        parent : AcquirePopUp
+            The AcquirePopup window.
+        frame : ttk.Frame
+            The TabFrame Window.
+        """
+        notebook = ttk.Notebook(frame, padding=(0, 0, 0, 0))
+        notebook.grid(row=0, column=0, sticky=tk.NSEW)
+
+        tab1 = tk.Frame(notebook)
+        tab2 = tk.Frame(notebook)
+        tab1.columnconfigure(0, weight=1)
+        tab1.columnconfigure(1, weight=1)
+
+        notebook.add(tab1, text="Tab 1")
+        notebook.add(tab2, text="Tab 2")
+
+        tk.Label(tab1, text="This is Tab 1").pack()
+        tk.Button(tab2, text="Button on Tab 2").pack()
+
+        # frame = ttk.Frame(parent, padding=(0, 0, 0, 0))
+        # frame.grid_columnconfigure(0, weight=1)
+        # frame.grid_columnconfigure(1, weight=1)
+        #
+        # parent.inputs["misc"] = LabelInput(
+        #     parent=frame,
+        #     label="Notes",
+        #     input_class=ScrolledText,
+        #     input_args={
+        #         "wrap": tk.WORD,
+        #         "width": parent.column2_width + 10,
+        #         "height": 10,
+        #     },
+        # )
+        #
+        # # LabelInput
+        # parent.inputs["misc"].grid(row=0, column=1, columnspan=2, sticky=tk.NSEW)
+        #
+        # # Label
+        # parent.inputs["misc"].label.grid(padx=(5, 0))
+        # parent.inputs["misc"].label.config(width=parent.column1_width)
+        #
+        # # Widget
+        # parent.inputs["misc"].widget.grid(padx=(0, 0), sticky=tk.NSEW)
+
+        # Init notebook
+
+        # self.misc_input_tab = MiscInputTab(parent)
+
+        #: CameraSettingsTab: Camera settings tab
+        # self.camera_settings_tab = CameraSettingsTab(self)
+
+        # self.add(self.misc_input_tab, text="Misc Input")
+
+        # Adding tabs to settings notebook
+        # self.add(self.misc_input_tab, text="Text", sticky=tk.NSEW)
+        # self.add(self.camera_settings_tab, text="Camera Settings", sticky=tk.NSEW)
+        # self.add(self.stage_control_tab, text="Stage Control", sticky=tk.NSEW)
+        # self.add(self.multiposition_tab, text="Multiposition", sticky=tk.NSEW)
