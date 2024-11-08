@@ -1104,7 +1104,7 @@ def verify_positions_config(positions):
         try:
             for j in range(5):
                 float(position[j])
-        except (ValueError, KeyError):
+        except (ValueError, KeyError, IndexError):
             del positions[i]
 
     return positions

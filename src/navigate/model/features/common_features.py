@@ -185,8 +185,8 @@ class Snap:
 
         #: dict: A dictionary defining the configuration for the data capture process.
         self.config_table = {
-            "signal":{"main": self.signal_func},
-            "data": {"main": self.data_func}
+            "signal": {"main": self.signal_func},
+            "data": {"main": self.data_func},
         }
 
     def signal_func(self) -> bool:
@@ -483,8 +483,7 @@ class LoopByCount:
         }
 
     def pre_signal_func(self):
-        """Initialize loop parameters
-        """
+        """Initialize loop parameters"""
         if self.initialized:
             return
         self.initialized = True
@@ -537,10 +536,10 @@ class LoopByCount:
             self.data_frames = self.steps
             return False
         return True
-    
+
     def get_steps(self):
         """Get number of steps
-        
+
         Returns:
         --------
         int
@@ -1055,7 +1054,14 @@ class ZStackAcquisition:
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
 
         # get available channels
-        self.channels = len(self.model.active_microscope.available_channels)
+        self.channels = len(
+            list(
+                filter(
+                    lambda channel: channel["is_selected"],
+                    microscope_state["channels"].values(),
+                )
+            )
+        )
         #: int: The current channel being acquired in the z-stack
         self.current_channel_in_list = 0
 

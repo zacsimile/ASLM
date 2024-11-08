@@ -552,6 +552,10 @@ class Model:
             self.is_save = self.configuration["experiment"]["MicroscopeState"][
                 "is_save"
             ]
+            if len(self.configuration["multi_positions"]) == 0:
+                self.configuration["experiment"]["MicroscopeState"][
+                    "is_multiposition"
+                ] = False
 
             # Calculate waveforms, turn on lasers, etc.
             self.prepare_acquisition()
