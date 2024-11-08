@@ -80,6 +80,7 @@ from navigate.config.config import (
     update_config_dict,
     verify_experiment_config,
     verify_waveform_constants,
+    verify_positions_config,
     verify_configuration,
     get_navigate_path,
 )
@@ -205,9 +206,7 @@ class Controller:
         verify_waveform_constants(self.manager, self.configuration)
 
         positions = load_yaml_file(multi_positions_path)
-        # TODO: verify multipositions
-        if not positions:
-            positions = [[1, 2, 3, 4, 5]]
+        positions = verify_positions_config(positions)
         self.configuration["multi_positions"] = positions
 
         total_ram, available_ram = get_ram_info()

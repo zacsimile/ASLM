@@ -653,30 +653,6 @@ def verify_experiment_config(manager, configuration):
             if channel_value[k] < 0:
                 channel_value[k] = temp[k]
 
-
-    # MultiPositions
-    # if (
-    #     "MultiPositions" not in configuration["experiment"]
-    #     or type(configuration["experiment"]["MultiPositions"]) is not ListProxy
-    # ):
-    #     update_config_dict(manager, configuration["experiment"], "MultiPositions", [])
-    # position_ids = []
-    # multipositions = configuration["experiment"]["MultiPositions"]
-    # for i, position in enumerate(multipositions):
-    #     try:
-    #         for j in range(5):
-    #             float(position[j])
-    #     except (ValueError, KeyError):
-    #         position_ids.append(i)
-
-    # for idx in position_ids[::-1]:
-    #     del multipositions[idx]
-    # if len(multipositions) < 1:
-    #     multipositions.append([10.0, 10.0, 10.0, 10.0, 10.0])
-
-    # microscope_setting_dict["multiposition_count"] = len(multipositions)
-
-
 def verify_waveform_constants(manager, configuration):
     """Verifies and updates the waveform constants in the configuration dictionary.
 
@@ -1117,3 +1093,18 @@ def verify_configuration(manager, configuration):
         "gui",
         {"channels": {"count": channel_count}},
     )
+
+def verify_positions_config(positions):
+    if positions is None or type(positions) not in (list, ListProxy):
+        return []
+    # MultiPositions
+    position_num = len(positions)
+    for i in range(position_num-1, -1, -1):
+        position = positions[i]
+        try:
+            for j in range(5):
+                float(position[j])
+        except (ValueError, KeyError):
+            del positions[i]
+
+    return positions
