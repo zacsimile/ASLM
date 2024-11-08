@@ -1054,12 +1054,14 @@ class Microscope:
             self.info[device_name] = device_ref_name
 
     def terminate(self) -> None:
-        """Close hardware explicitly."""
+        """Close hardware explicitly.
 
-        # TODO: I get a DCAM warning if I call the __del__ method.
-        self.camera.close_camera()
+        Closes all devices other than plugin devices and deformable mirrors.
+        """
 
-        del self.daq
+        for device in [self.camera, self.daq, self.remote_focus_device,
+                       self.shutter, self.zoom]:
+            del device
 
         for key in list(self.filter_wheel.keys()):
             del self.filter_wheel[key]
@@ -1070,16 +1072,8 @@ class Microscope:
         for key in list(self.lasers.keys()):
             del self.lasers[key]
 
-        # mirrors?
-
-        del self.remote_focus_device
-
-        del self.shutter
-
         for stage, _ in self.stages_list:
             del stage
-
-        # zoom?
 
     def run_command(self, command: str, *args) -> None:
         """Run command.
