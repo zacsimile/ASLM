@@ -1169,8 +1169,7 @@ class CameraViewController(BaseViewController):
 
         slider_index = self.view.slider.get()
         channel_index = self.view.live_frame.channel.get()
-        channel_index = channel_index[-1]
-        channel_index = int(channel_index) - 1
+        channel_index = self.selected_channels.index(channel_index)
         image = self.spooled_images.load_image(
             channel=channel_index, slice_index=slider_index
         )
