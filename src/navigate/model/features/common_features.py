@@ -471,27 +471,37 @@ class LoopByCount:
         self.data_frames = 1
 
         #: bool: Initialization flag
-        self.initialized = False
+        self.initialized = VariableWithLock(bool)
+        self.initialized.value = False
 
         #: dict: A dictionary defining the configuration for the loop control process.
         self.config_table = {
             "signal": {
-                "init": self.pre_signal_func,
+                "init": self.pre_func,
                 "main": self.signal_func,
             },
-            "data": {"main": self.data_func},
+            "data": {
+                "init": self.pre_func,
+                "main": self.data_func
+            },
         }
 
-    def pre_signal_func(self):
+    def pre_func(self):
         """Initialize loop parameters"""
-        if self.initialized:
+        if self.initialized.value:
             return
-        self.initialized = True
+        
+        with self.initialized as initialized:
+            if initialized.value:
+                return
 
-        self.get_steps()
+            self.get_steps()
 
-        self.signals = self.steps
-        self.data_frames = self.steps
+            self.signals = self.steps
+            self.data_frames = self.steps
+            initialized.value = True
+
+            logger.debug(f"LoopByCount-initialize: {self.signals}, {self.data_frames}")
 
     def signal_func(self):
         """Control the signal acquisition loop and update the remaining steps.
