@@ -518,6 +518,7 @@ class LoopByCount:
         self.signals -= 1
         if self.signals <= 0:
             self.signals = self.steps
+            self.initialized.value = False
             return False
         return True
 
@@ -544,6 +545,7 @@ class LoopByCount:
             self.data_frames -= 1
         if self.data_frames <= 0:
             self.data_frames = self.steps
+            self.initialized.value = False
             return False
         return True
 
