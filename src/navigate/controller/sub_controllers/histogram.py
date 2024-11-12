@@ -146,14 +146,16 @@ class HistogramController:
         image : SharedNDArray
             Image data
         """
+        down_sampling_constant = 8
         data = image.flatten()
+        data = data[::down_sampling_constant]
         self.ax.cla()
         counts, _, _ = self.ax.hist(data, bins=20, color="black", rwidth=1)
 
         x_maximum = np.max(data) + np.std(data)
         x_minimum = np.min(data) - np.std(data)
         x_minimum = 1 if x_minimum < 1 else x_minimum
-        y_maximum = 10**6
+        y_maximum = 10**6 // down_sampling_constant
 
         self.ax.set_xlim(x_minimum, x_maximum)
         self.ax.set_ylim(1, y_maximum)

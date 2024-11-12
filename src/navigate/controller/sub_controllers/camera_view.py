@@ -526,8 +526,8 @@ class BaseViewController(GUIController, ABaseViewController):
         self.slice_index = 0
         self.image_mode = microscope_state["image_mode"]
         self.stack_cycling_mode = microscope_state["stack_cycling_mode"]
-        self.number_of_channels = int(microscope_state["selected_channels"])
         self.get_selected_channels(microscope_state)
+        self.number_of_channels = len(self.selected_channels)
         self.number_of_slices = int(microscope_state["number_z_steps"])
         self.total_images_per_volume = self.number_of_channels * self.number_of_slices
         self.original_image_width = int(camera_parameters["img_x_pixels"])
@@ -1169,8 +1169,7 @@ class CameraViewController(BaseViewController):
 
         slider_index = self.view.slider.get()
         channel_index = self.view.live_frame.channel.get()
-        channel_index = channel_index[-1]
-        channel_index = int(channel_index) - 1
+        channel_index = self.selected_channels.index(channel_index)
         image = self.spooled_images.load_image(
             channel=channel_index, slice_index=slider_index
         )
@@ -1470,7 +1469,8 @@ class MIPViewController(BaseViewController):
         self.render_widgets["perspective"].set("XY")
 
         self.get_selected_channels()
-        self.render_widgets["channel"].set(self.selected_channels[0])
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
+            self.render_widgets["channel"].set(self.selected_channels[0])
 
         # event binding
         self.render_widgets["perspective"].get_variable().trace_add(
@@ -1564,7 +1564,8 @@ class MIPViewController(BaseViewController):
             Camera parameters.
         """
         super().initialize_non_live_display(microscope_state, camera_parameters)
-        self.render_widgets["channel"].set(self.selected_channels[0])
+        if isinstance(self.selected_channels, list) and len(self.selected_channels) > 0:
+            self.render_widgets["channel"].set(self.selected_channels[0])
         self.perspective = self.render_widgets["perspective"].get()
         self.XY_image_width = self.original_image_width
         self.XY_image_height = self.original_image_height
