@@ -330,7 +330,7 @@ class TiffDataSource(DataSource):
         if self.mode == "w":
             if not internal:
                 self._check_shape(self._current_frame - 1, self.metadata.per_stack)
-        if type(self.image) == list:
+        if type(self.image) is list:
             for ch in range(len(self.image)):
                 self.image[ch].close()
                 if self.is_ome and len(self._views) > 0:

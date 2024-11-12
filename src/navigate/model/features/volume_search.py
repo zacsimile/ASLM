@@ -539,7 +539,7 @@ class VolumeSearch3D:
         self.current_pixel_size = current_pixel_size
 
         #: int: The filter pixel number
-        self.filter_pixel_number = 10
+        self.filter_pixel_number = filter_pixel_number
 
         #: dict: Feature configuration
         self.config_table = {
@@ -584,12 +584,12 @@ class VolumeSearch3D:
             position = [
                 pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
             ]
-            # current stage position is the end of z
-            position[2] -= z_end
         else:
             position = self.model.configuration["experiment"]["MultiPositions"][
                 self.position_id
             ]
+        # current stage position is the end of z
+        position[2] -= z_end
 
         current_microscope_name = self.model.active_microscope_name
         current_zoom_value = self.model.active_microscope.zoom.zoomvalue
