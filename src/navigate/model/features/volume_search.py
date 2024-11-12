@@ -557,7 +557,7 @@ class VolumeSearch3D:
             "MicroscopeState"
         ]
 
-        if self.position_id > microscope_state_config["multiposition_count"]:
+        if self.position_id > len(self.model.configuration["multi_positions"]):
             self.position_id = 0
 
         z_stack_data = self.model.image_writer.data_source.get_data(
@@ -585,7 +585,7 @@ class VolumeSearch3D:
                 pos_dict[f"{axis}_pos"] for axis in ["x", "y", "z", "theta", "f"]
             ]
         else:
-            position = self.model.configuration["experiment"]["MultiPositions"][
+            position = self.model.configuration["multi_positions"][
                 self.position_id
             ]
         # current stage position is the end of z
@@ -666,8 +666,7 @@ class VolumeSearch3D:
         )
 
         self.model.event_queue.put(("multiposition", positions))
-        self.model.configuration["experiment"]["MultiPositions"] = positions
-        microscope_state_config["multiposition_count"] = len(positions)
+        self.model.configuration["multi_positions"] = positions
         if len(positions) > 0:
             microscope_state_config["is_multiposition"] = True
 
