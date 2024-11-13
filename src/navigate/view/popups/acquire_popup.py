@@ -75,9 +75,6 @@ class AcquirePopUp(CommonMethods):
         #: int: Width of the second column
         self.column2_width = 40
 
-        #: int: Total width of the columns
-        self.total_width = self.column1_width + self.column2_width
-
         #: PopUp: The popup window
         if platform.system() == "Windows":
             self.global_width = 450
@@ -88,11 +85,12 @@ class AcquirePopUp(CommonMethods):
                 transient=True,
             )
         else:
-            self.global_width = 600
+            self.global_width = 580
+            self.global_height = 720
             self.popup = PopUp(
                 root,
                 "File Saving Dialog",
-                f"{self.global_width}x650+320+180",
+                f"{self.global_width}x{self.global_height}+320+180",
                 transient=True,
             )
 
@@ -123,6 +121,7 @@ class AcquirePopUp(CommonMethods):
         tab_frame.grid_rowconfigure(index=1, weight=1)
 
         separator2.grid(row=3, column=0, sticky=tk.NSEW, padx=0, pady=3)
+
         button_frame.grid(row=4, column=0, sticky=tk.NSEW, padx=0, pady=3)
         button_frame.grid_columnconfigure(index=0, weight=1)
         button_frame.grid_rowconfigure(index=1, weight=1)
@@ -169,6 +168,7 @@ class EntryFrame:
         frame : ttk.Frame
             The EntryFrame Window.
         """
+        row_index = 0
         text = "Please Fill Out the Fields Below"
 
         #: ttk.Label: Label for the entries
@@ -199,6 +199,7 @@ class EntryFrame:
         ]
 
         # Loop for each entry and label
+        row_index += 1
         for i in range(len(entry_names)):
             if entry_names[i] == "file_type":
                 parent.inputs[entry_names[i]] = LabelInput(
@@ -233,7 +234,7 @@ class EntryFrame:
 
             # Widgets
             parent.inputs[entry_names[i]].grid(
-                row=i + 1,
+                row=row_index,
                 column=0,
                 columnspan=1,
                 sticky=tk.NSEW,
@@ -244,13 +245,8 @@ class EntryFrame:
             # Labels
             parent.inputs[entry_names[i]].label.grid(padx=(5, 5))
             parent.inputs[entry_names[i]].label.config(width=parent.column1_width)
-
-        # Formatting
-        parent.inputs["user"].widget.grid(padx=(0, 0), pady=(1, 1))
-        parent.inputs["tissue"].widget.grid(padx=(0, 0), pady=(1, 1))
-        parent.inputs["celltype"].widget.grid(padx=(0, 0), pady=(1, 1))
-        parent.inputs["prefix"].widget.grid(padx=(0, 0), pady=(1, 1))
-        parent.inputs["label"].widget.grid(padx=(0, 0), pady=(1, 1))
+            parent.inputs[entry_names[i]].widget.grid(padx=(0, 0), pady=(1, 1))
+            row_index += 1
 
 
 class TabFrame:
@@ -282,7 +278,7 @@ class TabFrame:
 
         text = "All notes are saved in to the header of the image file."
 
-        self.notes_label = tk.Label(
+        notes_label = tk.Label(
             tab1,
             text=text,
             justify=tk.LEFT,
@@ -290,7 +286,7 @@ class TabFrame:
             wraplength=parent.global_width - 30,
         )
 
-        self.notes_label.grid(
+        notes_label.grid(
             row=row_index,
             column=0,
             columnspan=3,
@@ -324,7 +320,7 @@ class TabFrame:
             "enabling immediate visualization with BigDataViewer."
         )
 
-        self.bdv_label = tk.Label(
+        bdv_label = tk.Label(
             tab2,
             text=text,
             justify=tk.LEFT,
@@ -332,7 +328,7 @@ class TabFrame:
             wraplength=parent.global_width - 40,
         )
 
-        self.bdv_label.grid(
+        bdv_label.grid(
             row=row_index,
             column=0,
             columnspan=3,
@@ -519,15 +515,15 @@ class TabFrame:
             "automatically be calculated. "
         )
 
-        self.bdv_label2 = tk.Label(
+        bdv_label2 = tk.Label(
             tab2,
             text=text,
             justify=tk.LEFT,
-            width=parent.global_width - 35,
-            wraplength=parent.global_width - 35,
+            width=parent.global_width - 40,
+            wraplength=parent.global_width - 40,
         )
 
-        self.bdv_label2.grid(
+        bdv_label2.grid(
             row=row_index,
             column=0,
             columnspan=3,

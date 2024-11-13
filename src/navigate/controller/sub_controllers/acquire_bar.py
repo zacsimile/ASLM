@@ -314,8 +314,10 @@ class AcquireBarController(GUIController):
         """
         if self.is_acquiring and self.view.acquire_btn["text"] == "Acquire":
             return
+
         if not self.is_acquiring and self.view.acquire_btn["text"] == "Stop":
             return
+
         if self.view.acquire_btn["text"] == "Stop":
             # tell the controller to stop acquire (continuous mode)
             self.view.acquire_btn.configure(state="disabled")
@@ -341,6 +343,8 @@ class AcquireBarController(GUIController):
             file_type = widgets["file_type"].get_variable()
             file_type.trace_add("write", lambda *args: self.update_file_type(file_type))
 
+            bdv_inputs = self.acquire_pop.tab_frame.inputs
+            print(bdv_inputs)
             for k, v in self.saving_settings.items():
                 if widgets.get(k, None):
                     widgets[k].set(v)
@@ -387,7 +391,6 @@ class AcquireBarController(GUIController):
         the create_save_path function.
         This automatically removes spaces and replaces them with underscores.
         Then it makes the directory.
-        Thereafter, the experiment is ready to go.
 
         Parameters
         ----------
@@ -410,7 +413,7 @@ class AcquireBarController(GUIController):
                 messagebox.showwarning(
                     title="Invalid Entry",
                     message="Only alphanumeric characters, hyphens, "
-                            "and underscores are allowed. \n",
+                    "and underscores are allowed. \n",
                     parent=popup_window.popup,
                 )
                 return
@@ -431,8 +434,8 @@ class AcquireBarController(GUIController):
                 messagebox.showwarning(
                     title="Directory Not Found.",
                     message="The directory specified is invalid. \n"
-                            "This commonly occurs when the Root Directory is "
-                            "incorrect. Please double-check and try again.",
+                    "This commonly occurs when the Root Directory is "
+                    "incorrect. Please double-check and try again.",
                     parent=popup_window.popup,
                 )
                 return
@@ -493,5 +496,5 @@ class AcquireBarController(GUIController):
         bool
             True if the string is valid.
         """
-        pattern = r'^[\w\-\ ]+$'
+        pattern = r"^[\w\-\ ]+$"
         return bool(re.match(pattern, string))
