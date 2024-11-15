@@ -502,7 +502,6 @@ class Controller:
             Warning info if any
 
         """
-        warning_message = self.camera_setting_controller.update_experiment_values()
         microscope_name = self.configuration["experiment"]["MicroscopeState"][
             "microscope_name"
         ]
@@ -516,6 +515,9 @@ class Controller:
                 "microscope_name"
             ] = microscope_name
             self.configuration["experiment"]["MicroscopeState"]["zoom"] = zoom_value
+            self.execute("resolution", resolution_value)
+        
+        warning_message = self.camera_setting_controller.update_experiment_values()
 
         # set waveform template
         if self.acquire_bar_controller.mode in ["live", "single", "z-stack"]:
