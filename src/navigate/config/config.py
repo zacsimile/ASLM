@@ -4,6 +4,7 @@
 # modification, are permitted for academic and research use only
 # (subject to the limitations in the disclaimer below)
 # provided that the following conditions are met:
+import multiprocessing
 
 #      * Redistributions of source code must retain the above copyright notice,
 #      this list of conditions and the following disclaimer.
@@ -39,6 +40,7 @@ from pathlib import Path
 from os.path import isfile
 from multiprocessing.managers import ListProxy, DictProxy
 import logging
+from typing import Union
 
 # Third Party Imports
 import yaml
@@ -186,7 +188,12 @@ def build_nested_dict(manager, parent_dict, key_name, dict_data):
     parent_dict[key_name] = d
 
 
-def update_config_dict(manager, parent_dict, config_name, new_config) -> bool:
+def update_config_dict(
+    manager: multiprocessing.Manager,
+    parent_dict: dict,
+    config_name: str,
+    new_config: Union[dict, str],
+) -> bool:
     """Read a new file and update info of the configuration dict.
 
     Parameters
@@ -196,7 +203,7 @@ def update_config_dict(manager, parent_dict, config_name, new_config) -> bool:
     parent_dict : dict
         Dictionary we are adding to
     config_name : str
-        Name of subdictionary to replace
+        Name of dictionary to replace
     new_config : dict or str
         Dictionary values or
         yaml file name
@@ -998,7 +1005,9 @@ def verify_configuration(manager, configuration):
                     f"{device_name} is not defined in configuration.yaml for "
                     f"microscope {microscope_name}"
                 )
-                raise Exception(f"No {device_name} defined for microscope {microscope_name}")
+                raise Exception(
+                    f"No {device_name} defined for microscope {microscope_name}"
+                )
         camera_config = device_config[microscope_name]["camera"]
         if "delay" not in camera_config.keys():
             camera_config["delay"] = camera_config.get("delay_percent", 2)
