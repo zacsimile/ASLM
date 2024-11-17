@@ -80,10 +80,16 @@ from navigate.config.config import (
     update_config_dict,
     verify_experiment_config,
     verify_waveform_constants,
+    verify_positions_config,
     verify_configuration,
     get_navigate_path,
 )
-from navigate.tools.file_functions import save_yaml_file, get_ram_info
+from navigate.tools.file_functions import (
+    create_save_path,
+    load_yaml_file,
+    save_yaml_file,
+    get_ram_info,
+)
 from navigate.tools.common_dict_tools import update_stage_dict
 from navigate.tools.multipos_table_tools import update_table
 from navigate.tools.common_functions import combine_funcs
@@ -108,6 +114,7 @@ class Controller:
         rest_api_path,
         waveform_templates_path,
         gui_configuration_path,
+        multi_positions_path,
         args,
     ):
         """Initialize the Navigate Controller.
@@ -197,6 +204,10 @@ class Controller:
         verify_configuration(self.manager, self.configuration)
         verify_experiment_config(self.manager, self.configuration)
         verify_waveform_constants(self.manager, self.configuration)
+
+        positions = load_yaml_file(multi_positions_path)
+        positions = verify_positions_config(positions)
+        self.configuration["multi_positions"] = positions
 
         total_ram, available_ram = get_ram_info()
         logger.info(
@@ -460,7 +471,7 @@ class Controller:
         self.acquire_bar_controller.populate_experiment_values()
         # self.stage_controller.populate_experiment_values()
         self.multiposition_tab_controller.set_positions(
-            self.configuration["experiment"]["MultiPositions"]
+            self.configuration["multi_positions"]
         )
         self.channels_tab_controller.populate_experiment_values()
         self.camera_setting_controller.populate_experiment_values()
@@ -491,10 +502,22 @@ class Controller:
             Warning info if any
 
         """
-        warning_message = self.camera_setting_controller.update_experiment_values()
         microscope_name = self.configuration["experiment"]["MicroscopeState"][
             "microscope_name"
         ]
+        zoom_value = self.configuration["experiment"]["MicroscopeState"]["zoom"]
+        resolution_value = self.menu_controller.resolution_value.get()
+
+        # set microscope and zoom value according to GUI
+        if f"{microscope_name} {zoom_value}" != resolution_value:
+            microscope_name, zoom_value = resolution_value.split()
+            self.configuration["experiment"]["MicroscopeState"][
+                "microscope_name"
+            ] = microscope_name
+            self.configuration["experiment"]["MicroscopeState"]["zoom"] = zoom_value
+            self.execute("resolution", resolution_value)
+
+        warning_message = self.camera_setting_controller.update_experiment_values()
 
         # set waveform template
         if self.acquire_bar_controller.mode in ["live", "single", "z-stack"]:
@@ -510,10 +533,7 @@ class Controller:
 
         # update multi-positions
         positions = self.multiposition_tab_controller.get_positions()
-        self.configuration["experiment"]["MultiPositions"] = positions
-        self.configuration["experiment"]["MicroscopeState"][
-            "multiposition_count"
-        ] = len(positions)
+        self.configuration["multi_positions"] = positions
 
         if (
             self.configuration["experiment"]["MicroscopeState"]["is_multiposition"]
@@ -526,7 +546,7 @@ class Controller:
             self.channels_tab_controller.is_multiposition_val.set(False)
 
         # TODO: validate experiment dict
-
+        self.channels_tab_controller.update_experiment_values()
         warning_message += self.channels_tab_controller.verify_experiment_values()
 
         # additional microscopes
@@ -831,8 +851,8 @@ class Controller:
             if not self.prepare_acquire_data():
                 self.acquire_bar_controller.stop_acquire()
                 return
-
-            file_directory = args[0]
+            saving_settings = self.configuration["experiment"]["Saving"]
+            file_directory = create_save_path(saving_settings)
 
             # Save the experiment.yaml file.
             save_yaml_file(
@@ -846,6 +866,13 @@ class Controller:
                 file_directory=file_directory,
                 content_dict=self.configuration["waveform_constants"],
                 filename="waveform_constants.yml",
+            )
+
+            # Save multi_positions.yml file
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
             )
 
             self.camera_setting_controller.solvent = self.configuration["experiment"][
@@ -952,6 +979,12 @@ class Controller:
                 content_dict=self.configuration["experiment"],
                 filename="experiment.yml",
             )
+            save_yaml_file(
+                file_directory=file_directory,
+                content_dict=self.configuration["multi_positions"],
+                filename="multi_positions.yml",
+            )
+
             if hasattr(self, "waveform_popup_controller"):
                 self.waveform_popup_controller.save_waveform_constants()
 
@@ -1219,7 +1252,10 @@ class Controller:
             if microscope_name not in self.additional_microscopes:
                 self.additional_microscopes[microscope_name] = {}
 
-            if "camera_view_controller" not in self.additional_microscopes[microscope_name]:
+            if (
+                "camera_view_controller"
+                not in self.additional_microscopes[microscope_name]
+            ):
                 popup_window = CameraViewPopupWindow(self.view, microscope_name)
                 camera_view_controller = CameraViewController(
                     popup_window.camera_view, self

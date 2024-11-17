@@ -48,8 +48,7 @@ from navigate.model.features.adaptive_optics import TonyWilson
 from navigate.model.features.image_writer import ImageWriter
 from navigate.model.features.auto_tile_scan import CalculateFocusRange  # noqa
 from navigate.model.features.common_features import (
-    ChangeResolution,
-    Snap,
+    Snap,  # noqa
     ZStackAcquisition,
     FindTissueSimple2D,
     PrepareNextChannel,
@@ -277,16 +276,6 @@ class Model:
         #: list: List of features.
         self.feature_list = []
 
-        # automatically switch resolution
-        self.feature_list.append(
-            [
-                {"name": ChangeResolution, "args": ("Mesoscale", "1x")},
-                {"name": Snap},
-            ]
-        )
-        # z stack acquisition
-        self.feature_list.append([{"name": ZStackAcquisition}])
-
         # threshold and tile
         self.feature_list.append([{"name": FindTissueSimple2D}])
 
@@ -309,7 +298,7 @@ class Model:
                         {"name": PrepareNextChannel},
                         {
                             "name": LoopByCount,
-                            "args": ("experiment.MicroscopeState.selected_channels",),
+                            "args": ("channels",),
                         },
                     ),
                     {
@@ -338,7 +327,7 @@ class Model:
                     {"name": WaitToContinue},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.multiposition_count",),
+                        "args": ("positions",),
                     },
                 ),
             ]
@@ -361,7 +350,7 @@ class Model:
                     },
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.multiposition_count",),
+                        "args": ("positions",),
                     },
                 ),
                 {"name": RemoveEmptyPositions, "args": (records,)},
@@ -374,7 +363,7 @@ class Model:
                     {"name": PrepareNextChannel},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.selected_channels",),
+                        "args": ("channels",),
                     },
                 )
             ],
@@ -383,7 +372,7 @@ class Model:
                     {"name": PrepareNextChannel},
                     {
                         "name": LoopByCount,
-                        "args": ("experiment.MicroscopeState.selected_channels",),
+                        "args": ("channels",),
                     },
                 )
             ],
@@ -552,6 +541,10 @@ class Model:
             self.is_save = self.configuration["experiment"]["MicroscopeState"][
                 "is_save"
             ]
+            if len(self.configuration["multi_positions"]) == 0:
+                self.configuration["experiment"]["MicroscopeState"][
+                    "is_multiposition"
+                ] = False
 
             # Calculate waveforms, turn on lasers, etc.
             self.prepare_acquisition()
@@ -943,6 +936,10 @@ class Model:
 
             wait_num = self.camera_wait_iterations
 
+            # ImageWriter to save images
+            if data_func:
+                data_func(frame_ids)
+
             if hasattr(self, "data_container") and not self.data_container.end_flag:
                 if self.data_container.is_closed:
                     self.logger.info("Data container is closed.")
@@ -950,10 +947,6 @@ class Model:
                     break
 
                 self.data_container.run(frame_ids)
-
-            # ImageWriter to save images
-            if data_func:
-                data_func(frame_ids)
 
             # show image
             self.logger.info(f"Image delivered to controller: {frame_ids[0]}")
@@ -1190,7 +1183,7 @@ class Model:
                         {"name": PrepareNextChannel},
                         {
                             "name": LoopByCount,
-                            "args": ("experiment.MicroscopeState.selected_channels",),
+                            "args": ("channels",),
                         },
                     )
                 ],
