@@ -32,7 +32,7 @@
 
 # Standard Library Imports
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 # Third Party Imports
 import numpy.typing as npt
@@ -45,7 +45,12 @@ logger = logging.getLogger(p)
 
 
 class DataSource:
-    def __init__(self, file_name: str = "", mode: str = "w") -> None:
+    def __init__(
+        self,
+        file_name: str = "",
+        mode: str = "w",
+        configuration: Optional[Dict[str, Any]] = None,
+    ) -> None:
         """Base class for data sources, which can be of arbitrary file type.
 
         This implements read and write methods for accessing each data source.
@@ -64,6 +69,8 @@ class DataSource:
             Name of the file to read/write from.
         mode : str
             Mode to open the file in. Can be 'r' or 'w'.
+        configuration : Optional[Dict[str, Any]]
+            Configuration dictionary.
         """
         #: logging.Logger: Logger for this class.
         self.logger = logging.getLogger(__name__.split(".")[1])

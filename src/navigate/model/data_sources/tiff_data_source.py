@@ -34,6 +34,7 @@
 import os
 import uuid
 from pathlib import Path
+from typing import Optional, Dict, Any
 
 # Third Party Imports
 import tifffile
@@ -49,7 +50,11 @@ class TiffDataSource(DataSource):
     """Data source for TIFF files."""
 
     def __init__(
-        self, file_name: str = "", mode: str = "w", is_bigtiff: bool = False
+        self,
+        file_name: str = "",
+        mode: str = "w",
+        is_bigtiff: bool = False,
+        configuration: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Initialize a TIFF data source.
 
@@ -61,13 +66,15 @@ class TiffDataSource(DataSource):
             File mode. "r" for read, "w" for write.
         is_bigtiff : bool
             Is this a bigtiff file?
+        configuration : Optional[Dict[str, Any]]
+            Configuration dictionary
         """
         #: np.ndarray: Image data
         self.image = None
         self._write_mode = None
         self._views = []
 
-        super().__init__(file_name, mode)
+        super().__init__(file_name=file_name, mode=mode, configuration=configuration)
 
         #: str: Directory to save the data to.
         self.save_directory = Path(self.file_name).parent

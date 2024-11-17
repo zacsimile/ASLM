@@ -578,16 +578,19 @@ class Model:
                 self.signal_thread = threading.Thread(target=self.run_acquisition)
 
             self.signal_thread.name = f"{self.imaging_mode} signal"
+
             if self.is_save and self.imaging_mode != "live":
                 saving_config = {}
                 plugin_obj = self.plugin_acquisition_modes.get(self.imaging_mode, None)
                 if plugin_obj and hasattr(plugin_obj, "update_saving_config"):
                     saving_config = getattr(plugin_obj, "update_saving_config")(self)
+
                 self.image_writer = ImageWriter(
-                    self,
+                    model=self,
                     saving_flags=self.data_buffer_saving_flags,
                     saving_config=saving_config,
                 )
+
                 self.data_thread = threading.Thread(
                     target=self.run_data_process,
                     kwargs={"data_func": self.image_writer.save_image},

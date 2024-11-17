@@ -46,7 +46,6 @@ from navigate.view.popups.acquire_popup import AcquirePopUp
 from navigate.view.main_window_content.acquire_notebook import AcquireBar
 from navigate.config import update_config_dict
 
-
 # Logger Setup
 p = __name__.split(".")[1]
 logger = logging.getLogger(p)
@@ -117,7 +116,7 @@ class AcquireBarController(GUIController):
         #: dict: BDV Widgets. Keys are primary widgets, values are lists.
         self.bdv_widgets = {
             "shear_data": ["shear_dimension", "shear_angle"],
-            "rotate_data": ["rotate_angle", "rotate_axis"],
+            "rotate_data": ["rotate_angle_x", "rotate_angle_y", "rotate_angle_z"],
             "down_sample_data": ["lateral_down_sample", "axial_down_sample"],
         }
 
@@ -363,56 +362,7 @@ class AcquireBarController(GUIController):
             file_type = widgets["file_type"].get_variable()
             file_type.trace_add("write", lambda *args: self.update_file_type(file_type))
 
-            # Shear Parameters
-            if self.bdv_configuration.get("shear", None) is None:
-                self.bdv_configuration["shear"] = {
-                    "shear_data": False,
-                    "shear_dimension": "YZ",
-                    "shear_angle": 0,
-                }
-            self.acquire_pop.tab_frame.inputs["shear_data"].set(
-                self.bdv_configuration["shear"].get("shear_data", False)
-            )
-            self.acquire_pop.tab_frame.inputs["shear_dimension"].set(
-                self.bdv_configuration["shear"].get("shear_dimension", "YZ")
-            )
-            self.acquire_pop.tab_frame.inputs["shear_angle"].set(
-                self.bdv_configuration["shear"].get("shear_angle", 0)
-            )
-
-            # Rotation Parameters
-            if self.bdv_configuration.get("rotate", None) is None:
-                self.bdv_configuration["rotate"] = {
-                    "rotate_data": False,
-                    "X": 0,
-                    "Y": 0,
-                    "Z": 0,
-                }
-            self.acquire_pop.tab_frame.inputs["rotate_data"].set(
-                self.bdv_configuration["rotate"].get("rotate_data", False)
-            )
-            self.acquire_pop.tab_frame.inputs["rotate_angle"].set(
-                self.bdv_configuration["rotate"].get("X", 0)
-            )
-
-            # Down Sample Parameters
-            if self.bdv_configuration.get("down_sample_data", None) is None:
-                self.bdv_configuration["down_sample_data"] = {
-                    "down_sample_data": False,
-                    "lateral_down_sample": 1,
-                    "axial_down_sample": 1,
-                }
-            self.acquire_pop.tab_frame.inputs["down_sample_data"].set(
-                self.bdv_configuration["down_sample_data"].get(
-                    "down_sample_data", False
-                )
-            )
-            self.acquire_pop.tab_frame.inputs["lateral_down_sample"].set(
-                self.bdv_configuration["down_sample_data"].get("lateral_down_sample", 1)
-            )
-            self.acquire_pop.tab_frame.inputs["axial_down_sample"].set(
-                self.bdv_configuration["down_sample_data"].get("axial_down_sample", 1)
-            )
+            self.set_bdv_settings()
 
             for widget in self.bdv_widgets.keys():
                 # Traces for the main widgets
@@ -433,54 +383,142 @@ class AcquireBarController(GUIController):
             self.view.pull_down.state(["disabled", "readonly"])
             self.parent_controller.execute("acquire")
 
+    def set_bdv_settings(self) -> None:
+        """Set the BDV Settings from the configuration file.
+
+        If the settings are not in the configuration file, they will be added.
+        """
+        update_config = False
+
+        # Shear Parameters
+        if self.bdv_configuration.get("shear", None) is None:
+            update_config = True
+            self.bdv_configuration["shear"] = {
+                "shear_data": False,
+                "shear_dimension": "YZ",
+                "shear_angle": 0,
+            }
+        self.acquire_pop.tab_frame.inputs["shear_data"].set(
+            self.bdv_configuration["shear"].get("shear_data", False)
+        )
+        self.acquire_pop.tab_frame.inputs["shear_dimension"].set(
+            self.bdv_configuration["shear"].get("shear_dimension", "YZ")
+        )
+        self.acquire_pop.tab_frame.inputs["shear_angle"].set(
+            self.bdv_configuration["shear"].get("shear_angle", 0)
+        )
+
+        # Rotation Parameters
+        if self.bdv_configuration.get("rotate", None) is None:
+            update_config = True
+            self.bdv_configuration["rotate"] = {
+                "rotate_data": False,
+                "X": 0,
+                "Y": 0,
+                "Z": 0,
+            }
+        self.acquire_pop.tab_frame.inputs["rotate_data"].set(
+            self.bdv_configuration["rotate"].get("rotate_data", False)
+        )
+        self.acquire_pop.tab_frame.inputs["rotate_angle_x"].set(
+            self.bdv_configuration["rotate"].get("X", 0)
+        )
+        self.acquire_pop.tab_frame.inputs["rotate_angle_y"].set(
+            self.bdv_configuration["rotate"].get("Y", 0)
+        )
+        self.acquire_pop.tab_frame.inputs["rotate_angle_z"].set(
+            self.bdv_configuration["rotate"].get("Z", 0)
+        )
+
+        # Down Sample Parameters
+        if self.bdv_configuration.get("down_sample", None) is None:
+            update_config = True
+            self.bdv_configuration["down_sample"] = {
+                "down_sample": False,
+                "lateral_down_sample": 1,
+                "axial_down_sample": 1,
+            }
+        self.acquire_pop.tab_frame.inputs["down_sample_data"].set(
+            self.bdv_configuration["down_sample"].get("down_sample", False)
+        )
+        self.acquire_pop.tab_frame.inputs["lateral_down_sample"].set(
+            str(self.bdv_configuration["down_sample"].get("lateral_down_sample", 1))
+            + "x"
+        )
+        self.acquire_pop.tab_frame.inputs["axial_down_sample"].set(
+            str(self.bdv_configuration["down_sample"].get("axial_down_sample", 1)) + "x"
+        )
+
+        if update_config:
+            # TODO: Annie, should we add the new fields to the configuration file?
+            pass
+
+        # Set the state of the dependent widgets
+        for widget in self.bdv_widgets.keys():
+            self.toggle_bdv_widgets(widget, self.bdv_widgets[widget])
+
     def update_bdv_settings(self) -> None:
         """Update the BDV settings."""
         if self.bdv_configuration is not None:
             # Set the widget variables according to the BDV configuration
             # Shear Parameters
-            self.bdv_configuration["shear"]["shear_data"] = (
-                self.acquire_pop.tab_frame.inputs["shear_data"].get_variable().get()
+            self.bdv_configuration["shear"]["shear_data"] = bool(
+                (
+                    update := self.acquire_pop.tab_frame.inputs[
+                        "shear_data"
+                    ].variable.get()
+                )
             )
-            self.bdv_configuration["shear"]["shear_dimension"] = (
-                self.acquire_pop.tab_frame.inputs["shear_dimension"]
-                .get_variable()
-                .get()
-            )
-            self.bdv_configuration["shear"]["shear_angle"] = (
-                self.acquire_pop.tab_frame.inputs["shear_angle"].get_variable().get()
-            )
+
+            if update:
+                self.bdv_configuration["shear"]["shear_dimension"] = str(
+                    self.acquire_pop.tab_frame.inputs["shear_dimension"].variable.get()
+                )
+                self.bdv_configuration["shear"]["shear_angle"] = float(
+                    self.acquire_pop.tab_frame.inputs["shear_angle"].variable.get()
+                )
 
             # Rotation Parameters
-            self.bdv_configuration["rotate"]["rotate_data"] = (
-                self.acquire_pop.tab_frame.inputs["rotate_data"].get_variable().get()
-            )
-            # TODO: Update the GUI to have each axis.
-            self.bdv_configuration["rotate"]["X"] = (
-                self.acquire_pop.tab_frame.inputs["rotate_angle"].get_variable().get()
-            )
-            self.bdv_configuration["rotate"]["Y"] = (
-                self.acquire_pop.tab_frame.inputs["rotate_angle"].get_variable().get()
-            )
-            self.bdv_configuration["rotate"]["Z"] = (
-                self.acquire_pop.tab_frame.inputs["rotate_angle"].get_variable().get()
+            self.bdv_configuration["rotate"]["rotate_data"] = bool(
+                (
+                    update := self.acquire_pop.tab_frame.inputs[
+                        "rotate_data"
+                    ].variable.get()
+                )
             )
 
+            if update:
+                self.bdv_configuration["rotate"]["X"] = float(
+                    self.acquire_pop.tab_frame.inputs["rotate_angle_x"].variable.get()
+                )
+                self.bdv_configuration["rotate"]["Y"] = float(
+                    self.acquire_pop.tab_frame.inputs["rotate_angle_y"].variable.get()
+                )
+                self.bdv_configuration["rotate"]["Z"] = float(
+                    self.acquire_pop.tab_frame.inputs["rotate_angle_z"].variable.get()
+                )
+
             # Down Sample Parameters
-            self.bdv_configuration["down_sample_data"]["down_sample_data"] = (
-                self.acquire_pop.tab_frame.inputs["down_sample_data"]
-                .get_variable()
-                .get()
+            self.bdv_configuration["down_sample"]["down_sample"] = bool(
+                (
+                    update := self.acquire_pop.tab_frame.inputs[
+                        "down_sample_data"
+                    ].variable.get()
+                )
             )
-            self.bdv_configuration["down_sample_data"]["lateral_down_sample"] = (
-                self.acquire_pop.tab_frame.inputs["lateral_down_sample"]
-                .get_variable()
-                .get()
-            )
-            self.bdv_configuration["down_sample_data"]["axial_down_sample"] = (
-                self.acquire_pop.tab_frame.inputs["axial_down_sample"]
-                .get_variable()
-                .get()
-            )
+
+            if update:
+                self.bdv_configuration["down_sample"]["lateral_down_sample"] = int(
+                    self.acquire_pop.tab_frame.inputs[
+                        "lateral_down_sample"
+                    ].variable.get()[:-1]
+                )
+
+                self.bdv_configuration["down_sample"]["axial_down_sample"] = int(
+                    self.acquire_pop.tab_frame.inputs[
+                        "axial_down_sample"
+                    ].variable.get()[:-1]
+                )
 
     def toggle_bdv_widgets(self, main_widget: str, dependent_widgets: list) -> None:
         """Toggles the state of the dependent widgets.

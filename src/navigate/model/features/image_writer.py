@@ -36,13 +36,16 @@ import os
 import logging
 import shutil
 import time
+from typing import Optional
 
 # Third Party Imports
 import numpy as np
 from tifffile import imsave
 
 # Local imports
+import navigate
 from navigate.model import data_sources
+from navigate.model.concurrency.concurrency_tools import SharedNDArray
 
 # Logger Setup
 p = __name__.split(".")[1]
@@ -54,13 +57,13 @@ class ImageWriter:
 
     def __init__(
         self,
-        model,
-        microscope_name=None,
-        data_buffer=None,
-        sub_dir="",
-        image_name=None,
-        saving_flags=None,
-        saving_config={},
+        model: "navigate.model.Model",
+        microscope_name: str = None,
+        data_buffer: list[SharedNDArray] = None,
+        sub_dir: str = "",
+        image_name: Optional[str] = None,
+        saving_flags: Optional[list[bool]] = None,
+        saving_config: Optional[dict] = None,
     ):
         """Class for saving acquired data to disk.
 
@@ -72,12 +75,19 @@ class ImageWriter:
             data_buffer will use model's default data_buffer if it's not specified
         sub_dir : str
             Sub-directory of self.model.configuration['experiment']
-            ['Saving']['save_directory']
-            indicating where to save data
-        image_name : str
+            ['Saving']['save_directory'] indicating where to save data
+        image_name : Optional[str]
             Name of the image to be saved. If None, a name will be generated
+        saving_flags : Optional[list[bool]]
+            A list of flags indicating whether to save each frame.
+        saving_config : Optional[dict]
+            Dictionary of saving configuration
         """
+
         #: str: Name of the microscope.
+        if saving_config is None:
+            saving_config = {}
+
         self.microscope_name = microscope_name
 
         #: navigate.model.model.Model: Navigate Model class for controlling
@@ -134,7 +144,7 @@ class ImageWriter:
                         "Unable to Create Save Directory. Acquisition Terminated",
                     )
                     return
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             logger.error(f"Unable to Create Save Directory - {self.save_directory}")
 
         # create the MIP directory if it doesn't already exist
@@ -158,7 +168,7 @@ class ImageWriter:
                         "Unable to create MIP Directory. Acquisition Terminated.",
                     )
                     return
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             logger.error("Image Writer: Unable to create MIP directory.")
 
         # Set up the file name and path in the save directory
@@ -174,13 +184,13 @@ class ImageWriter:
 
         # Initialize data source, pointing to the new file name
         #: navigate.model.data_sources.DataSource : Data source for saving data to disk.
-        self.data_source = data_sources.get_data_source(self.file_type)(
-            file_name=file_name
+        self.data_source = data_sources.get_data_source(file_type=self.file_type)(
+            file_name=file_name, configuration=self.model.configuration["configuration"]
         )
 
         # Pass experiment and configuration to metadata
         self.data_source.set_metadata_from_configuration_experiment(
-            self.model.configuration, microscope_name
+            configuration=self.model.configuration, microscope_name=microscope_name
         )
 
         self.data_source.set_metadata(saving_config)
@@ -203,7 +213,7 @@ class ImageWriter:
 
         Parameters
         ----------
-        frame_ids : int
+        frame_ids : list[int]
             Index into self.model.data_buffer.
         """
 
@@ -255,8 +265,10 @@ class ImageWriter:
                     theta=self.model.data_buffer_positions[idx][3],
                     f=self.model.data_buffer_positions[idx][4],
                 )
-                logger.info(f"C: {c_idx}, Z:{z_idx}, T:{t_idx}, P:{p_idx}, Write Time:"
-                            f" {time.time() - start_time}")
+                logger.info(
+                    f"C: {c_idx}, Z:{z_idx}, T:{t_idx}, P:{p_idx}, Write Time:"
+                    f" {time.time() - start_time}"
+                )
 
                 # Update MIP
                 self.mip[c_idx, :, :] = np.maximum(self.mip[c_idx, :, :], image)
@@ -321,8 +333,7 @@ class ImageWriter:
         return image_name
 
     def close(self):
-        """Close the data source we are writing to.
-        """
+        """Close the data source we are writing to."""
         self.data_source.close()
 
     def calculate_and_check_disk_space(self):

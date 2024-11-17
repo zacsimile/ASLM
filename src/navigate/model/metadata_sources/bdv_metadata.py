@@ -31,7 +31,7 @@
 
 #  Standard Imports
 import os
-from typing import Optional, Union
+from typing import Optional, Union, Dict, Any
 import xml.etree.ElementTree as ET
 import logging
 
@@ -57,8 +57,17 @@ class BigDataViewerMetadata(XMLMetadata):
 
     """
 
-    def __init__(self) -> None:
-        """Initialize the BigDataViewer metadata object."""
+    def __init__(
+        self,
+        configuration: Optional[Dict[str, Any]] = None,
+    ) -> None:
+        """Initialize the BigDataViewer metadata object.
+
+        Parameters
+        ----------
+        configuration : Optional[Dict[str, Any]]
+            Configuration dictionary.
+        """
         super().__init__()
 
         # Affine Transform Parameters
@@ -136,12 +145,13 @@ class BigDataViewerMetadata(XMLMetadata):
 
         """
         # Header
-        bdv_dict = {"version": 0.2}
+        bdv_dict = {
+            "version": 0.2,
+            "BasePath": {"type": "relative", "text": "."},
+            "SequenceDescription": {},
+        }
 
         # File path
-        bdv_dict["BasePath"] = {"type": "relative", "text": "."}
-        bdv_dict["SequenceDescription"] = {}
-
         ext = os.path.basename(file_name).split(".")[-1]
         if ext == "h5":
             """
@@ -211,24 +221,30 @@ class BigDataViewerMetadata(XMLMetadata):
             bdv_dict["SequenceDescription"]["ViewSetups"]["Attributes"][1][
                 "Channel"
             ].append(ch)
-            for p in range(self.positions):
-                d = {"id": {"text": view_id}, "name": {"text": view_id}}
-                d["size"] = {"text": f"{self.shape_x} {self.shape_y} {self.shape_z}"}
-                d["voxelSize"] = {"unit": {"text": "um"}}
-                d["voxelSize"]["size"] = {"text": f"{self.dx} {self.dy} {self.dz}"}
-                # These attributes are necessary for BigStitcher
-                d["attributes"] = {
-                    "illumination": {"text": "0"},
-                    "channel": {"text": str(c)},
-                    "tile": {"text": str(p)},
-                    "angle": {"text": "0"},
+
+            for pos in range(self.positions):
+                d = {
+                    "id": {"text": view_id},
+                    "name": {"text": view_id},
+                    "size": {"text": f"{self.shape_x} {self.shape_y} {self.shape_z}"},
+                    "voxelSize": {
+                        "unit": {"text": "um"},
+                        "size": {"text": f"{self.dx} {self.dy} {self.dz}"},
+                    },
+                    "attributes": {
+                        "illumination": {"text": "0"},
+                        "channel": {"text": str(c)},
+                        "tile": {"text": str(pos)},
+                        "angle": {"text": "0"},
+                    },
                 }
+
                 bdv_dict["SequenceDescription"]["ViewSetups"]["ViewSetup"].append(d)
                 view_id += 1
         # Finish up the Tile Attributes outside of the channels loop so we have
         # one per tile
-        for p in range(self.positions):
-            tile = {"id": {"text": str(p)}, "name": {"text": str(p)}}
+        for pos in range(self.positions):
+            tile = {"id": {"text": str(pos)}, "name": {"text": str(pos)}}
             bdv_dict["SequenceDescription"]["ViewSetups"]["Attributes"][2][
                 "Tile"
             ].append(tile)
@@ -367,7 +383,7 @@ class BigDataViewerMetadata(XMLMetadata):
         # Translation into pixels
         arr[:, 3] = [yp, xp, zp]
 
-        # Rotation (theta pivots in the xz plane, about the y axis)
+        # Rotation (theta pivots in the xz plane, about the y-axis)
         # sin_theta, cos_theta = np.sin(theta), np.cos(theta)
         # arr[0,0], arr[2,2] = cos_theta, cos_theta
         # arr[0,2], arr[2,0] = sin_theta, -sin_theta

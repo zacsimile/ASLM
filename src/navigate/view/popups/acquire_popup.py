@@ -78,19 +78,20 @@ class AcquirePopUp(CommonMethods):
         #: PopUp: The popup window
         if platform.system() == "Windows":
             self.global_width = 450
+            self.global_height = 500
             self.popup = PopUp(
                 root,
-                "File Saving Dialog",
-                f"{self.global_width}x500+320+180",
+                name="File Saving Dialog",
+                size=f"{self.global_width}x{self.global_height}+320+180",
                 transient=True,
             )
         else:
             self.global_width = 580
-            self.global_height = 720
+            self.global_height = 730
             self.popup = PopUp(
                 root,
-                "File Saving Dialog",
-                f"{self.global_width}x{self.global_height}+320+180",
+                name="File Saving Dialog",
+                size=f"{self.global_width}x{self.global_height}+320+180",
                 transient=True,
             )
 
@@ -317,7 +318,8 @@ class TabFrame:
         row_index = 0
         text = (
             "HDF5, N5, and Zarr files are saved with BDV metadata, "
-            "enabling immediate visualization with BigDataViewer."
+            "enabling immediate visualization with BigDataViewer. "
+            "All angles are in degrees."
         )
 
         bdv_label = tk.Label(
@@ -372,7 +374,7 @@ class TabFrame:
         self.inputs["shear_angle"] = LabelInput(
             parent=tab2,
             label_pos="top",
-            label="Angle (Degrees)",
+            label="Angle",
             input_class=ValidatedSpinbox,
             input_var=tk.StringVar(),
             input_args={
@@ -411,24 +413,16 @@ class TabFrame:
             pady=(1, 1),
         )
 
-        values = ["X", "Y", "Z"]
-        self.inputs["rotate_axis"] = LabelInput(
-            parent=tab2,
-            label_pos="top",
-            label="Dimension",
-            input_class=ttk.Combobox,
-            input_var=tk.StringVar(),
-            input_args={"values": values, "state": "readonly"},
-        )
+        # Insert a new frame here, and then add the widgets to that frame
+        rotate_notebook = ttk.Notebook(tab2, padding=(5, 2, 5, 2))
+        rotate_notebook.grid(row=row_index, column=1, columnspan=2, sticky=tk.NSEW)
+        for i in range(3):
+            rotate_notebook.columnconfigure(index=i, weight=1)
 
-        self.inputs["rotate_axis"].grid(
-            row=row_index, column=1, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
-        )
-
-        self.inputs["rotate_angle"] = LabelInput(
-            parent=tab2,
+        self.inputs["rotate_angle_x"] = LabelInput(
+            parent=rotate_notebook,
             label_pos="top",
-            label="Angle (Degrees)",
+            label="X Angle",
             input_class=ValidatedSpinbox,
             input_var=tk.StringVar(),
             input_args={
@@ -437,8 +431,41 @@ class TabFrame:
                 "increment": 1,
             },
         )
-        self.inputs["rotate_angle"].grid(
-            row=row_index, column=2, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
+
+        self.inputs["rotate_angle_x"].grid(
+            row=0, column=0, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
+        )
+
+        self.inputs["rotate_angle_y"] = LabelInput(
+            parent=rotate_notebook,
+            label_pos="top",
+            label="Y Angle",
+            input_class=ValidatedSpinbox,
+            input_var=tk.StringVar(),
+            input_args={
+                "from_": 0,
+                "to": 360,
+                "increment": 1,
+            },
+        )
+        self.inputs["rotate_angle_y"].grid(
+            row=0, column=1, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
+        )
+
+        self.inputs["rotate_angle_z"] = LabelInput(
+            parent=rotate_notebook,
+            label_pos="top",
+            label="Y Angle",
+            input_class=ValidatedSpinbox,
+            input_var=tk.StringVar(),
+            input_args={
+                "from_": 0,
+                "to": 360,
+                "increment": 1,
+            },
+        )
+        self.inputs["rotate_angle_z"].grid(
+            row=0, column=2, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
         )
 
         row_index += 1
@@ -473,7 +500,7 @@ class TabFrame:
             pady=(1, 1),
         )
 
-        values = ["2x", "4x", "8x", "16x", "32x", "64x", "128x"]
+        values = ["1x", "2x", "4x", "8x", "16x", "32x", "64x", "128x"]
         self.inputs["lateral_down_sample"] = LabelInput(
             parent=tab2,
             label_pos="top",
@@ -487,7 +514,7 @@ class TabFrame:
             row=row_index, column=1, columnspan=1, sticky=tk.W, padx=(5, 5), pady=(1, 1)
         )
 
-        values = ["2x", "4x", "8x", "16x", "32x", "64x", "128x"]
+        values = ["1x", "2x", "4x", "8x", "16x", "32x", "64x", "128x"]
         self.inputs["axial_down_sample"] = LabelInput(
             parent=tab2,
             label_pos="top",
