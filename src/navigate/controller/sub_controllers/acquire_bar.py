@@ -390,6 +390,10 @@ class AcquireBarController(GUIController):
         """
         update_config = False
 
+        if self.bdv_configuration is None:
+            update_config = True
+            self.bdv_configuration = {}
+
         # Shear Parameters
         if self.bdv_configuration.get("shear", None) is None:
             update_config = True
