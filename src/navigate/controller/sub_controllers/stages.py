@@ -71,6 +71,9 @@ class StageController(GUIController):
         """
         super().__init__(view, parent_controller)
 
+        #: dict: The joystick axes
+        self.new_joystick_axes = None
+
         #: str: The default microscope
         self.default_microscope = (
             f"{self.parent_controller.configuration_controller.microscope_name}"

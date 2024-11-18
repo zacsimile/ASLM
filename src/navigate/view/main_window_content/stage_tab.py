@@ -32,7 +32,7 @@
 
 # Standard Imports
 import tkinter as tk
-from tkinter import ttk, Grid
+from tkinter import ttk
 import logging
 from pathlib import Path
 
@@ -59,7 +59,7 @@ class StageControlNotebook(ttk.Notebook):
         Parameters
         ----------
         frame_bot_right : tk.Frame
-            Frame to put notebook into.
+            The frame to put notebook into.
         *args
             Arguments for ttk.Notebook
         **kwargs
@@ -67,10 +67,6 @@ class StageControlNotebook(ttk.Notebook):
         """
         # Init notebook
         ttk.Notebook.__init__(self, frame_bot_right, *args, **kwargs)
-
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
 
         # Putting notebook 3 into bottom right frame
         self.grid(row=0, column=0)
@@ -83,7 +79,10 @@ class StageControlNotebook(ttk.Notebook):
 
 
 class GoToFrame(ttk.Frame):
-    """GoTo Frame for stage control tab."""
+    """GoTo Frame for stage control tab.
+
+    This is a list of entry widgets for the user to input the desired stage position.
+    """
 
     def __init__(self, stage_control_tab, *args, **kwargs):
         """Initialize the goto frame.
@@ -99,10 +98,6 @@ class GoToFrame(ttk.Frame):
         """
         # Init Frame
         ttk.Frame.__init__(self, stage_control_tab, *args, **kwargs)
-
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
 
 
 class StageControlTab(tk.Frame):
@@ -126,10 +121,6 @@ class StageControlTab(tk.Frame):
         #: int: Index of the stage control tab.
         self.index = 2
 
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
-
         #: PositionFrame: Position frame.
         self.position_frame = PositionFrame(self)
 
@@ -152,22 +143,6 @@ class StageControlTab(tk.Frame):
 
         #: StopFrame: Stop frame.
         self.stop_frame = StopFrame(self, "Stop")
-
-        # Formatting
-        tk.Grid.columnconfigure(self.position_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.position_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.xy_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.xy_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.z_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.z_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.theta_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.theta_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.f_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.f_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.goto_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.goto_frame, "all", weight=1)
-        tk.Grid.columnconfigure(self.stop_frame, "all", weight=1)
-        tk.Grid.rowconfigure(self.stop_frame, "all", weight=1)
 
         # Griding out frames
         self.position_frame.grid(row=0, column=0, sticky=tk.NSEW, padx=3, pady=3)
@@ -314,11 +289,6 @@ class OtherAxisFrame(ttk.Labelframe):
 
         #: str: Name of the axis.
         self.name = name
-
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
-
         image_directory = Path(__file__).resolve().parent
 
         #: tk.PhotoImage: Image for the up button.
@@ -328,7 +298,9 @@ class OtherAxisFrame(ttk.Labelframe):
 
         #: tk.PhotoImage: Image for the down button.
         self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown.png")
+            file=image_directory.joinpath("images", "greydown.png"),
+            height=100,
+            width=100,
         )
 
         #: tk.PhotoImage: Image for the disabled up button.
@@ -614,10 +586,6 @@ class XYFrame(ttk.Labelframe):
             self, stage_control_tab, text="X Y Movement", *args, **kwargs
         )
 
-        # Formatting
-        Grid.columnconfigure(self, "all", weight=1)
-        Grid.rowconfigure(self, "all", weight=1)
-
         # Setting up buttons for up, down, left, right, zero and increment spinbox
         s = ttk.Style()
         s.configure("arrow.TButton", font=(None, 20))
@@ -825,10 +793,6 @@ class StopFrame(ttk.Frame):
 
         #: str: Name of the frame.
         self.name = name
-
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
 
         #: tk.Button: Stop button.
         self.stop_btn = tk.Button(
