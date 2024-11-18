@@ -90,6 +90,8 @@ class DummyController:
         #: dict: The custom events
         self.event_listeners = {}
 
+        self.manager = Manager()
+
         #: DummyView: The view to be controlled by this controller.
         self.view = view
 
