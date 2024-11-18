@@ -4,8 +4,6 @@
 # modification, are permitted for academic and research use only
 # (subject to the limitations in the disclaimer below)
 # provided that the following conditions are met:
-import multiprocessing
-
 #      * Redistributions of source code must retain the above copyright notice,
 #      this list of conditions and the following disclaimer.
 
@@ -38,6 +36,7 @@ import shutil
 import platform
 from pathlib import Path
 from os.path import isfile
+import multiprocessing
 from multiprocessing.managers import ListProxy, DictProxy
 import logging
 from typing import Union

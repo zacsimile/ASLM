@@ -113,7 +113,7 @@ class ImageWriter:
         self.mip = None
 
         #: str : Directory for saving maximum intensity projection images.
-        self.mip_directory = os.path.join(self.save_directory, "MIP")
+        self.mip_directory = ""
 
         #: str : Sub-directory for saving data to disk.
         self.sub_dir = sub_dir
@@ -366,6 +366,7 @@ class ImageWriter:
         print("saving to new file:", file_name)
 
         # create the MIP directory if it doesn't already exist
+        self.mip_directory = os.path.join(self.save_directory, "MIP")
         try:
             if not os.path.exists(self.mip_directory):
                 try:
