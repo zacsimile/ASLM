@@ -67,8 +67,6 @@ class StageControlNotebook(ttk.Notebook):
         """
         # Init notebook
         ttk.Notebook.__init__(self, frame_bot_right, *args, **kwargs)
-
-        # Putting notebook 3 into bottom right frame
         self.grid(row=0, column=0)
 
         #: StageControlTab: Stage control tab.
@@ -293,56 +291,60 @@ class OtherAxisFrame(ttk.Labelframe):
 
         #: tk.PhotoImage: Image for the up button.
         self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup.png")
-        )
+            file=image_directory.joinpath("images", "up.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the 5x up button.
+        self.up_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_up.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the down button.
         self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown.png"),
-            height=100,
-            width=100,
-        )
+            file=image_directory.joinpath("images", "down.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the 5x up button.
+        self.down_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_down.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled up button.
         self.d_up_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greyup_disabled.png")
-        )
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled down button.
         self.d_down_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greydown_disabled.png")
-        )
-
-        self.up_image = self.up_image.subsample(2, 2)
-        self.down_image = self.down_image.subsample(2, 2)
+        ).subsample(2, 2)
 
         #: list: List of images for the normal state.
         self.normal_images = [
             self.up_image,
             self.down_image,
+            self.up_5x_image,
+            self.down_5x_image,
         ]
-
-        self.d_up_image = self.d_up_image.subsample(2, 2)
-        self.d_down_image = self.d_down_image.subsample(2, 2)
 
         self.disabled_images = [
             self.d_up_image,
             self.d_down_image,
         ]
 
-        # Setting up buttons for up, down, zero and increment spinbox
+        # Setting up buttons for up, down and increment spinbox
 
         #: HoverTkButton: Up button.
         self.up_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
 
+        #: HoverTkButton: 5x Up button.
+        self.up_5x_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+
         #: HoverTkButton: Down button.
         self.down_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
 
-        #: HoverTkButton: Zero button.
-        self.zero_btn = HoverTkButton(
-            self,
-            text="ZERO " + self.name,
-        )
+        #: HoverTkButton: 5x Down button.
+        self.down_5x_btn = HoverTkButton(self, image=self.down_5x_image, borderwidth=0)
 
         #: LabelInput: Increment spinbox.
         self.increment_box = LabelInput(
@@ -365,7 +367,13 @@ class OtherAxisFrame(ttk.Labelframe):
 
         # Set the Hover Descriptions
         self.up_btn.hover.setdescription(f"Increases {self.hover_text_ending}")
+        self.up_5x_btn.hover.setdescription(
+            f"Increases {self.hover_text_ending} " f"5-fold"
+        )
         self.down_btn.hover.setdescription(f"Decreases {self.hover_text_ending}")
+        self.down_5x_btn.hover.setdescription(
+            f"Decreases {self.hover_text_ending} " f"5-fold"
+        )
 
         #: list: List of hover texts for the normal state.
         self.normal_hover_texts = [
@@ -380,9 +388,11 @@ class OtherAxisFrame(ttk.Labelframe):
         ]
 
         # Griding out buttons
-        self.up_btn.grid(row=0, column=0, pady=2)  # UP
-        self.down_btn.grid(row=3, column=0, pady=2)  # DOWN
-        self.increment_box.grid(row=2, column=0, pady=2)
+        self.up_5x_btn.grid(row=0, column=0, pady=2, padx=2)
+        self.up_btn.grid(row=1, column=0, pady=2, padx=2)
+        self.increment_box.grid(row=2, column=0, pady=2, padx=2)
+        self.down_btn.grid(row=3, column=0, pady=2, padx=2)
+        self.down_5x_btn.grid(row=4, column=0, pady=2, padx=2)
 
         # Increment spinbox
         self.increment_box.widget.set_precision(-1)
@@ -408,7 +418,8 @@ class OtherAxisFrame(ttk.Labelframe):
         return {
             "up": self.up_btn,
             "down": self.down_btn,
-            "zero": self.zero_btn,
+            # "5x_up": self.up_5x_btn,
+            # "5x_down": self.down_5x_btn
         }
 
     def toggle_button_states(self, joystick_is_on=False, joystick_axes=[]):
@@ -428,7 +439,7 @@ class OtherAxisFrame(ttk.Labelframe):
             A ListProxy containing the axes controlled by the joystick, if any
         """
 
-        buttons = [self.up_btn, self.down_btn]
+        buttons = [self.up_btn, self.down_btn, self.up_5x_btn, self.down_5x_btn]
         button_state = "normal"
         image_list = self.normal_images
         hover_list = self.normal_hover_texts
@@ -470,10 +481,6 @@ class PositionFrame(ttk.Labelframe):
         ttk.Labelframe.__init__(
             self, stage_control_tab, text="Stage Positions", *args, **kwargs
         )
-
-        # Formatting
-        tk.Grid.columnconfigure(self, "all", weight=1)
-        tk.Grid.rowconfigure(self, "all", weight=1)
 
         #: dict: Dictionary of the label input widgets for the position entries.
         self.inputs = {}
@@ -565,7 +572,7 @@ class PositionFrame(ttk.Labelframe):
 class XYFrame(ttk.Labelframe):
     """Frame for the x and y movement buttons.
 
-    This frame is used for the up, down, left, right, zero, and increment buttons.
+    This frame is used for the up, down, left, right, and increment buttons.
     """
 
     def __init__(self, stage_control_tab, *args, **kwargs):
@@ -586,7 +593,7 @@ class XYFrame(ttk.Labelframe):
             self, stage_control_tab, text="X Y Movement", *args, **kwargs
         )
 
-        # Setting up buttons for up, down, left, right, zero and increment spinbox
+        # Setting up buttons for up, down, left, right and increment spinbox
         s = ttk.Style()
         s.configure("arrow.TButton", font=(None, 20))
 
@@ -595,48 +602,63 @@ class XYFrame(ttk.Labelframe):
 
         #: tk.PhotoImage: Image for the up button.
         self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup.png")
-        )
+            file=image_directory.joinpath("images", "up.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the 5x up button.
+        self.up_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_up.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the down button.
         self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown.png")
-        )
+            file=image_directory.joinpath("images", "down.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the down button.
+        self.down_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_down.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the left button.
         self.left_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyleft.png")
-        )
+            file=image_directory.joinpath("images", "left.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the left button.
+        self.left_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_left.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the right button.
         self.right_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyright.png")
-        )
+            file=image_directory.joinpath("images", "right.png")
+        ).subsample(2, 2)
+
+        #: tk.PhotoImage: Image for the left button.
+        self.right_5x_image = tk.PhotoImage(
+            file=image_directory.joinpath("images", "5x_right.png")
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled up button.
         self.d_up_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greyup_disabled.png")
-        )
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled down button.
         self.d_down_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greydown_disabled.png")
-        )
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled left button.
         self.d_left_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greyleft_disabled.png")
-        )
+        ).subsample(2, 2)
 
         #: tk.PhotoImage: Image for the disabled right button.
         self.d_right_image = tk.PhotoImage(
             file=image_directory.joinpath("images", "greyright_disabled.png")
-        )
-
-        self.right_image = self.right_image.subsample(2, 2)
-        self.left_image = self.left_image.subsample(2, 2)
-        self.up_image = self.up_image.subsample(2, 2)
-        self.down_image = self.down_image.subsample(2, 2)
+        ).subsample(2, 2)
 
         #: list: List of images for the normal state.
         self.normal_images = [
@@ -654,11 +676,6 @@ class XYFrame(ttk.Labelframe):
             "Decreases the Y value of the stage's position",
         ]
 
-        self.d_right_image = self.d_right_image.subsample(2, 2)
-        self.d_left_image = self.d_left_image.subsample(2, 2)
-        self.d_up_image = self.d_up_image.subsample(2, 2)
-        self.d_down_image = self.d_down_image.subsample(2, 2)
-
         #: list: List of images for the disabled state.
         self.disabled_images = [
             self.d_right_image,
@@ -675,14 +692,26 @@ class XYFrame(ttk.Labelframe):
         #: HoverTkButton: Up button.
         self.up_y_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
 
+        #: HoverTkButton: Up button.
+        self.up_5y_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+
         #: HoverTkButton: Down button.
         self.down_y_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
+
+        #: HoverTkButton: Down button.
+        self.down_5y_btn = HoverTkButton(self, image=self.down_5x_image, borderwidth=0)
 
         #: HoverTkButton: Right button.
         self.up_x_btn = HoverTkButton(self, image=self.right_image, borderwidth=0)
 
+        #: HoverTkButton: Right 5x button.
+        self.up_5x_btn = HoverTkButton(self, image=self.right_5x_image, borderwidth=0)
+
         #: HoverTkButton: Left button.
         self.down_x_btn = HoverTkButton(self, image=self.left_image, borderwidth=0)
+
+        #: HoverTkButton: Left 5x button.
+        self.down_5x_btn = HoverTkButton(self, image=self.left_5x_image, borderwidth=0)
 
         #: LabelInput: Increment spinbox.
         self.increment_box = LabelInput(
@@ -698,22 +727,47 @@ class XYFrame(ttk.Labelframe):
             "y": [self.up_y_btn, self.down_y_btn],
         }
 
-        # Griding out buttons
-        self.up_y_btn.grid(
-            row=0, column=2, rowspan=2, columnspan=2, padx=2, pady=2
-        )  # UP
-        self.up_x_btn.grid(
-            row=2, column=4, rowspan=2, columnspan=2, padx=2, pady=2
-        )  # RIGHT
-        self.down_y_btn.grid(
-            row=4, column=2, rowspan=2, columnspan=2, padx=2, pady=2
-        )  # DOWN
-        self.down_x_btn.grid(
-            row=2, column=0, rowspan=2, columnspan=2, padx=2, pady=2
-        )  # LEFT
-        self.increment_box.grid(
-            row=3, column=2, rowspan=1, columnspan=2, padx=2, pady=2
+        # Up
+        central_column = 4
+        self.up_5y_btn.grid(
+            row=0, column=central_column, rowspan=2, columnspan=2, padx=2, pady=2
         )
+
+        self.up_y_btn.grid(
+            row=2, column=central_column, rowspan=2, columnspan=2, padx=2, pady=2
+        )
+
+        # Increment box.
+        self.increment_box.grid(
+            row=4, column=central_column, rowspan=3, columnspan=2, padx=2, pady=2
+        )
+
+        # Down
+        self.down_y_btn.grid(
+            row=7, column=central_column, rowspan=2, columnspan=2, padx=2, pady=2
+        )
+
+        self.down_5y_btn.grid(
+            row=9, column=central_column, rowspan=2, columnspan=2, padx=2, pady=2
+        )
+
+        # Left
+        self.down_5x_btn.grid(row=5, column=0, rowspan=2, columnspan=2, padx=2, pady=2)
+
+        self.down_x_btn.grid(
+            row=5,
+            column=2,
+            rowspan=2,
+            columnspan=2,
+            padx=2,
+            pady=2,
+        )
+
+        # Right
+        self.up_x_btn.grid(
+            row=5, column=6, rowspan=2, columnspan=2, padx=2, pady=2
+        )  # RIGHT
+        self.up_5x_btn.grid(row=5, column=8, rowspan=2, columnspan=2, padx=2, pady=2)
 
         # Increment spinbox
         self.increment_box.widget.set_precision(-1)
@@ -738,7 +792,16 @@ class XYFrame(ttk.Labelframe):
             A dictionary of the buttons
         """
 
-        names = ["up_x_btn", "down_x_btn", "up_y_btn", "down_y_btn"]
+        names = [
+            "up_x_btn",
+            "down_x_btn",
+            "up_y_btn",
+            "down_y_btn",
+            "up_5x_btn",
+            "down_5x_btn",
+            "up_5y_btn",
+            "down_5y_btn",
+        ]
         return {k: getattr(self, k) for k in names}
 
     def toggle_button_states(self, joystick_is_on=False, joystick_axes=[]):
