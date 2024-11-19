@@ -32,7 +32,7 @@
 
 # Standard library imports
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 # Third-party imports
 import numpy as np
@@ -54,12 +54,7 @@ class PyramidalDataSource(DataSource):
     indexing by subdivision.
     """
 
-    def __init__(
-        self,
-        file_name: str = None,
-        mode: str = "w",
-        configuration: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    def __init__(self, file_name: str = None, mode: str = "w") -> None:
         """Initializes the PyramidalDataSource.
 
         Parameters
@@ -69,33 +64,8 @@ class PyramidalDataSource(DataSource):
         mode : str
             The mode to open the file in. Must be "w" for write or "r" for read.
         """
-
-        down_sample = configuration["BDVParameters"]["down_sample"].get(
-            "down_sample", False
-        )
-
-        if down_sample:
-            max_xy = configuration["BDVParameters"]["down_sample"].get(
-                "lateral_down_sample", 1
-            )
-            max_z = configuration["BDVParameters"]["down_sample"].get(
-                "axial_down_sample", 1
-            )
-
-            xy_values = [2**i for i in range(int(np.log2(max_xy)) + 1)]
-            z_values = [2**i for i in range(int(np.log2(max_z)) + 1)]
-
-            max_len = max(len(xy_values), len(z_values))
-            xy_values.extend([xy_values[-1]] * (max_len - len(xy_values)))
-            z_values.extend([z_values[-1]] * (max_len - len(z_values)))
-
-            #: npt.NDArray: The resolution of each down-sampled pyramid level.
-            self._resolutions = np.array(
-                [[xy, xy, z] for xy, z in zip(xy_values, z_values)], dtype=int
-            )
-        else:
-            self._resolutions = np.array([[1, 1, 1]], dtype=int)
-
+        #: np.array: The resolution of each down-sampled pyramid level.
+        self._resolutions = np.array([[1, 1, 1]], dtype=int)
         #: np.array: The number of subdivisions in each dimension.
         self._subdivisions = None
 
@@ -196,6 +166,32 @@ class PyramidalDataSource(DataSource):
         """
         self._subdivisions = None
         self._shapes = None
+
+        if ("BDVParameters" in configuration["experiment"].keys()
+            and "down_sample" in configuration["experiment"]["BDVParameters"].keys()):
+            down_sample = configuration["experiment"]["BDVParameters"]["down_sample"].get(
+                "down_sample", False
+            )
+
+            if down_sample:
+                max_xy = configuration["experiment"]["BDVParameters"]["down_sample"].get(
+                    "lateral_down_sample", 1
+                )
+                max_z = configuration["experiment"]["BDVParameters"]["down_sample"].get(
+                    "axial_down_sample", 1
+                )
+
+                xy_values = [2**i for i in range(int(np.log2(max_xy)) + 1)]
+                z_values = [2**i for i in range(int(np.log2(max_z)) + 1)]
+
+                max_len = max(len(xy_values), len(z_values))
+                xy_values.extend([xy_values[-1]] * (max_len - len(xy_values)))
+                z_values.extend([z_values[-1]] * (max_len - len(z_values)))
+
+                #: npt.NDArray: The resolution of each down-sampled pyramid level.
+                self._resolutions = np.array(
+                    [[xy, xy, z] for xy, z in zip(xy_values, z_values)], dtype=int
+                )
 
         return super().set_metadata_from_configuration_experiment(
             configuration, microscope_name

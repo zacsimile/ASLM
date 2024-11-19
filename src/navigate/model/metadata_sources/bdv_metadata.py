@@ -31,7 +31,7 @@
 
 #  Standard Imports
 import os
-from typing import Optional, Union, Dict, Any
+from typing import Optional, Union
 import xml.etree.ElementTree as ET
 import logging
 
@@ -57,10 +57,7 @@ class BigDataViewerMetadata(XMLMetadata):
 
     """
 
-    def __init__(
-        self,
-        configuration: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    def __init__(self) -> None:
         """Initialize the BigDataViewer metadata object.
 
         Parameters
@@ -107,7 +104,7 @@ class BigDataViewerMetadata(XMLMetadata):
         configuration : dict
             Configuration dictionary.
         """
-        bdv_configuration = configuration["configuration"].get("BDVParameters")
+        bdv_configuration = configuration["experiment"].get("BDVParameters", None)
 
         if bdv_configuration is not None:
 
@@ -330,6 +327,10 @@ class BigDataViewerMetadata(XMLMetadata):
                     d = dict(timepoint=t, setup=view_id, ViewTransform=view_transforms)
 
                     bdv_dict["ViewRegistrations"]["ViewRegistration"].append(d)
+
+        bdv_dict["Misc"] = {
+            "Entry": {"Key": "Note", "text": self.misc}
+        }
 
         return bdv_dict
 

@@ -215,6 +215,19 @@ class OMETIFFMetadata(XMLMetadata):
                 }
                 ome_dict["Image"]["Pixels"]["Plane"].append(d)
 
+        # misc info
+        ome_dict["StructuredAnnotations"] = {
+            "MapAnnotation": {
+                "Value": {
+                    "Map": {
+                        "M": [
+                            {"Key": "misc", "text": self.misc},
+                        ]
+                    }
+                }
+            }
+        }
+        
         return ome_dict
 
     def write_xml(

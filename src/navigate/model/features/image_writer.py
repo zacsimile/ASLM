@@ -363,7 +363,6 @@ class ImageWriter:
         self.current_time_point = 0
 
         file_name = self.get_saving_file_name(sub_dir, image_name)
-        print("saving to new file:", file_name)
 
         # create the MIP directory if it doesn't already exist
         self.mip_directory = os.path.join(self.save_directory, "MIP")
@@ -389,7 +388,6 @@ class ImageWriter:
         #: navigate.model.data_sources.DataSource : Data source for saving data to disk.
         self.data_source = data_sources.get_data_source(self.file_type)(
             file_name=file_name,
-            configuration=self.model.configuration["configuration"],
         )
 
         # Pass experiment and configuration to metadata

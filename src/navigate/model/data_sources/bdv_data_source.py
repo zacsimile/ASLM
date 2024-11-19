@@ -32,7 +32,7 @@
 #  Standard Imports
 import os
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 import warnings
 
 # Third Party Imports
@@ -64,12 +64,7 @@ class BigDataViewerDataSource(PyramidalDataSource):
     supports both HDF5 and N5 file formats.
     """
 
-    def __init__(
-        self,
-        file_name: str = None,
-        mode: str = "w",
-        configuration: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    def __init__(self, file_name: str = None, mode: str = "w") -> None:
         """Initializes the BigDataViewerDataSource.
 
         Parameters
@@ -78,8 +73,6 @@ class BigDataViewerDataSource(PyramidalDataSource):
             The name of the file to write to.
         mode : str
             The mode to open the file in. Must be "w" for write or "r" for read.
-        configuration : Optional[Dict[str, Any]]
-            The shared configuration file.
         """
         #: np.array: The image.
         self.image = None
@@ -108,9 +101,9 @@ class BigDataViewerDataSource(PyramidalDataSource):
 
         # self._current_frame = 0
         #: BigDataViewerMetadata: The metadata.
-        self.metadata = BigDataViewerMetadata(configuration=configuration)
+        self.metadata = BigDataViewerMetadata()
 
-        super().__init__(file_name=file_name, mode=mode, configuration=configuration)
+        super().__init__(file_name=file_name, mode=mode)
 
     def get_slice(self, x, y, c, z=0, t=0, p=0, subdiv=0) -> npt.ArrayLike:
         """Get a 3D slice of the dataset for a single c, t, p, subdiv.

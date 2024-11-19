@@ -51,12 +51,7 @@ class OMEZarrDataSource(PyramidalDataSource):
     This class implements an OME-Zarr image data source using the Zarr v2 format.
     """
 
-    def __init__(
-        self,
-        file_name: str = None,
-        mode: str = "w",
-        configuration: Optional[Dict[str, Any]] = None,
-    ) -> None:
+    def __init__(self, file_name: str = None, mode: str = "w") -> None:
         """Initialize the OME-Zarr data source.
 
         Parameters
@@ -65,8 +60,6 @@ class OMEZarrDataSource(PyramidalDataSource):
             Name of the file to open.
         mode : str
             Mode to open the file in.
-        configuration : dict
-            Configuration dictionary.
         """
 
         #: OMEZarrMetadata: Metadata object for the OME-Zarr data source.
@@ -74,7 +67,7 @@ class OMEZarrDataSource(PyramidalDataSource):
         self.__store = None
         self._current_position = -1
 
-        super().__init__(file_name=file_name, mode=mode, configuration=configuration)
+        super().__init__(file_name=file_name, mode=mode)
 
     def get_slice(self, x, y, c, z=0, t=0, p=0, subdiv=0) -> npt.ArrayLike:
         """Get a 3D slice of the dataset for a single c, t, p, subdiv.
