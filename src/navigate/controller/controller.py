@@ -85,7 +85,6 @@ from navigate.config.config import (
     get_navigate_path,
 )
 from navigate.tools.file_functions import (
-    create_save_path,
     load_yaml_file,
     save_yaml_file,
     get_ram_info,
@@ -851,8 +850,8 @@ class Controller:
             if not self.prepare_acquire_data():
                 self.acquire_bar_controller.stop_acquire()
                 return
-            saving_settings = self.configuration["experiment"]["Saving"]
-            file_directory = create_save_path(saving_settings)
+            # get saving file directory
+            file_directory = args[0]
 
             # Save the experiment.yaml file.
             save_yaml_file(

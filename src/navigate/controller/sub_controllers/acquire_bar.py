@@ -101,17 +101,10 @@ class AcquireBarController(GUIController):
         # framerate information.
         self.framerate = 0
 
-        update_config_dict(
-            manager=self.parent_controller.manager,
-            parent_dict=self.parent_controller.configuration,
-            config_name="",
-            new_config={},
-        )
-
         #: dict: The ProxyDict for the BDV configuration.
-        self.bdv_configuration = self.parent_controller.configuration[
-            "configuration"
-        ].get("BDVParameters", None)
+        self.bdv_configuration = self.parent_controller.configuration["experiment"].get(
+            "BDVParameters", None
+        )
 
         #: dict: BDV Widgets. Keys are primary widgets, values are lists.
         self.bdv_widgets = {
@@ -376,6 +369,9 @@ class AcquireBarController(GUIController):
             for k, v in self.saving_settings.items():
                 if widgets.get(k, None):
                     widgets[k].set(v)
+            self.acquire_pop.tab_frame.inputs["misc"].insert(
+                "1.0", self.saving_settings.get("misc", "")
+            )
 
         else:
             self.is_acquiring = True
@@ -454,8 +450,15 @@ class AcquireBarController(GUIController):
         )
 
         if update_config:
-            # TODO: Annie, should we add the new fields to the configuration file?
-            pass
+            update_config_dict(
+                self.parent_controller.manager,
+                self.parent_controller.configuration["experiment"],
+                "BDVParameters",
+                self.bdv_configuration,
+            )
+            self.bdv_configuration = self.parent_controller.configuration["experiment"][
+                "BDVParameters"
+            ]
 
         # Set the state of the dependent widgets
         for widget in self.bdv_widgets.keys():
@@ -669,6 +672,9 @@ class AcquireBarController(GUIController):
         for name in popup_vals:
             # remove leading and tailing whitespaces
             self.saving_settings[name] = popup_vals[name].strip()
+        self.saving_settings["misc"] = self.acquire_pop.tab_frame.inputs["misc"].get(
+            "1.0", "end-1c"
+        )
 
     @staticmethod
     def is_valid_string(string: str) -> bool:
