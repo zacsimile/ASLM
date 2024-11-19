@@ -217,14 +217,10 @@ class OMETIFFMetadata(XMLMetadata):
 
         # misc info
         ome_dict["StructuredAnnotations"] = {
-            "MapAnnotation": {
-                "ID": "misc:annotation",
-                "Value": {
-                    "Map": {
-                        "M": [
-                            {"Key": "misc", "text": self.misc},
-                        ]
-                    }
+            "ListAnnotation": {
+                "ID": "Annotation:misc",
+                "Description": {
+                    "text": self.misc
                 }
             }
         }
