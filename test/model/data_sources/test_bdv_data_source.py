@@ -51,7 +51,7 @@ def bdv_ds(fn, multiposition, per_stack, z_stack, stop_early, size):
         "is_multiposition"
     ] = multiposition
     model.configuration["experiment"]["MicroscopeState"]["timepoints"] = timepoints
-    model.configuration["BDVParameters"] = {
+    model.configuration["experiment"]["BDVParameters"] = {
         "shear": {
             "shear_data": True,
             "shear_dimension": "YZ",
@@ -79,7 +79,7 @@ def bdv_ds(fn, multiposition, per_stack, z_stack, stop_early, size):
         ] = "per_slice"
 
     # Establish a BDV data source
-    ds = BigDataViewerDataSource(fn, configuration=model.configuration)
+    ds = BigDataViewerDataSource(fn)
     ds.set_metadata_from_configuration_experiment(model.configuration)
 
     # Populate one image per channel per timepoint

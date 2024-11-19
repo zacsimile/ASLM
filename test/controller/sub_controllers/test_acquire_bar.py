@@ -33,6 +33,7 @@ import tkinter
 #
 
 # Standard library imports
+from unittest.mock import MagicMock
 
 # Third party imports
 import pytest
@@ -64,6 +65,8 @@ class TestAcquireBarController:
             view=v.acquire_bar, parent_controller=c
         )
         self.acquire_bar_controller.populate_experiment_values()
+        c.channels_tab_controller.populate_experiment_values()
+        c.camera_setting_controller = MagicMock()
 
     def test_init(self):
         """Tests the initialization of the AcquireBarController class

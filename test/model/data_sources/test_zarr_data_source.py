@@ -50,7 +50,7 @@ def zarr_ds(fn, multiposition, per_stack, z_stack, stop_early, size):
     ] = multiposition
     model.configuration["experiment"]["MicroscopeState"]["timepoints"] = timepoints
 
-    model.configuration["BDVParameters"] = {
+    model.configuration["experiment"]["BDVParameters"] = {
         "shear": {
             "shear_data": True,
             "shear_dimension": "YZ",
@@ -79,7 +79,7 @@ def zarr_ds(fn, multiposition, per_stack, z_stack, stop_early, size):
         ] = "per_slice"
 
     # Establish a BDV data source
-    ds = OMEZarrDataSource(fn, configuration=model.configuration)
+    ds = OMEZarrDataSource(fn)
     ds.set_metadata_from_configuration_experiment(model.configuration)
 
     # Populate one image per channel per timepoint
