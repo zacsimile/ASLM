@@ -34,12 +34,17 @@
 import tkinter as tk
 from multiprocessing.managers import ListProxy, DictProxy
 import logging
+from typing import Dict, Optional, Callable, Iterable
 
 # Third Party Imports
 
 # Local Imports
+import navigate
+from navigate.controller.configuration_controller import ConfigurationController
 from navigate.controller.sub_controllers.gui import GUIController
 from navigate.tools.decorators import log_initialization
+from navigate.view.main_application_window import MainApp
+from navigate.view.main_window_content.stage_tab import StageControlTab
 
 # Logger Setup
 p = __name__.split(".")[1]
@@ -55,7 +60,13 @@ class StageController(GUIController):
     stage movement limits.
     """
 
-    def __init__(self, view, main_view, canvas, parent_controller):
+    def __init__(
+        self,
+        view: StageControlTab,
+        main_view: MainApp,
+        canvas: tk.Canvas,
+        parent_controller: "navigate.controller.controller.Controller",
+    ) -> None:
         """Initializes the StageController
 
         Parameters
@@ -115,6 +126,8 @@ class StageController(GUIController):
         # gui event bind
         buttons = self.view.get_buttons()
         for k in buttons:
+            if "5x" in k:
+                return
             if k[:2] == "up":
                 buttons[k].configure(command=self.up_btn_handler(k[3:-4]))
             elif k[:4] == "down":
@@ -130,7 +143,6 @@ class StageController(GUIController):
             )
 
         buttons["stop"].configure(command=self.stop_button_handler)
-
         buttons["joystick"].configure(command=self.joystick_button_handler)
 
         #: dict: The position callback traces
@@ -146,10 +158,10 @@ class StageController(GUIController):
 
         #: list: The stage flip flags
         self.flip_flags = None
-
+        self.set_hover_descriptions()
         self.initialize()
 
-    def stage_key_press(self, event):
+    def stage_key_press(self, event: tk.Event) -> None:
         """The stage key press.
 
         This function is called when a W, A, S, or D is
@@ -157,7 +169,7 @@ class StageController(GUIController):
 
         Parameters
         ----------
-        event : tkinter.Event
+        event : tk.Event
             The tkinter event
 
         """
@@ -174,7 +186,7 @@ class StageController(GUIController):
             elif char == "d":
                 self.up_btn_handler("x")()
 
-    def initialize(self):
+    def initialize(self) -> None:
         """Initialize the Stage limits of steps and positions."""
         config = self.parent_controller.configuration_controller
         self.disable_synthetic_stages(config)
@@ -228,12 +240,11 @@ class StageController(GUIController):
         if list(self.joystick_axes) != list(self.new_joystick_axes):
             self.force_enable_all_axes()
             self.joystick_is_on = False
-            self.new_joystick_axes
 
         self.joystick_axes = self.new_joystick_axes
         self.flip_flags = config.stage_flip_flags
 
-    def disable_synthetic_stages(self, config):
+    def disable_synthetic_stages(self, config: ConfigurationController) -> None:
         """Disable synthetic stages.
 
         Parameters
@@ -285,7 +296,7 @@ class StageController(GUIController):
             else:
                 pass
 
-    def bind_position_callbacks(self):
+    def bind_position_callbacks(self) -> None:
         """Binds position_callback() to each axis, records the trace name so we can
         unbind later."""
         widgets = self.view.get_widgets()
@@ -299,14 +310,14 @@ class StageController(GUIController):
                 # self.position_callback_traces[axis] = cbname
             self.position_callbacks_bound = True
 
-    def unbind_position_callbacks(self):
+    def unbind_position_callbacks(self) -> None:
         """Unbinds position callbacks."""
         if self.position_callbacks_bound:
             for axis, cbname in self.position_callback_traces.items():
                 self.widget_vals[axis].trace_remove("write", cbname)
             self.position_callbacks_bound = False
 
-    def populate_experiment_values(self):
+    def populate_experiment_values(self) -> None:
         """This function sets all the position and step values"""
         self.stage_setting_dict = self.parent_controller.configuration["experiment"][
             "StageParameters"
@@ -316,12 +327,12 @@ class StageController(GUIController):
             self.widget_vals[k].set(self.stage_setting_dict.get(k, 0))
             widgets[k].widget.trigger_focusout_validation()
 
-    def set_position(self, position):
+    def set_position(self, position: Dict[str, float]) -> None:
         """This function is to populate(set) position in the View
 
         Parameters
         ----------
-        position : dict
+        position : Dict[str, float]
             {'x': value, 'y': value, 'z': value, 'theta': value, 'f': value}
         """
         for axis in ["x", "y", "z", "theta", "f"]:
@@ -331,12 +342,12 @@ class StageController(GUIController):
             self.position_callback(axis)()
         self.show_verbose_info("Set stage position")
 
-    def set_position_silent(self, position):
+    def set_position_silent(self, position: Dict[str, float]) -> None:
         """This function is to populate(set) position in the View without a trace.
 
         Parameters
         ----------
-        position : dict
+        position : Dict[str, float]
             {'x': value, 'y': value, 'z': value, 'theta': value, 'f': value}
         """
         widgets = self.view.get_widgets()
@@ -350,13 +361,13 @@ class StageController(GUIController):
             self.stage_setting_dict[axis] = position.get(axis, 0)
         self.show_verbose_info("Set stage position")
 
-    def get_position(self):
+    def get_position(self) -> Optional[dict[str, float]]:
         """This function returns current position from the view.
 
         Returns
         -------
-        position : dict
-            Dictionary of x, y, z, theta, and f values.
+        position : Optional[dict[str, float]]
+            Dictionary of x, y, z, theta, and f values. None if the value is not valid.
 
         """
         position = {}
@@ -375,7 +386,7 @@ class StageController(GUIController):
             return None
         return position
 
-    def up_btn_handler(self, axis):
+    def up_btn_handler(self, axis: str) -> Callable[[], None]:
         """This function generates command functions according to the desired axis
         to move.
 
@@ -387,7 +398,7 @@ class StageController(GUIController):
 
         Returns
         -------
-        handler : object
+        handler : Callable[[], None]
             Function for setting desired stage positions in the View.
         """
         position_val = self.widget_vals[axis]
@@ -416,7 +427,7 @@ class StageController(GUIController):
 
         return handler
 
-    def down_btn_handler(self, axis):
+    def down_btn_handler(self, axis: str) -> Callable[[], None]:
         """This function generates command functions according to the desired axis
         to move.
 
@@ -428,7 +439,7 @@ class StageController(GUIController):
 
         Returns
         -------
-        handler : object
+        handler : Callable[[], None]
             Function for setting desired stage positions in the View.
         """
         position_val = self.widget_vals[axis]
@@ -457,35 +468,12 @@ class StageController(GUIController):
 
         return handler
 
-    def zero_btn_handler(self, axis):
-        """This function generates command functions according to the desired axis
-        to move.
-
-        Parameters
-        ----------
-        axis : str
-            Should be one of 'z', 'theta', 'f'
-            position_axis = 0
-
-        Returns
-        -------
-        handler : object
-            Function for setting desired stage positions in the View.
-        """
-        position_val = self.widget_vals[axis]
-
-        def handler():
-            position_val.set(0)
-            self.position_callback(axis)()
-
-        return handler
-
-    def xy_zero_btn_handler(self):
+    def xy_zero_btn_handler(self) -> Callable[[], None]:
         """This function generates command functions to set xy position to zero
 
         Returns
         -------
-        handler : object
+        handler : Callable[[], None]
             Function for setting desired stage positions in the View.
         """
         x_val = self.widget_vals["x"]
@@ -499,17 +487,27 @@ class StageController(GUIController):
 
         return handler
 
-    def stop_button_handler(self, *args):
-        """This function stops the stage after a 250 ms debouncing period of time."""
+    def stop_button_handler(self, *args: Iterable) -> None:
+        """This function stops the stage after a 250 ms debouncing period of time.
+
+        Parameters
+        ----------
+        *args : Iterable
+            Variable length argument list
+        """
         self.view.after(250, lambda *args: self.parent_controller.execute("stop_stage"))
 
-    def joystick_button_handler(self, event=None, *args):
+    def joystick_button_handler(
+        self, event: Optional[tk.Event] = None, *args: Iterable
+    ) -> None:
         """Toggle the joystick operation mode.
 
         Parameters
         ----------
-        event : tkinter.Event
+        event : Optional[tk.Event]
             The tkinter event
+        *args : Iterable
+            Variable length argument list
         """
         if self.joystick_is_on:
             self.joystick_is_on = False
@@ -520,19 +518,23 @@ class StageController(GUIController):
         )
         self.view.toggle_button_states(self.joystick_is_on, self.joystick_axes)
 
-    def force_enable_all_axes(self, event=None, *args):
+    def force_enable_all_axes(
+        self, event: Optional[tk.Event] = None, *args: Iterable
+    ) -> None:
         """Enables all buttons and entries on the stage tab.
 
         Parameters
         ----------
-        event : tkinter.Event
+        event : Optional[tk.Event]
             The tkinter event (currently unused)
-        *args : ...
-            ...
+        *args : Iterable
+            Variable length argument list
         """
         self.view.force_enable_all_axes()
 
-    def position_callback(self, axis, *args, **kwargs):
+    def position_callback(
+        self, axis, *args: Iterable, **kwargs: dict
+    ) -> Callable[[], None]:
         """Callback functions bind to position variables.
 
         Implements debounce functionality for user inputs (or click buttons) to reduce
@@ -542,12 +544,14 @@ class StageController(GUIController):
         ----------
         axis : str
             axis can be 'x', 'y', 'z', 'theta', 'f'
-        kwargs : ...
-            ...
+        *args : Iterable
+            Variable length argument list
+        kwargs : Iterable
+            Variable length keyword argument list
 
         Returns
         -------
-        handler : object
+        handler : Callable[[], None]
             Function for moving stage to the desired position with debounce
             functionality.
         """
@@ -594,7 +598,7 @@ class StageController(GUIController):
 
         return handler
 
-    def update_step_size_handler(self, axis):
+    def update_step_size_handler(self, axis: str) -> Callable[[], None]:
         """Callback functions bind to step size variables
 
         Parameters
@@ -604,7 +608,7 @@ class StageController(GUIController):
 
         Returns
         -------
-        handler : object
+        handler : Callable[[], None]
             Function to update step size in experiment.yml.
         """
 
@@ -620,3 +624,64 @@ class StageController(GUIController):
             self.stage_setting_dict[microscope_name][axis + "_step"] = step_size
 
         return func
+
+    def set_hover_descriptions(self) -> None:
+        """Set hover descriptions for the stage tab"""
+        self.view.xy_frame.up_y_btn.hover.setdescription(
+            "Increases the Y value of the stage's position"
+        )
+        self.view.xy_frame.down_y_btn.hover.setdescription(
+            "Decreases the Y value of the stage's position"
+        )
+        self.view.xy_frame.down_x_btn.hover.setdescription(
+            "Decreases the X value of the stage's position"
+        )
+        self.view.xy_frame.up_x_btn.hover.setdescription(
+            "Increases the X value of the stage's position"
+        )
+        self.view.position_frame.inputs["y"].widget.hover.setdescription(
+            "Y position of the stage"
+        )
+        self.view.position_frame.inputs["x"].widget.hover.setdescription(
+            "X position of the stage"
+        )
+        self.view.position_frame.inputs["z"].widget.hover.setdescription(
+            "Z position of the stage"
+        )
+        self.view.position_frame.inputs["f"].widget.hover.setdescription("Focus")
+        self.view.stop_frame.joystick_btn.hover.setdescription(
+            "Enables/disables joystick mode"
+        )
+
+        # #: str: Text for the hover description.
+        # self.hover_text_ending = ""
+        #
+        # if self.name == "Z":
+        #     self.hover_text_ending = f"the {self.name} \
+        #         value of the stage's position"
+        # elif self.name == "Theta":
+        #     self.hover_text_ending = "the angle of sample rotation"
+        # else:
+        #     self.hover_text_ending = f"the {self.name.lower()}"
+        #
+        # # Set the Hover Descriptions
+        # self.up_btn.hover.setdescription(f"Increases {self.hover_text_ending}")
+        # self.up_5x_btn.hover.setdescription(
+        #     f"Increases {self.hover_text_ending} " f"5-fold"
+        # )
+        # self.down_btn.hover.setdescription(f"Decreases {self.hover_text_ending}")
+        # self.down_5x_btn.hover.setdescription(
+        #     f"Decreases {self.hover_text_ending} " f"5-fold"
+        # )
+        #
+        # #: list: List of hover texts for the normal state.
+        # self.normal_hover_texts = [
+        #     self.up_btn.hover.getdescription(),
+        #     self.down_btn.hover.getdescription(),
+        # ]
+        #
+        # #: list: List of hover texts for the disabled state.
+        # self.disabled_hover_texts = [
+        #     "Turn off Joystick Mode to enable",
+        #     "Turn off Joystick Mode to enable",
+        # ]
