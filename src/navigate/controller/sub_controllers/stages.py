@@ -161,8 +161,8 @@ class StageController(GUIController):
 
         #: list: The stage flip flags
         self.flip_flags = None
-        self.set_hover_descriptions()
         self.initialize()
+        self.set_hover_descriptions()
 
     def stage_key_press(self, event: tk.Event) -> None:
         """The stage key press.
@@ -617,6 +617,7 @@ class StageController(GUIController):
         handler : Callable[[], None]
             Function to update step size in experiment.yml.
         """
+        self.set_hover_descriptions()
 
         def func(*args):
             """Callback functions bind to step size variables."""
@@ -634,30 +635,111 @@ class StageController(GUIController):
     def set_hover_descriptions(self) -> None:
         """Set hover descriptions for the stage tab"""
 
+        # Y Axis
         self.view.xy_frame.up_y_btn.hover.setdescription(
-            "Increases the Y value of the stage's position"
+            f"Move {self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m in Y"
         )
         self.view.xy_frame.down_y_btn.hover.setdescription(
-            "Decreases the Y value of the stage's position"
+            f"Move {-1 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Y"
+        )
+        self.view.xy_frame.large_up_y_btn.hover.setdescription(
+            f"Move {5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Y"
+        )
+        self.view.xy_frame.large_down_y_btn.hover.setdescription(
+            f"Move {-5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Y"
+        )
+
+        # X Axis
+        self.view.xy_frame.up_x_btn.hover.setdescription(
+            f"Move {self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m in X"
         )
         self.view.xy_frame.down_x_btn.hover.setdescription(
-            "Decreases the X value of the stage's position"
+            f"Move {-1 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in X"
         )
-        self.view.xy_frame.up_x_btn.hover.setdescription(
-            "Increases the X value of the stage's position"
+        self.view.xy_frame.large_up_x_btn.hover.setdescription(
+            f"Move {5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in X"
         )
+        self.view.xy_frame.large_down_x_btn.hover.setdescription(
+            f"Move {-5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in X"
+        )
+
+        # Z Axis
+        self.view.z_frame.up_btn.hover.setdescription(
+            f"Move {self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m in Z"
+        )
+        self.view.z_frame.down_btn.hover.setdescription(
+            f"Move {-1 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Z"
+        )
+        self.view.z_frame.large_up_btn.hover.setdescription(
+            f"Move {5 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Z"
+        )
+        self.view.z_frame.large_down_btn.hover.setdescription(
+            f"Move {-5 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in Z"
+        )
+
+        # F Axis
+        self.view.f_frame.up_btn.hover.setdescription(
+            f"Move {self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m in F"
+        )
+        self.view.f_frame.down_btn.hover.setdescription(
+            f"Move {-1 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in F"
+        )
+        self.view.f_frame.large_up_btn.hover.setdescription(
+            f"Move {5 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in F"
+        )
+        self.view.f_frame.large_down_btn.hover.setdescription(
+            f"Move {-5 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
+            f"in F"
+        )
+
+        # Theta Axis
+        self.view.theta_frame.up_btn.hover.setdescription(
+            f"Move {1 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
+            f"in \N{GREEK CAPITAL LETTER THETA}"
+        )
+        self.view.theta_frame.down_btn.hover.setdescription(
+            f"Move {-1 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
+            f"in \N{GREEK CAPITAL LETTER THETA}"
+        )
+        self.view.theta_frame.large_up_btn.hover.setdescription(
+            f"Move {5 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
+            f"in \N{GREEK CAPITAL LETTER THETA}"
+        )
+        self.view.theta_frame.large_down_btn.hover.setdescription(
+            f"Move {-5 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
+            f"in \N{GREEK CAPITAL LETTER THETA}"
+        )
+
+        # Position Frame
         self.view.position_frame.inputs["y"].widget.hover.setdescription(
-            "Y position of the stage"
+            "Y position of the stage in \N{GREEK SMALL LETTER MU}m."
         )
         self.view.position_frame.inputs["x"].widget.hover.setdescription(
-            "X position of the stage"
+            "X position of the stage in \N{GREEK SMALL LETTER MU}m."
         )
         self.view.position_frame.inputs["z"].widget.hover.setdescription(
-            "Z position of the stage"
+            "Z position of the stage in \N{GREEK SMALL LETTER MU}m."
         )
-        self.view.position_frame.inputs["f"].widget.hover.setdescription("Focus")
+        self.view.position_frame.inputs["f"].widget.hover.setdescription(
+            "Focus position of the stage in \N{GREEK SMALL LETTER MU}m."
+        )
+        self.view.position_frame.inputs["theta"].widget.hover.setdescription(
+            "Theta position of the stage in degrees."
+        )
+
         self.view.stop_frame.joystick_btn.hover.setdescription(
-            "Enables/disables joystick mode"
+            "Enables/disables joystick mode."
         )
 
         # #: str: Text for the hover description.

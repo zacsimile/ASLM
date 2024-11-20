@@ -302,50 +302,52 @@ class OtherAxisFrame(ttk.Labelframe):
             self, image=self.down_5x_image, borderwidth=0
         )
 
+        if self.name.lower() == "theta":
+            text = "Step Size (" + "\N{DEGREE SIGN}" + ")"
+        else:
+            text = "Step Size (" + "\N{GREEK SMALL LETTER MU}" + "m)"
+
         # #: LabelInput: Increment spinbox.
         self.increment_box = LabelInput(
             parent=self,
             input_class=ValidatedSpinbox,
             input_var=tk.DoubleVar(),
             input_args={"width": 5},
+            label=text,
+            label_pos="top",
+            label_args={"font": tk.font.Font(size=10)},
         )
 
-        # Center the widgets.
+        # Center the widgets laterally.
         self.columnconfigure(index=0, weight=1)
         self.columnconfigure(index=1, weight=1)
         self.columnconfigure(index=2, weight=1)
 
-        # Adding space between buttons
-        custom_font = tk.font.Font(size=10)
-
-        if self.name.lower() == "theta":
-            space_1 = ttk.Label(
-                self,
-                borderwidth=0,
-                text="Step Size (" + "\N{DEGREE SIGN}" + ")",
-                font=custom_font,
-            )
-        else:
-            space_1 = ttk.Label(
-                self,
-                borderwidth=0,
-                text="Step Size (" + "\N{GREEK SMALL LETTER MU}" + "m)",
-                font=custom_font,
-            )
+        # # Adding space between buttons
+        space_1 = ttk.Label(self, borderwidth=0)
         space_2 = ttk.Label(self, borderwidth=0)
 
         # Griding out buttons
-        self.large_up_btn.grid(row=0, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
-        self.up_btn.grid(row=1, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
-
-        space_1.grid(row=2, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
-        self.increment_box.grid(
-            row=3, column=1, rowspan=1, columnspan=1, padx=2, pady=2
+        self.large_up_btn.grid(
+            row=(row := 0), column=1, rowspan=1, columnspan=1, padx=2, pady=2
         )
-        space_2.grid(row=4, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
-        self.down_btn.grid(row=5, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
+        self.up_btn.grid(
+            row=(row := row + 1), column=1, rowspan=1, columnspan=1, pady=(2, 0)
+        )
+        space_1.grid(
+            row=(row := row + 1), column=1, rowspan=1, columnspan=1, padx=2, pady=0
+        )
+        self.increment_box.grid(
+            row=(row := row + 1), column=1, rowspan=1, columnspan=1, padx=2, pady=0
+        )
+        space_2.grid(
+            row=(row := row + 1), column=1, rowspan=1, columnspan=1, padx=2, pady=0
+        )
+        self.down_btn.grid(
+            row=(row := row + 1), column=1, rowspan=1, columnspan=1, pady=(0, 2)
+        )
         self.large_down_btn.grid(
-            row=6, column=1, rowspan=1, columnspan=1, padx=2, pady=2
+            row=(row + 1), column=1, rowspan=1, columnspan=1, padx=2, pady=2
         )
 
     def get_widget(self) -> LabelInput:
@@ -678,7 +680,6 @@ class XYFrame(ttk.Labelframe):
         )
 
         #: LabelInput: Increment spinbox.
-        custom_font = tk.font.Font(size=10)
         self.increment_box = LabelInput(
             parent=self,
             input_class=ValidatedSpinbox,
@@ -686,7 +687,7 @@ class XYFrame(ttk.Labelframe):
             input_args={"width": 5},
             label="Step Size (\N{GREEK SMALL LETTER MU}m)",
             label_pos="top",
-            label_args={"font": custom_font},
+            label_args={"font": tk.font.Font(size=10)},
         )
 
         #: dict: Dictionary of the buttons for the x and y movement buttons.
