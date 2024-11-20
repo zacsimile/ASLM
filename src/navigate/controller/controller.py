@@ -85,7 +85,6 @@ from navigate.config.config import (
     get_navigate_path,
 )
 from navigate.tools.file_functions import (
-    create_save_path,
     load_yaml_file,
     save_yaml_file,
     get_ram_info,
@@ -516,7 +515,7 @@ class Controller:
             ] = microscope_name
             self.configuration["experiment"]["MicroscopeState"]["zoom"] = zoom_value
             self.execute("resolution", resolution_value)
-        
+
         warning_message = self.camera_setting_controller.update_experiment_values()
 
         # set waveform template
@@ -851,8 +850,8 @@ class Controller:
             if not self.prepare_acquire_data():
                 self.acquire_bar_controller.stop_acquire()
                 return
-            saving_settings = self.configuration["experiment"]["Saving"]
-            file_directory = create_save_path(saving_settings)
+            # get saving file directory
+            file_directory = args[0]
 
             # Save the experiment.yaml file.
             save_yaml_file(
@@ -1252,7 +1251,10 @@ class Controller:
             if microscope_name not in self.additional_microscopes:
                 self.additional_microscopes[microscope_name] = {}
 
-            if "camera_view_controller" not in self.additional_microscopes[microscope_name]:
+            if (
+                "camera_view_controller"
+                not in self.additional_microscopes[microscope_name]
+            ):
                 popup_window = CameraViewPopupWindow(self.view, microscope_name)
                 camera_view_controller = CameraViewController(
                     popup_window.camera_view, self
