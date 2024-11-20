@@ -35,6 +35,7 @@ import tkinter as tk
 from multiprocessing.managers import ListProxy, DictProxy
 import logging
 from typing import Dict, Optional, Callable, Iterable
+import re
 
 # Third Party Imports
 
@@ -119,23 +120,26 @@ class StageController(GUIController):
         #: dict: The maximum stage position.
         self.position_max = {}
 
-        # variables
-        #: dict: The widget values
+        #: dict: The widget values for the stage position and step sizes.
         self.widget_vals = self.view.get_variables()
 
         # gui event bind
         buttons = self.view.get_buttons()
+
+        # buttons are up_x_btn,
         for k in buttons:
-            if "5x" in k:
-                return
-            if k[:2] == "up":
-                buttons[k].configure(command=self.up_btn_handler(k[3:-4]))
-            elif k[:4] == "down":
-                buttons[k].configure(command=self.down_btn_handler(k[5:-4]))
-            elif k[5:-4] == "xy":
-                buttons[k].configure(command=self.xy_zero_btn_handler())
-            elif k.startswith("zero"):
-                buttons[k].configure(command=self.zero_btn_handler(k[5:-4]))
+            large_step = True if "large" in k else False
+            match = re.search(r"_(x|y|z|theta|f)_", k)
+            if match:
+                axis = match.group(1)
+                if "up" in k:
+                    buttons[k].configure(
+                        command=self.up_btn_handler(axis=axis, large_step=large_step)
+                    )
+                elif "down" in k:
+                    buttons[k].configure(
+                        command=self.down_btn_handler(axis=axis, large_step=large_step)
+                    )
 
         for k in ["xy", "z", "f", "theta"]:
             self.widget_vals[k + "_step"].trace_add(
@@ -150,7 +154,6 @@ class StageController(GUIController):
 
         #: bool: The position callbacks are bound
         self.position_callbacks_bound = False
-
         self.bind_position_callbacks()
 
         #: bool: The stage limits are on
@@ -178,13 +181,13 @@ class StageController(GUIController):
         if not self.joystick_is_on:
             char = event.char.lower()
             if char == "w":
-                self.up_btn_handler("y")()
+                self.up_btn_handler(axis="y", large_step=False)()
             elif char == "a":
-                self.down_btn_handler("x")()
+                self.down_btn_handler(axis="x", large_step=False)()
             elif char == "s":
-                self.down_btn_handler("y")()
+                self.down_btn_handler(axis="y", large_step=False)()
             elif char == "d":
-                self.up_btn_handler("x")()
+                self.up_btn_handler(axis="x", large_step=False)()
 
     def initialize(self) -> None:
         """Initialize the Stage limits of steps and positions."""
@@ -208,6 +211,7 @@ class StageController(GUIController):
 
             # Set step size.
             # the minimum step should be non-zero and non-negative.
+            # TODO: Move to the GUI configuration file.
             widgets[step_axis + "_step"].widget.configure(from_=0.01)
             widgets[step_axis + "_step"].widget.configure(to=self.position_max[axis])
             step_increment = step_dict[step_axis + "_step"] // 10
@@ -267,9 +271,7 @@ class StageController(GUIController):
                 stage_dict = stage
 
             for axis in stage_dict["axes"]:
-                if (stage_dict["type"].lower() == "synthetic") or (
-                    stage_dict["type"].lower() == "syntheticstage"
-                ):
+                if "synthetic" in stage_dict["type"].lower():
                     state = "disabled"
                 else:
                     state = "normal"
@@ -277,22 +279,32 @@ class StageController(GUIController):
                 if axis == "x":
                     self.view.xy_frame.up_x_btn.config(state=state)
                     self.view.xy_frame.down_x_btn.config(state=state)
+                    self.view.xy_frame.large_up_x_btn.config(state=state)
+                    self.view.xy_frame.large_down_x_btn.config(state=state)
 
                 elif axis == "y":
                     self.view.xy_frame.up_y_btn.config(state=state)
                     self.view.xy_frame.down_y_btn.config(state=state)
+                    self.view.xy_frame.large_up_y_btn.config(state=state)
+                    self.view.xy_frame.large_down_y_btn.config(state=state)
 
                 elif axis == "z":
                     self.view.z_frame.down_btn.config(state=state)
                     self.view.z_frame.up_btn.config(state=state)
+                    self.view.z_frame.large_down_btn.config(state=state)
+                    self.view.z_frame.large_up_btn.config(state=state)
 
                 elif axis == "theta":
                     self.view.theta_frame.down_btn.config(state=state)
                     self.view.theta_frame.up_btn.config(state=state)
+                    self.view.theta_frame.large_down_btn.config(state=state)
+                    self.view.theta_frame.large_up_btn.config(state=state)
 
                 elif axis == "f":
                     self.view.f_frame.down_btn.config(state=state)
                     self.view.f_frame.up_btn.config(state=state)
+                    self.view.f_frame.large_down_btn.config(state=state)
+                    self.view.f_frame.large_up_btn.config(state=state)
             else:
                 pass
 
@@ -302,12 +314,7 @@ class StageController(GUIController):
         widgets = self.view.get_widgets()
         if not self.position_callbacks_bound:
             for axis in ["x", "y", "z", "theta", "f"]:
-                # add event bind to position entry variables
                 widgets[axis].widget.bind("<FocusOut>", self.position_callback(axis))
-                # cbname = self.widget_vals[axis].trace_add(
-                #     "write", self.position_callback(axis)
-                # )
-                # self.position_callback_traces[axis] = cbname
             self.position_callbacks_bound = True
 
     def unbind_position_callbacks(self) -> None:
@@ -386,7 +393,11 @@ class StageController(GUIController):
             return None
         return position
 
-    def up_btn_handler(self, axis: str) -> Callable[[], None]:
+    def up_btn_handler(
+        self,
+        axis: str,
+        large_step: bool = False,
+    ) -> Callable[[], None]:
         """This function generates command functions according to the desired axis
         to move.
 
@@ -395,12 +406,15 @@ class StageController(GUIController):
         axis : str
             Should be one of 'x', 'y', 'z', 'theta', 'f'
             position_axis += step_axis
+        large_step : bool
+            If True, the step size is 5x the normal step size.
 
         Returns
         -------
         handler : Callable[[], None]
             Function for setting desired stage positions in the View.
         """
+        step_multiple = 5 if large_step else 1
         position_val = self.widget_vals[axis]
         if axis == "x" or axis == "y":
             step_val = self.widget_vals["xy_step"]
@@ -412,8 +426,11 @@ class StageController(GUIController):
             to move."""
             stage_direction = -1 if self.flip_flags[axis] else 1
             try:
-                temp = float(position_val.get()) + step_val.get() * stage_direction
-            except tk._tkinter.TclError:
+                temp = (
+                    float(position_val.get())
+                    + step_val.get() * stage_direction * step_multiple
+                )
+            except tk.TclError:
                 return
             if self.stage_limits is True:
                 if temp > self.position_max[axis]:
@@ -427,7 +444,9 @@ class StageController(GUIController):
 
         return handler
 
-    def down_btn_handler(self, axis: str) -> Callable[[], None]:
+    def down_btn_handler(
+        self, axis: str, large_step: bool = False
+    ) -> Callable[[], None]:
         """This function generates command functions according to the desired axis
         to move.
 
@@ -436,12 +455,15 @@ class StageController(GUIController):
         axis : str
             Should be one of 'x', 'y', 'z', 'theta', 'f'
             position_axis += step_axis
+        large_step : bool
+            If True, the step size is 5x the normal step size.
 
         Returns
         -------
         handler : Callable[[], None]
             Function for setting desired stage positions in the View.
         """
+        step_multiple = 5 if large_step else 1
         position_val = self.widget_vals[axis]
         if axis == "x" or axis == "y":
             step_val = self.widget_vals["xy_step"]
@@ -453,8 +475,11 @@ class StageController(GUIController):
             to move."""
             stage_direction = -1 if self.flip_flags[axis] else 1
             try:
-                temp = float(position_val.get()) - step_val.get() * stage_direction
-            except tk._tkinter.TclError:
+                temp = (
+                    float(position_val.get())
+                    - step_val.get() * stage_direction * step_multiple
+                )
+            except tk.TclError:
                 return
             if self.stage_limits is True:
                 if temp < self.position_min[axis]:
@@ -465,25 +490,6 @@ class StageController(GUIController):
             if float(position_val.get()) != temp:
                 position_val.set(temp)
                 self.position_callback(axis)()
-
-        return handler
-
-    def xy_zero_btn_handler(self) -> Callable[[], None]:
-        """This function generates command functions to set xy position to zero
-
-        Returns
-        -------
-        handler : Callable[[], None]
-            Function for setting desired stage positions in the View.
-        """
-        x_val = self.widget_vals["x"]
-        y_val = self.widget_vals["y"]
-
-        def handler():
-            x_val.set(0)
-            y_val.set(0)
-            self.position_callback("x")()
-            self.position_callback("y")()
 
         return handler
 
@@ -533,7 +539,7 @@ class StageController(GUIController):
         self.view.force_enable_all_axes()
 
     def position_callback(
-        self, axis, *args: Iterable, **kwargs: dict
+        self, axis: str, *args: Iterable, **kwargs: dict
     ) -> Callable[[], None]:
         """Callback functions bind to position variables.
 
@@ -559,7 +565,7 @@ class StageController(GUIController):
         temp = self.view.get_widgets()
         widget = temp[axis].widget
 
-        def handler(*args):
+        def handler(*_):
             """Callback functions bind to position variables."""
             # check if focus on another window
             if not self.view.focus_get():
@@ -576,7 +582,7 @@ class StageController(GUIController):
                         self.position_max[axis]
                     ):
                         return
-            except tk._tkinter.TclError:
+            except tk.TclError:
                 if self.event_id[axis]:
                     self.view.after_cancel(self.event_id[axis])
                 return
@@ -619,7 +625,7 @@ class StageController(GUIController):
             ]["microscope_name"]
             try:
                 step_size = int(self.widget_vals[axis + "_step"].get())
-            except (ValueError, tk._tkinter.TclError):
+            except (ValueError, tk.TclError):
                 return
             self.stage_setting_dict[microscope_name][axis + "_step"] = step_size
 
@@ -627,6 +633,7 @@ class StageController(GUIController):
 
     def set_hover_descriptions(self) -> None:
         """Set hover descriptions for the stage tab"""
+
         self.view.xy_frame.up_y_btn.hover.setdescription(
             "Increases the Y value of the stage's position"
         )

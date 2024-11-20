@@ -74,7 +74,6 @@ class StageControlNotebook(ttk.Notebook):
         """
 
         super().__init__()
-        # super().__init__(self, frame, *args, **kwargs).grid(row=0, column=0)
 
         #: StageControlTab: Stage control tab.
         self.stage_control_tab = StageControlTab(self)
@@ -293,15 +292,17 @@ class OtherAxisFrame(ttk.Labelframe):
         self.up_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
 
         #: HoverTkButton: 5x Up button.
-        self.up_5x_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+        self.large_up_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
 
         #: HoverTkButton: Down button.
         self.down_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
 
         #: HoverTkButton: 5x Down button.
-        self.down_5x_btn = HoverTkButton(self, image=self.down_5x_image, borderwidth=0)
+        self.large_down_btn = HoverTkButton(
+            self, image=self.down_5x_image, borderwidth=0
+        )
 
-        #: LabelInput: Increment spinbox.
+        # #: LabelInput: Increment spinbox.
         self.increment_box = LabelInput(
             parent=self,
             input_class=ValidatedSpinbox,
@@ -315,19 +316,37 @@ class OtherAxisFrame(ttk.Labelframe):
         self.columnconfigure(index=2, weight=1)
 
         # Adding space between buttons
-        space_1 = ttk.Label(self, borderwidth=0)
+        custom_font = tk.font.Font(size=10)
+
+        if self.name.lower() == "theta":
+            space_1 = ttk.Label(
+                self,
+                borderwidth=0,
+                text="Step Size (" + "\N{DEGREE SIGN}" + ")",
+                font=custom_font,
+            )
+        else:
+            space_1 = ttk.Label(
+                self,
+                borderwidth=0,
+                text="Step Size (" + "\N{GREEK SMALL LETTER MU}" + "m)",
+                font=custom_font,
+            )
         space_2 = ttk.Label(self, borderwidth=0)
 
         # Griding out buttons
-        self.up_5x_btn.grid(row=0, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
+        self.large_up_btn.grid(row=0, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
         self.up_btn.grid(row=1, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
+
         space_1.grid(row=2, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
         self.increment_box.grid(
             row=3, column=1, rowspan=1, columnspan=1, padx=2, pady=2
         )
         space_2.grid(row=4, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
         self.down_btn.grid(row=5, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
-        self.down_5x_btn.grid(row=6, column=1, rowspan=1, columnspan=1, padx=2, pady=2)
+        self.large_down_btn.grid(
+            row=6, column=1, rowspan=1, columnspan=1, padx=2, pady=2
+        )
 
     def get_widget(self) -> LabelInput:
         """Returns the frame widget
@@ -350,8 +369,8 @@ class OtherAxisFrame(ttk.Labelframe):
         return {
             "up": self.up_btn,
             "down": self.down_btn,
-            # "5x_up": self.up_5x_btn,
-            # "5x_down": self.down_5x_btn
+            "large_up": self.large_up_btn,
+            "large_down": self.large_down_btn,
         }
 
     def toggle_button_states(
@@ -370,7 +389,7 @@ class OtherAxisFrame(ttk.Labelframe):
 
         if joystick_axes is None:
             joystick_axes = []
-        buttons = [self.up_btn, self.down_btn, self.up_5x_btn, self.down_5x_btn]
+        buttons = [self.up_btn, self.down_btn, self.large_up_btn, self.large_down_btn]
         button_state = "normal"
         image_list = self.normal_images
         hover_list = self.normal_hover_texts
@@ -632,32 +651,42 @@ class XYFrame(ttk.Labelframe):
         self.up_y_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
 
         #: HoverTkButton: Up button.
-        self.up_5y_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+        self.large_up_y_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
 
         #: HoverTkButton: Down button.
         self.down_y_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
 
         #: HoverTkButton: Down button.
-        self.down_5y_btn = HoverTkButton(self, image=self.down_5x_image, borderwidth=0)
+        self.large_down_y_btn = HoverTkButton(
+            self, image=self.down_5x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Right button.
         self.up_x_btn = HoverTkButton(self, image=self.right_image, borderwidth=0)
 
         #: HoverTkButton: Right 5x button.
-        self.up_5x_btn = HoverTkButton(self, image=self.right_5x_image, borderwidth=0)
+        self.large_up_x_btn = HoverTkButton(
+            self, image=self.right_5x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Left button.
         self.down_x_btn = HoverTkButton(self, image=self.left_image, borderwidth=0)
 
         #: HoverTkButton: Left 5x button.
-        self.down_5x_btn = HoverTkButton(self, image=self.left_5x_image, borderwidth=0)
+        self.large_down_x_btn = HoverTkButton(
+            self, image=self.left_5x_image, borderwidth=0
+        )
 
         #: LabelInput: Increment spinbox.
+        custom_font = tk.font.Font(size=10)
         self.increment_box = LabelInput(
             parent=self,
             input_class=ValidatedSpinbox,
             input_var=tk.DoubleVar(),
             input_args={"width": 5},
+            label="Step Size (\N{GREEK SMALL LETTER MU}m)",
+            label_pos="top",
+            label_args={"font": custom_font},
         )
 
         #: dict: Dictionary of the buttons for the x and y movement buttons.
@@ -667,7 +696,9 @@ class XYFrame(ttk.Labelframe):
         }
 
         # Up
-        self.up_5y_btn.grid(row=0, column=4, rowspan=2, columnspan=2, padx=2, pady=2)
+        self.large_up_y_btn.grid(
+            row=0, column=4, rowspan=2, columnspan=2, padx=2, pady=2
+        )
 
         self.up_y_btn.grid(row=2, column=4, rowspan=2, columnspan=2, padx=2, pady=2)
 
@@ -679,10 +710,14 @@ class XYFrame(ttk.Labelframe):
         # Down
         self.down_y_btn.grid(row=7, column=4, rowspan=2, columnspan=2, padx=2, pady=2)
 
-        self.down_5y_btn.grid(row=9, column=4, rowspan=2, columnspan=2, padx=2, pady=2)
+        self.large_down_y_btn.grid(
+            row=9, column=4, rowspan=2, columnspan=2, padx=2, pady=2
+        )
 
         # Left
-        self.down_5x_btn.grid(row=5, column=0, rowspan=2, columnspan=2, padx=2, pady=2)
+        self.large_down_x_btn.grid(
+            row=5, column=0, rowspan=2, columnspan=2, padx=2, pady=2
+        )
 
         self.down_x_btn.grid(
             row=5,
@@ -695,9 +730,12 @@ class XYFrame(ttk.Labelframe):
 
         # Right
         self.up_x_btn.grid(row=5, column=6, rowspan=2, columnspan=2, padx=2, pady=2)
-        self.up_5x_btn.grid(row=5, column=8, rowspan=2, columnspan=2, padx=2, pady=2)
+        self.large_up_x_btn.grid(
+            row=5, column=8, rowspan=2, columnspan=2, padx=2, pady=2
+        )
 
         # Increment spinbox
+        # TODO: Set in GUI Configuration File.
         self.increment_box.widget.set_precision(-1)
 
     def get_widget(self) -> LabelInput:
@@ -725,10 +763,10 @@ class XYFrame(ttk.Labelframe):
             "down_x_btn",
             "up_y_btn",
             "down_y_btn",
-            "up_5x_btn",
-            "down_5x_btn",
-            "up_5y_btn",
-            "down_5y_btn",
+            "large_up_x_btn",
+            "large_down_x_btn",
+            "large_up_y_btn",
+            "large_down_y_btn",
         ]
         return {k: getattr(self, k) for k in names}
 
