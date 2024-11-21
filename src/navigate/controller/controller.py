@@ -658,12 +658,7 @@ class Controller:
             Function-specific passes
         """
 
-        if command == "joystick_toggle":
-            """Toggles the joystick mode on/off."""
-            if self.stage_controller.joystick_is_on:
-                self.execute("stop_stage")
-
-        elif command == "stage":
+        if command == "stage":
             """Creates a thread and uses it to call the model to move stage
 
             Parameters

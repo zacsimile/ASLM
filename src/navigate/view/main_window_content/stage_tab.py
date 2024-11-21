@@ -104,6 +104,56 @@ class StageControlTab(tk.Frame):
         #: int: Index of the stage control tab.
         self.index = 2
 
+        #: tk.PhotoImage: Image for the up button.
+        self.up_1x_image = None
+
+        #: tk.PhotoImage: Image for the 5x up button.
+        self.up_5x_image = None
+
+        #: tk.PhotoImage: Image for the down button.
+        self.down_1x_image = None
+
+        #: tk.PhotoImage: Image for the 5x down button.
+        self.down_5x_image = None
+
+        #: tk.PhotoImage: Image for the left button.
+        self.left_1x_image = None
+
+        #: tk.PhotoImage: Image for the 5x left button.
+        self.left_5x_image = None
+
+        #: tk.PhotoImage: Image for the right button.
+        self.right_1x_image = None
+
+        #: tk.PhotoImage: Image for the 5x right button.
+        self.right_5x_image = None
+
+        #: tk.PhotoImage: Image for the disabled up button.
+        self.d_up_1x_image = None
+
+        #: tk.PhotoImage: Image for the disabled 5x button.
+        self.d_up_5x_image = None
+
+        #: tk.PhotoImage: Image for the disabled down button.
+        self.d_down_1x_image = None
+
+        #: tk.PhotoImage: Image for the disabled 5x down button.
+        self.d_down_5x_image = None
+
+        #: tk.PhotoImage: Image for the disabled left button.
+        self.d_left_1x_image = None
+
+        #: tk.PhotoImage: Image for the disabled 5x left button.
+        self.d_left_5x_image = None
+
+        #: tk.PhotoImage: Image for the disabled right button.
+        self.d_right_1x_image = None
+
+        #: tk.PhotoImage: Image for the disabled 5x right button.
+        self.d_right_5x_image = None
+
+        self.load_images()
+
         #: PositionFrame: Position frame.
         self.position_frame = PositionFrame(self)
         self.position_frame.grid(row=0, column=0, sticky=tk.NSEW, padx=3, pady=3)
@@ -129,6 +179,39 @@ class StageControlTab(tk.Frame):
             stage_control_tab=self, name="Stage Movement Interrupt"
         )
         self.stop_frame.grid(row=1, column=1, sticky=tk.NSEW, padx=3, pady=3)
+
+    def load_images(self) -> None:
+        """Load images for the stage control tab."""
+
+        # Path to arrows
+        image_directory = Path(__file__).resolve().parent
+        image_names = [
+            "up_1x_image",
+            "up_5x_image",
+            "down_1x_image",
+            "down_5x_image",
+            "left_1x_image",
+            "left_5x_image",
+            "right_1x_image",
+            "right_5x_image",
+            "d_up_1x_image",
+            "d_up_5x_image",
+            "d_down_1x_image",
+            "d_down_5x_image",
+            "d_left_1x_image",
+            "d_left_5x_image",
+            "d_right_1x_image",
+            "d_right_5x_image",
+        ]
+
+        for name in image_names:
+            setattr(
+                self,
+                f"{name}",
+                tk.PhotoImage(
+                    file=image_directory.joinpath("images", f"{name}.png")
+                ).subsample(2, 2),
+            )
 
     def get_widgets(self) -> dict:
         """Get all widgets in the stage control tab.
@@ -241,65 +324,28 @@ class OtherAxisFrame(ttk.Labelframe):
 
         #: str: Name of the axis.
         self.name = name
-        image_directory = Path(__file__).resolve().parent
 
-        #: tk.PhotoImage: Image for the up button.
-        self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "up.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the 5x up button.
-        self.up_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_up.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the down button.
-        self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "down.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the 5x up button.
-        self.down_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_down.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled up button.
-        self.d_up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup_disabled.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled down button.
-        self.d_down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown_disabled.png")
-        ).subsample(2, 2)
-
-        #: list: List of images for the normal state.
-        self.normal_images = [
-            self.up_image,
-            self.down_image,
-            self.up_5x_image,
-            self.down_5x_image,
-        ]
-
-        self.disabled_images = [
-            self.d_up_image,
-            self.d_down_image,
-        ]
-
-        # Setting up buttons for up, down and increment spinbox
+        #: StageControlTab: Stage control tab.
+        self.stage_control_tab = stage_control_tab
 
         #: HoverTkButton: Up button.
-        self.up_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
+        self.up_btn = HoverTkButton(
+            self, image=self.stage_control_tab.d_up_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: 5x Up button.
-        self.large_up_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+        self.large_up_btn = HoverTkButton(
+            self, image=self.stage_control_tab.up_5x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Down button.
-        self.down_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
+        self.down_btn = HoverTkButton(
+            self, image=self.stage_control_tab.down_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: 5x Down button.
         self.large_down_btn = HoverTkButton(
-            self, image=self.down_5x_image, borderwidth=0
+            self, image=self.stage_control_tab.down_5x_image, borderwidth=0
         )
 
         if self.name.lower() == "theta":
@@ -389,25 +435,44 @@ class OtherAxisFrame(ttk.Labelframe):
             A list containing the axes controlled by the joystick, if any
         """
 
+        normal_images = [
+            self.stage_control_tab.up_1x_image,
+            self.stage_control_tab.down_1x_image,
+            self.stage_control_tab.down_5x_image,
+            self.stage_control_tab.up_5x_image,
+        ]
+
+        disabled_images = [
+            self.stage_control_tab.d_up_1x_image,
+            self.stage_control_tab.d_down_1x_image,
+            self.stage_control_tab.d_down_5x_image,
+            self.stage_control_tab.d_up_5x_image,
+        ]
+
+        buttons = [
+            self.up_btn,
+            self.down_btn,
+            self.large_down_btn,
+            self.large_up_btn,
+        ]
+
         if joystick_axes is None:
             joystick_axes = []
-        buttons = [self.up_btn, self.down_btn, self.large_up_btn, self.large_down_btn]
+
+        # Default Button State
         button_state = "normal"
-        image_list = self.normal_images
-        hover_list = self.normal_hover_texts
+        image_list = normal_images
 
         if joystick_is_on:
             if (self.name.lower() in joystick_axes) or (
                 self.name.lower() == "focus" and "f" in joystick_axes
             ):
                 button_state = "disabled"
-                image_list = self.disabled_images
-                hover_list = self.disabled_hover_texts
+                image_list = disabled_images
 
         for k in range(len(buttons)):
             buttons[k]["state"] = button_state
             buttons[k].config(image=image_list[k])
-            buttons[k].hover.setdescription(hover_list[k])
 
 
 class PositionFrame(ttk.Labelframe):
@@ -557,126 +622,47 @@ class XYFrame(ttk.Labelframe):
             **kwargs,
         )
 
-        # Path to arrows
-        image_directory = Path(__file__).resolve().parent
-
-        #: tk.PhotoImage: Image for the up button.
-        self.up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "up.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the 5x up button.
-        self.up_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_up.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the down button.
-        self.down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "down.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the down button.
-        self.down_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_down.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the left button.
-        self.left_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "left.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the left button.
-        self.left_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_left.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the right button.
-        self.right_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "right.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the left button.
-        self.right_5x_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "5x_right.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled up button.
-        self.d_up_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyup_disabled.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled down button.
-        self.d_down_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greydown_disabled.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled left button.
-        self.d_left_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyleft_disabled.png")
-        ).subsample(2, 2)
-
-        #: tk.PhotoImage: Image for the disabled right button.
-        self.d_right_image = tk.PhotoImage(
-            file=image_directory.joinpath("images", "greyright_disabled.png")
-        ).subsample(2, 2)
-
-        #: list: List of images for the normal state.
-        self.normal_images = [
-            self.right_image,
-            self.left_image,
-            self.up_image,
-            self.down_image,
-        ]
-
-        #: list: List of hover texts for the normal state.
-        self.normal_hover_texts = [
-            "Decreases the X value of the stage's position",
-            "Increases the X value of the stage's position",
-            "Increases the Y value of the stage's position",
-            "Decreases the Y value of the stage's position",
-        ]
-
-        #: list: List of images for the disabled state.
-        self.disabled_images = [
-            self.d_right_image,
-            self.d_left_image,
-            self.d_up_image,
-            self.d_down_image,
-        ]
-
-        #: list: List of hover texts for the disabled state.
-        self.disabled_hover_texts = [
-            "Turn off Joystick Mode to enable" for i in range(4)
-        ]
+        #: StageControlTab: Stage control tab.
+        self.stage_control_tab = stage_control_tab
 
         #: HoverTkButton: Up button.
-        self.up_y_btn = HoverTkButton(self, image=self.up_image, borderwidth=0)
+        self.up_y_btn = HoverTkButton(
+            self, image=self.stage_control_tab.up_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Up button.
-        self.large_up_y_btn = HoverTkButton(self, image=self.up_5x_image, borderwidth=0)
+        self.large_up_y_btn = HoverTkButton(
+            self, image=self.stage_control_tab.up_5x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Down button.
-        self.down_y_btn = HoverTkButton(self, image=self.down_image, borderwidth=0)
+        self.down_y_btn = HoverTkButton(
+            self, image=self.stage_control_tab.down_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Down button.
         self.large_down_y_btn = HoverTkButton(
-            self, image=self.down_5x_image, borderwidth=0
+            self, image=self.stage_control_tab.down_5x_image, borderwidth=0
         )
 
         #: HoverTkButton: Right button.
-        self.up_x_btn = HoverTkButton(self, image=self.right_image, borderwidth=0)
+        self.up_x_btn = HoverTkButton(
+            self, image=self.stage_control_tab.right_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Right 5x button.
         self.large_up_x_btn = HoverTkButton(
-            self, image=self.right_5x_image, borderwidth=0
+            self, image=self.stage_control_tab.right_5x_image, borderwidth=0
         )
 
         #: HoverTkButton: Left button.
-        self.down_x_btn = HoverTkButton(self, image=self.left_image, borderwidth=0)
+        self.down_x_btn = HoverTkButton(
+            self, image=self.stage_control_tab.left_1x_image, borderwidth=0
+        )
 
         #: HoverTkButton: Left 5x button.
         self.large_down_x_btn = HoverTkButton(
-            self, image=self.left_5x_image, borderwidth=0
+            self, image=self.stage_control_tab.left_5x_image, borderwidth=0
         )
 
         #: LabelInput: Increment spinbox.
@@ -692,8 +678,18 @@ class XYFrame(ttk.Labelframe):
 
         #: dict: Dictionary of the buttons for the x and y movement buttons.
         self.button_axes_dict = {
-            "x": [self.up_x_btn, self.down_x_btn],
-            "y": [self.up_y_btn, self.down_y_btn],
+            "x": [
+                self.up_x_btn,
+                self.down_x_btn,
+                self.large_up_x_btn,
+                self.large_down_x_btn,
+            ],
+            "y": [
+                self.up_y_btn,
+                self.down_y_btn,
+                self.large_up_y_btn,
+                self.large_down_y_btn,
+            ],
         }
 
         # Up
@@ -736,7 +732,6 @@ class XYFrame(ttk.Labelframe):
         )
 
         # Increment spinbox
-        # TODO: Set in GUI Configuration File.
         self.increment_box.widget.set_precision(-1)
 
     def get_widget(self) -> LabelInput:
@@ -785,24 +780,48 @@ class XYFrame(ttk.Labelframe):
         if joystick_axes is None:
             joystick_axes = []
 
-        for axis in self.button_axes_dict.keys():
-            if axis in joystick_axes:
-                buttons = self.button_axes_dict[axis]
-                axis_ascii = ord(axis)
-                if joystick_is_on:
-                    button_state = "disabled"
-                    image_list = self.disabled_images
-                    hover_list = self.disabled_hover_texts
-                else:
-                    button_state = "normal"
-                    image_list = self.normal_images
-                    hover_list = self.normal_hover_texts
-                for k in range(len(buttons)):
-                    buttons[k]["state"] = button_state
-                    buttons[k].config(image=image_list[2 * (axis_ascii % 2) + k])
-                    buttons[k].hover.setdescription(
-                        hover_list[2 * (axis_ascii % 2) + k]
-                    )
+            # Default Button State
+        button_state = "normal"
+        image_list = {
+            "x": [
+                self.stage_control_tab.right_1x_image,
+                self.stage_control_tab.left_1x_image,
+                self.stage_control_tab.right_5x_image,
+                self.stage_control_tab.left_5x_image,
+            ],
+            "y": [
+                self.stage_control_tab.up_1x_image,
+                self.stage_control_tab.down_1x_image,
+                self.stage_control_tab.up_5x_image,
+                self.stage_control_tab.down_5x_image,
+            ],
+        }
+
+        if joystick_is_on:
+            if "x" in joystick_axes:
+                button_state = "disabled"
+                image_list["x"] = [
+                    self.stage_control_tab.d_right_1x_image,
+                    self.stage_control_tab.d_left_1x_image,
+                    self.stage_control_tab.d_right_5x_image,
+                    self.stage_control_tab.d_left_5x_image,
+                ]
+            if "y" in joystick_axes:
+                button_state = "disabled"
+                image_list["y"] = [
+                    self.stage_control_tab.d_up_1x_image,
+                    self.stage_control_tab.d_down_1x_image,
+                    self.stage_control_tab.d_up_5x_image,
+                    self.stage_control_tab.d_down_5x_image,
+                ]
+
+        for k, button in enumerate(self.button_axes_dict["x"]):
+            button["state"] = button_state
+            button.config(image=image_list["x"][k])
+
+        for k, button in enumerate(self.button_axes_dict["y"]):
+            button["state"] = button_state
+            button.config(image=image_list["y"][k])
 
 
 class StopFrame(ttk.Labelframe):
@@ -871,10 +890,6 @@ class StopFrame(ttk.Labelframe):
         joystick_axes : Optional[list]
             A list containing the axes controlled by the joystick, if any
         """
-        if joystick_axes is None:
-            # TODO: Look into this...
-            _ = []
-
         if joystick_is_on:
             self.joystick_btn.config(text="Disable Joystick")
         else:
