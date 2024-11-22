@@ -630,8 +630,6 @@ class StageController(GUIController):
 
         for frame_prefix, axis in zip(frames, axes):
             step_value = self.widget_vals[f"{frame_prefix}_step"].get()
-            stage_direction = -1 if self.flip_flags[axis] else 1
-            step_value *= stage_direction
             if frame_prefix == "xy":
                 btn_suffix = f"{axis}_btn"
             else:
