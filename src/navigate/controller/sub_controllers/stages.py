@@ -605,8 +605,6 @@ class StageController(GUIController):
         handler : Callable[[], None]
             Function to update step size in experiment.yml.
         """
-        self.set_hover_descriptions()
-
         def func(*args):
             """Callback functions bind to step size variables."""
             microscope_name = self.parent_controller.configuration["experiment"][
@@ -617,97 +615,36 @@ class StageController(GUIController):
             except (ValueError, tk.TclError):
                 return
             self.stage_setting_dict[microscope_name][axis + "_step"] = step_size
+            # update hover descriptions
+            self.set_hover_descriptions()
 
         return func
 
     def set_hover_descriptions(self) -> None:
         """Set hover descriptions for the stage tab"""
 
-        # XY Axis
-        self.view.xy_frame.up_y_btn.hover.setdescription(
-            f"Move {self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m in Y."
-        )
-        self.view.xy_frame.down_y_btn.hover.setdescription(
-            f"Move {-1 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Y."
-        )
-        self.view.xy_frame.large_up_y_btn.hover.setdescription(
-            f"Move {5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Y."
-        )
-        self.view.xy_frame.large_down_y_btn.hover.setdescription(
-            f"Move {-5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Y."
-        )
+        frames = ["xy", "xy", "z", "theta", "f"]
+        axes = ["x", "y", "z", "theta", "f"]
+        btn_prefix = ["large_up", "large_down", "up", "down"]
+        step_multiple = [5, -5, 1, -1]
 
-        # X Axis
-        self.view.xy_frame.up_x_btn.hover.setdescription(
-            f"Move {self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m in X."
-        )
-        self.view.xy_frame.down_x_btn.hover.setdescription(
-            f"Move {-1 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in X."
-        )
-        self.view.xy_frame.large_up_x_btn.hover.setdescription(
-            f"Move {5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in X."
-        )
-        self.view.xy_frame.large_down_x_btn.hover.setdescription(
-            f"Move {-5 * self.widget_vals['xy_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in X."
-        )
+        for frame_prefix, axis in zip(frames, axes):
+            step_value = self.widget_vals[f"{frame_prefix}_step"].get()
+            stage_direction = -1 if self.flip_flags[axis] else 1
+            step_value *= stage_direction
+            if frame_prefix == "xy":
+                btn_suffix = f"{axis}_btn"
+            else:
+                btn_suffix = "btn"
 
-        # Z Axis
-        self.view.z_frame.up_btn.hover.setdescription(
-            f"Move {self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m in Z."
-        )
-        self.view.z_frame.down_btn.hover.setdescription(
-            f"Move {-1 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Z."
-        )
-        self.view.z_frame.large_up_btn.hover.setdescription(
-            f"Move {5 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Z."
-        )
-        self.view.z_frame.large_down_btn.hover.setdescription(
-            f"Move {-5 * self.widget_vals['z_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in Z."
-        )
+            if axis == "theta":
+                description = f"\N{DEGREE SIGN} in \N{GREEK CAPITAL LETTER THETA}."
+            else:
+                description = f"\N{GREEK SMALL LETTER MU}m in {axis.upper()}."
 
-        # F Axis
-        self.view.f_frame.up_btn.hover.setdescription(
-            f"Move {self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m in F."
-        )
-        self.view.f_frame.down_btn.hover.setdescription(
-            f"Move {-1 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in F."
-        )
-        self.view.f_frame.large_up_btn.hover.setdescription(
-            f"Move {5 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in F."
-        )
-        self.view.f_frame.large_down_btn.hover.setdescription(
-            f"Move {-5 * self.widget_vals['f_step'].get()} \N{GREEK SMALL LETTER MU}m "
-            f"in F."
-        )
-
-        # Theta Axis
-        self.view.theta_frame.up_btn.hover.setdescription(
-            f"Move {1 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
-            f"in \N{GREEK CAPITAL LETTER THETA}."
-        )
-        self.view.theta_frame.down_btn.hover.setdescription(
-            f"Move {-1 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
-            f"in \N{GREEK CAPITAL LETTER THETA}."
-        )
-        self.view.theta_frame.large_up_btn.hover.setdescription(
-            f"Move {5 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
-            f"in \N{GREEK CAPITAL LETTER THETA}."
-        )
-        self.view.theta_frame.large_down_btn.hover.setdescription(
-            f"Move {-5 * self.widget_vals['theta_step'].get()} \N{DEGREE SIGN} "
-            f"in \N{GREEK CAPITAL LETTER THETA}."
-        )
+            for i in range(len(btn_prefix)):
+                exec(f"self.view.{frame_prefix}_frame.{btn_prefix[i]}_{btn_suffix}.hover."
+                     f"setdescription('Move {step_multiple[i] * step_value} {description}')")
 
         # Position Frame
         self.view.position_frame.inputs["y"].widget.hover.setdescription(
