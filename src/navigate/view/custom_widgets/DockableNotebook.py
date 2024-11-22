@@ -58,7 +58,7 @@ class DockableNotebook(ttk.Notebook):
         ----------
         parent: Tk parent widget.
             The parent widget being passed down for hierarchy and organization.
-            Typically a ttk.Frame or tk.Frame.
+            Typically, a ttk.Frame or tk.Frame.
         root : Tk top-level widget.
             Tk.tk GUI instance.
         *args :
