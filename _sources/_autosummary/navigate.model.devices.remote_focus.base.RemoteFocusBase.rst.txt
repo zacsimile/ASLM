@@ -1,0 +1,41 @@
+navigate.model.devices.remote\_focus.base.RemoteFocusBase
+=========================================================
+
+.. currentmodule:: navigate.model.devices.remote_focus.base
+
+.. autoclass:: RemoteFocusBase
+   :members:
+   :show-inheritance:
+   :inherited-members:
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RemoteFocusBase.__init__
+      ~RemoteFocusBase.adjust
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RemoteFocusBase.device_connection
+      ~RemoteFocusBase.configuration
+      ~RemoteFocusBase.microscope_name
+      ~RemoteFocusBase.device_config
+      ~RemoteFocusBase.sample_rate
+      ~RemoteFocusBase.sweep_time
+      ~RemoteFocusBase.camera_delay
+      ~RemoteFocusBase.remote_focus_max_voltage
+      ~RemoteFocusBase.remote_focus_min_voltage
+      ~RemoteFocusBase.waveform_dict
+   
+   

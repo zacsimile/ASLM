@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>navigate.model.data_sources.data_source.DataSource &mdash; navigate 0.0.6 documentation</title>
+  <title>navigate.model.data_sources.data_source.DataSource &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="navigate.model.data_sources.pyramidal_data_source" href="navigate.model.data_sources.pyramidal_data_source.html" />
-    <link rel="prev" title="navigate.model.data_sources.data_source" href="navigate.model.data_sources.data_source.html" /> 
+    <link rel="prev" title="navigate.model.data_sources.data_source.DataReader" href="navigate.model.data_sources.data_source.DataReader.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -72,22 +72,24 @@
 <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-plugin-template">navigate Plugin Template</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-at-scale">navigate at Scale</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-constant-velocity-acquisition">navigate Constant Velocity Acquisition</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-ilastik-server">navigate ilastik Server</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-photoactivation">navigate Photoactivation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Implemented Microscopes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Software API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="navigate.config.html">navigate.config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.controller.html">navigate.controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="navigate.model.html">navigate.model</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.analysis.html">navigate.model.analysis</a></li>
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.concurrency.html">navigate.model.concurrency</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="navigate.model.data_sources.html">navigate.model.data_sources</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.logger.html">navigate.model.data_sources.logger</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.get_data_source.html">navigate.model.data_sources.get_data_source</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.data_sources.bdv_data_source.html">navigate.model.data_sources.bdv_data_source</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="navigate.model.data_sources.data_source.html">navigate.model.data_sources.data_source</a></li>
@@ -144,17 +146,17 @@
 <h1>navigate.model.data_sources.data_source.DataSource<a class="headerlink" href="#navigate-model-data-sources-data-source-datasource" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.data_sources.data_source.</span></span><span class="sig-name descname"><span class="pre">DataSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.data_sources.data_source.</span></span><span class="sig-name descname"><span class="pre">DataSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'w'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Base class for data sources, which can be of arbitrary file type.</p>
 <p>This implements read and write methods for accessing each data source.
 We expect to open the file for read or write during initialization.</p>
 <p>file_name  stores the name of the file to read/write from
 data       stores a pointer to the actual data in the data source and
-metdata    stores a pointer to the metadata.</p>
+metadata    stores a pointer to the metadata.</p>
 <p>Concept and some of the code borrowed from python-microscopy
 (<a class="reference external" href="https://github.com/python-microscopy/python-microscopy/">https://github.com/python-microscopy/python-microscopy/</a>).</p>
 <dl class="field-list simple">
@@ -176,22 +178,25 @@ metdata    stores a pointer to the metadata.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.close" title="navigate.model.data_sources.data_source.DataSource.close"><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code></a>()</p></td>
 <td><p>Clean up any leftover file pointers, etc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.get_shape_from_metadata" title="navigate.model.data_sources.data_source.DataSource.get_shape_from_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_shape_from_metadata</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.get_data" title="navigate.model.data_sources.data_source.DataSource.get_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_data</span></code></a>([timepoint, position, channel, z, ...])</p></td>
+<td><p>Get data according to timepoint, position, channel and z-axis id</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.get_shape_from_metadata" title="navigate.model.data_sources.data_source.DataSource.get_shape_from_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_shape_from_metadata</span></code></a>()</p></td>
 <td><p>Get the shape of the data source from the metadata.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.read" title="navigate.model.data_sources.data_source.DataSource.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.read" title="navigate.model.data_sources.data_source.DataSource.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>()</p></td>
 <td><p>Read data from file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.set_metadata" title="navigate.model.data_sources.data_source.DataSource.set_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata</span></code></a>(metadata_config)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.set_metadata" title="navigate.model.data_sources.data_source.DataSource.set_metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata</span></code></a>(metadata_config)</p></td>
 <td><p>Sets the metadata</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment" title="navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata_from_configuration_experiment</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment" title="navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_metadata_from_configuration_experiment</span></code></a>(...)</p></td>
 <td><p>Sets the metadata from according to the microscope configuration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.setup" title="navigate.model.data_sources.data_source.DataSource.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.setup" title="navigate.model.data_sources.data_source.DataSource.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>()</p></td>
 <td><p>Additional steps for establishing the initial file setup.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.write" title="navigate.model.data_sources.data_source.DataSource.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(data, **kw)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.write" title="navigate.model.data_sources.data_source.DataSource.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(data, **kw)</p></td>
 <td><p>Writes 2D image to the data source.</p></td>
 </tr>
 </tbody>
@@ -206,7 +211,7 @@ metdata    stores a pointer to the metadata.</p>
 <td><p>Getter for the mode of the data source.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.nbytes" title="navigate.model.data_sources.data_source.DataSource.nbytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nbytes</span></code></a></p></td>
-<td><p>Getter for the size of this data source in bytes.&quot;</p></td>
+<td><p>Getter for the size of this data source in bytes.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.shape" title="navigate.model.data_sources.data_source.DataSource.shape"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape</span></code></a></p></td>
 <td><p>Getter for the shape as XYCZT.</p></td>
@@ -245,16 +250,16 @@ metdata    stores a pointer to the metadata.</p>
 <td><p>Size of the data source in x dimension.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.shape_y" title="navigate.model.data_sources.data_source.DataSource.shape_y"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape_y</span></code></a></p></td>
-<td><p>Size of the data source in x dimension.</p></td>
+<td><p>Size of the data source in y dimension.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.shape_z" title="navigate.model.data_sources.data_source.DataSource.shape_z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape_z</span></code></a></p></td>
-<td><p>Size of the data source in x dimension.</p></td>
+<td><p>Size of the data source in z dimension.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.shape_t" title="navigate.model.data_sources.data_source.DataSource.shape_t"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape_t</span></code></a></p></td>
-<td><p>Size of the data source in x dimension.</p></td>
+<td><p>Size of the data source in t dimension.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.shape_c" title="navigate.model.data_sources.data_source.DataSource.shape_c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shape_c</span></code></a></p></td>
-<td><p>Size of the data source in x dimension.</p></td>
+<td><p>Size of the data source in c dimension.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#navigate.model.data_sources.data_source.DataSource.positions" title="navigate.model.data_sources.data_source.DataSource.positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">positions</span></code></a></p></td>
 <td><p>Number of positions in the data source.</p></td>
@@ -265,6 +270,33 @@ metdata    stores a pointer to the metadata.</p>
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.close">
 <span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.close" title="Permalink to this definition"></a></dt>
 <dd><p>Clean up any leftover file pointers, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timepoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">position</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">_SupportsArray</span><span class="p"><span class="pre">[</span></span><span class="pre">dtype</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_NestedSequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bytes</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.get_data" title="Permalink to this definition"></a></dt>
+<dd><p>Get data according to timepoint, position, channel and z-axis id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timepoint</strong> (<em>int</em>) – The timepoint value</p></li>
+<li><p><strong>position</strong> (<em>int</em>) – The position id in multi-position table</p></li>
+<li><p><strong>channel</strong> (<em>int</em>) – The channel id</p></li>
+<li><p><strong>z</strong> (<em>int</em>) – The index of Z in a Z-stack.
+Return all z if -1.</p></li>
+<li><p><strong>resolution</strong> (<em>int</em>) – values from 1, 2, 4, 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – Image data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>npt.ArrayLike</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>NotImplementedError</strong> – If not implemented in a derived class.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -297,11 +329,14 @@ metdata    stores a pointer to the metadata.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment">
-<span class="sig-name descname"><span class="pre">set_metadata_from_configuration_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">set_metadata_from_configuration_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">microscope_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.set_metadata_from_configuration_experiment" title="Permalink to this definition"></a></dt>
 <dd><p>Sets the metadata from according to the microscope configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>configuration</strong> (<em>DictProxy</em>) – Configuration experiment.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>configuration</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Configuration experiment.</p></li>
+<li><p><strong>microscope_name</strong> (<em>str</em>) – The microscope name</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -468,12 +503,12 @@ float: Pixel size in z dimension (microns).</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.nbytes">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">nbytes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.nbytes" title="Permalink to this definition"></a></dt>
-<dd><p>Getter for the size of this data source in bytes.”</p>
+<dd><p>Getter for the size of this data source in bytes.</p>
 <p>Does not account for pyramidal data sources. That process is handled by the
 bdv_data_source class, which is a child of this class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Size of this data source in bytes.</p>
+<dd class="field-odd"><p><strong>total_bytes</strong> – Size of this data source in bytes.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>int</p>
@@ -509,11 +544,7 @@ bdv_data_source class, which is a child of this class.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.shape_c">
 <span class="sig-name descname"><span class="pre">shape_c</span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.shape_c" title="Permalink to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.
-int: Size of the data source in y dimension.
-int: Size of the data source in z dimension.
-int: Size of the data source in t dimension.
-int: Size of the data source in c dimension.</p>
+<dd><p>Size of the data source in c dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -524,11 +555,7 @@ int: Size of the data source in c dimension.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.shape_t">
 <span class="sig-name descname"><span class="pre">shape_t</span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.shape_t" title="Permalink to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.
-int: Size of the data source in y dimension.
-int: Size of the data source in z dimension.
-int: Size of the data source in t dimension.
-int: Size of the data source in c dimension.</p>
+<dd><p>Size of the data source in t dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -539,11 +566,7 @@ int: Size of the data source in c dimension.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.shape_x">
 <span class="sig-name descname"><span class="pre">shape_x</span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.shape_x" title="Permalink to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.
-int: Size of the data source in y dimension.
-int: Size of the data source in z dimension.
-int: Size of the data source in t dimension.
-int: Size of the data source in c dimension.</p>
+<dd><p>Size of the data source in x dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -554,11 +577,7 @@ int: Size of the data source in c dimension.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.shape_y">
 <span class="sig-name descname"><span class="pre">shape_y</span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.shape_y" title="Permalink to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.
-int: Size of the data source in y dimension.
-int: Size of the data source in z dimension.
-int: Size of the data source in t dimension.
-int: Size of the data source in c dimension.</p>
+<dd><p>Size of the data source in y dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -569,11 +588,7 @@ int: Size of the data source in c dimension.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="navigate.model.data_sources.data_source.DataSource.shape_z">
 <span class="sig-name descname"><span class="pre">shape_z</span></span><a class="headerlink" href="#navigate.model.data_sources.data_source.DataSource.shape_z" title="Permalink to this definition"></a></dt>
-<dd><p>Size of the data source in x dimension.
-int: Size of the data source in y dimension.
-int: Size of the data source in z dimension.
-int: Size of the data source in t dimension.
-int: Size of the data source in c dimension.</p>
+<dd><p>Size of the data source in z dimension.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -603,7 +618,7 @@ int: Size of the data source in c dimension.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="navigate.model.data_sources.data_source.html" class="btn btn-neutral float-left" title="navigate.model.data_sources.data_source" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="navigate.model.data_sources.data_source.DataReader.html" class="btn btn-neutral float-left" title="navigate.model.data_sources.data_source.DataReader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="navigate.model.data_sources.pyramidal_data_source.html" class="btn btn-neutral float-right" title="navigate.model.data_sources.pyramidal_data_source" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

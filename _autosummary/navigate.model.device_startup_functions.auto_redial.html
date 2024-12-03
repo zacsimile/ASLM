@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>navigate.model.device_startup_functions.auto_redial &mdash; navigate 0.0.6 documentation</title>
+  <title>navigate.model.device_startup_functions.auto_redial &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -72,17 +72,18 @@
 <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-plugin-template">navigate Plugin Template</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-at-scale">navigate at Scale</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-constant-velocity-acquisition">navigate Constant Velocity Acquisition</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-ilastik-server">navigate ilastik Server</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-photoactivation">navigate Photoactivation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Implemented Microscopes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Software API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="navigate.config.html">navigate.config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.controller.html">navigate.controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="navigate.model.html">navigate.model</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.analysis.html">navigate.model.analysis</a></li>
@@ -108,6 +109,7 @@
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.device_startup_functions.start_stage.html">navigate.model.device_startup_functions.start_stage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.device_startup_functions.start_zoom.html">navigate.model.device_startup_functions.start_zoom</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.device_startup_functions.DummyDeviceConnection.html">navigate.model.device_startup_functions.DummyDeviceConnection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.device_startup_functions.SerialConnectionFactory.html">navigate.model.device_startup_functions.SerialConnectionFactory</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.devices.html">navigate.model.devices</a></li>
@@ -156,28 +158,34 @@
 <h1>navigate.model.device_startup_functions.auto_redial<a class="headerlink" href="#navigate-model-device-startup-functions-auto-redial" title="Permalink to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="navigate.model.device_startup_functions.auto_redial">
-<span class="sig-prename descclassname"><span class="pre">navigate.model.device_startup_functions.</span></span><span class="sig-name descname"><span class="pre">auto_redial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_tries=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exception=&lt;class</span> <span class="pre">'Exception'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.device_startup_functions.auto_redial" title="Permalink to this definition"></a></dt>
-<dd><p>Retries connections to a startup device defined by func n_tries times.</p>
+<span class="sig-prename descclassname"><span class="pre">navigate.model.device_startup_functions.</span></span><span class="sig-name descname"><span class="pre">auto_redial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">func:</span> <span class="pre">~typing.Callable[[...],</span> <span class="pre">~typing.Any],</span> <span class="pre">args:</span> <span class="pre">~typing.Tuple[~typing.Any,</span> <span class="pre">...],</span> <span class="pre">n_tries:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">10,</span> <span class="pre">exception:</span> <span class="pre">~typing.Type[Exception]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'Exception'&gt;,</span> <span class="pre">**kwargs:</span> <span class="pre">~typing.Any</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#navigate.model.device_startup_functions.auto_redial" title="Permalink to this definition"></a></dt>
+<dd><p>Retries connections to a startup device defined by <cite>func</cite> for a specified
+number of attempts.</p>
+<p>This function attempts to execute the connection function <cite>func</cite> up to <cite>n_tries</cite>
+times. If an exception occurs, it retries the connection after a brief pause,
+logging each failure. If the connection partially succeeds, it cleans up any objects
+before retrying.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>func</strong> (<em>function</em><em> or </em><em>class</em>) – The function or class (__init__() function) that connects to a device.</p></li>
-<li><p><strong>args</strong> (<em>tuple</em>) – Arguments to function or class</p></li>
-<li><p><strong>n_tries</strong> (<em>int</em>) – The number of tries to redial.</p></li>
-<li><p><strong>exception</strong> (<em>inherits from BaseException</em>) – An exception type to check on each connection attempt.</p></li>
+<li><p><strong>func</strong> (<em>Callable</em><em>[</em><em>...</em><em>, </em><em>Any</em><em>]</em>) – The function or class (<cite>__init__()</cite> method) that connects to a device.</p></li>
+<li><p><strong>args</strong> (<em>Tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em>) – Positional arguments to pass to the <cite>func</cite>.</p></li>
+<li><p><strong>n_tries</strong> (<em>int</em>) – The number of attempts to retry the connection. Default is 10.</p></li>
+<li><p><strong>exception</strong> (<em>Type</em><em>[</em><em>Exception</em><em>]</em>) – The exception type to catch and handle during connection attempts.
+Default is <cite>Exception</cite>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>Any</em>) – Additional keyword arguments passed to <cite>func</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>val</strong> – Result of func</p>
+<dd class="field-even"><p>The result of the successful execution of <cite>func</cite>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>object</p>
+<dd class="field-odd"><p>Any</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exception</strong> – If all connection attempts fail, the specified <cite>exception</cite> is raised.</p>
 </dd>
 </dl>
-<p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auto_redial</span><span class="p">(</span><span class="n">DCAM</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,),</span> <span class="n">exception</span><span class="o">=</span><span class="ne">Exception</span><span class="p">)</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </section>

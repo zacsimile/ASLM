@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lasers &mdash; navigate 0.0.6 documentation</title>
+  <title>Lasers &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
 
@@ -60,6 +60,7 @@
 <li class="toctree-l2"><a class="reference internal" href="remote_focus.html">Remote Focusing Devices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="stage.html">Stages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="filter_wheel.html">Filter Wheels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dichroic.html">Dichroic Turrets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="galvo.html">Galvanometers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Lasers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#analog-digital-controlled-lasers">Analog/Digital-Controlled Lasers</a></li>
@@ -88,10 +89,12 @@
 <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-plugin-template">navigate Plugin Template</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-at-scale">navigate at Scale</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-constant-velocity-acquisition">navigate Constant Velocity Acquisition</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-ilastik-server">navigate ilastik Server</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-photoactivation">navigate Photoactivation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -147,6 +150,14 @@ should be set in the mixed modulation mode.</p>
 <p>Coherent Obis lasers should be set in the mixed modulation mode. It is not uncommon
 for the slew rate from the data acquisition card to be insufficient to drive the modulation
 of the laser if the laser is set to an analog modulation mode.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Users have reported intermittent connection issues at random intervals arising
+from USB-based communication instance with Coherent Obis controllers. Specifically,
+these errors were observed as a conflict over COM port assignments between the
+Coherent OBIS laser and the ASI Tiger controller. These issues are discussed in
+depth in the <a class="reference internal" href="../communication_challenges.html#obis-tiger-connection"><span class="std std-ref">communication challenges</span></a> section.</p>
 </div>
 <details class="summary-configuration-file">
 <summary>Configuration File</summary><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">microscopes</span><span class="p">:</span>

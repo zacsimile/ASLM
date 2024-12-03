@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Acquiring Data &mdash; navigate 0.0.6 documentation</title>
+  <title>Acquiring Data &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -23,7 +23,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Acquiring Data" href="acquiring_guide.html" />
-    <link rel="prev" title="Multiple Cameras" href="multiple_cameras.html" /> 
+    <link rel="prev" title="Hardware Troubleshooting" href="communication_challenges.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,7 +60,9 @@
 <li class="toctree-l1"><a class="reference internal" href="setup_microscope.html">Setting Up A Microscope</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Acquiring Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="acquiring_guide.html">Acquiring Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html">Reconfigurable Acquisitions Using Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html">Reconfigurable Acquisitions Using Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/example_feature_lists.html">Example Feature Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="case_studies/case_studies_home.html">Case Studies</a></li>
@@ -76,10 +78,12 @@
 <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-plugin-template">navigate Plugin Template</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-at-scale">navigate at Scale</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-constant-velocity-acquisition">navigate Constant Velocity Acquisition</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-ilastik-server">navigate ilastik Server</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-photoactivation">navigate Photoactivation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul>
@@ -120,13 +124,22 @@
 <li class="toctree-l2"><a class="reference internal" href="acquiring_guide.html#analysis-pipeline">Analysis Pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Reconfigurable Acquisitions Using Features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="features.html#what-are-features">What are features?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#customizing-feature-functionality-in-the-gui">Customizing Feature Functionality in the GUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#creating-a-custom-feature-list-in-the-gui">Creating a Custom Feature List in the GUI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#editing-feature-lists-on-the-fly">Editing Feature Lists on the Fly</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#deleting-feature-lists">Deleting Feature Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="features.html#text-representation-of-feature-lists">Text Representation of Feature Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/features.html">Reconfigurable Acquisitions Using Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#what-are-features">What are features?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#customizing-feature-functionality-in-the-gui">Customizing Feature Functionality in the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#creating-a-custom-feature-list-in-the-gui">Creating a Custom Feature List in the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#editing-feature-lists-on-the-fly">Editing Feature Lists on the Fly</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#deleting-feature-lists">Deleting Feature Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/features.html#text-representation-of-feature-lists">Text Representation of Feature Lists</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="features/example_feature_lists.html">Example Feature Lists</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="features/example_feature_lists.html#multi-position-imaging-with-automated-autofocus">Multi-Position Imaging with Automated Autofocus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="features/example_feature_lists.html#time-lapse-imaging-with-automated-autofocus">Time-Lapse Imaging with Automated Autofocus</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="known_issues.html">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#slow-channel-switching">Slow Channel Switching</a></li>
 </ul>
 </li>
 </ul>
@@ -137,7 +150,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="multiple_cameras.html" class="btn btn-neutral float-left" title="Multiple Cameras" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="communication_challenges.html" class="btn btn-neutral float-left" title="Hardware Troubleshooting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="acquiring_guide.html" class="btn btn-neutral float-right" title="Acquiring Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

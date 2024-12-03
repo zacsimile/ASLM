@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>navigate.model.features.feature_related_functions.SharedList &mdash; navigate 0.0.6 documentation</title>
+  <title>navigate.model.features.feature_related_functions.SharedList &mdash; navigate 0.0.8 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
 
@@ -22,7 +22,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="navigate.model.metadata_sources" href="navigate.model.metadata_sources.html" />
+    <link rel="next" title="navigate.model.features.update_setting" href="navigate.model.features.update_setting.html" />
     <link rel="prev" title="navigate.model.features.feature_related_functions.load_dynamic_parameter_functions" href="navigate.model.features.feature_related_functions.load_dynamic_parameter_functions.html" /> 
 </head>
 
@@ -72,17 +72,18 @@
 <p class="caption" role="heading"><span class="caption-text">Plugins</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-plugin-template">navigate Plugin Template</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-confocal-projection">navigate Confocal Projection</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-at-scale">navigate at Scale</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore Plugin</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-constant-velocity-acquisition">navigate Constant Velocity Acquisition</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-mmcore-plugin">navigate MMCore</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-ilastik-server">navigate ilastik Server</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/TheDeanLab/navigate-photoactivation">navigate Photoactivation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reference</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../implementations/implementations.html">Implemented Microscopes</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">Software API</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="navigate.config.html">navigate.config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="navigate.controller.html">navigate.controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="navigate.log_files.html">navigate.log_files</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="navigate.model.html">navigate.model</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="navigate.model.analysis.html">navigate.model.analysis</a></li>
@@ -95,12 +96,12 @@
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.auto_tile_scan.html">navigate.model.features.auto_tile_scan</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.autofocus.html">navigate.model.features.autofocus</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.common_features.html">navigate.model.features.common_features</a></li>
-<li class="toctree-l4"><a class="reference internal" href="navigate.model.features.cva_conpro.html">navigate.model.features.cva_conpro</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.feature_container.html">navigate.model.features.feature_container</a></li>
 <li class="toctree-l4 current"><a class="reference internal" href="navigate.model.features.feature_related_functions.html">navigate.model.features.feature_related_functions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.image_writer.html">navigate.model.features.image_writer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.remove_empty_tiles.html">navigate.model.features.remove_empty_tiles</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.restful_features.html">navigate.model.features.restful_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="navigate.model.features.update_setting.html">navigate.model.features.update_setting</a></li>
 <li class="toctree-l4"><a class="reference internal" href="navigate.model.features.volume_search.html">navigate.model.features.volume_search</a></li>
 </ul>
 </li>
@@ -149,7 +150,7 @@
 <h1>navigate.model.features.feature_related_functions.SharedList<a class="headerlink" href="#navigate-model-features-feature-related-functions-sharedlist" title="Permalink to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="navigate.model.features.feature_related_functions.SharedList">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.feature_related_functions.</span></span><span class="sig-name descname"><span class="pre">SharedList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.feature_related_functions.SharedList" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">navigate.model.features.feature_related_functions.</span></span><span class="sig-name descname"><span class="pre">SharedList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.feature_related_functions.SharedList" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
 <p>Custom list class with a name attribute for sharing data.</p>
 <p>This class extends the built-in list class to provide an additional attribute
@@ -165,14 +166,14 @@ name for easier identification.</p></li>
 </ul>
 <dl class="py method">
 <dt class="sig sig-object py" id="navigate.model.features.feature_related_functions.SharedList.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#navigate.model.features.feature_related_functions.SharedList.__init__" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#navigate.model.features.feature_related_functions.SharedList.__init__" title="Permalink to this definition"></a></dt>
 <dd><p>Initialize a SharedList object.</p>
 <section id="parameters">
 <h3>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h3>
 <dl class="simple">
-<dt>value<span class="classifier">iterable, optional</span></dt><dd><p>Initial values for the list (default is an empty list).</p>
+<dt>value<span class="classifier">Iterable</span></dt><dd><p>Initial values for the list (default is an empty list).</p>
 </dd>
-<dt>name<span class="classifier">str, optional</span></dt><dd><p>A name to identify the shared list (default is ‘<a href="#id1"><span class="problematic" id="id2">shared_list__</span></a>’).</p>
+<dt>name<span class="classifier">Optional[str]</span></dt><dd><p>A name to identify the shared list (default is ‘<a href="#id1"><span class="problematic" id="id2">shared_list__</span></a>’).</p>
 </dd>
 </dl>
 </section>
@@ -303,7 +304,7 @@ ascending or descending, according to their function values.</p>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="navigate.model.features.feature_related_functions.load_dynamic_parameter_functions.html" class="btn btn-neutral float-left" title="navigate.model.features.feature_related_functions.load_dynamic_parameter_functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="navigate.model.metadata_sources.html" class="btn btn-neutral float-right" title="navigate.model.metadata_sources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="navigate.model.features.update_setting.html" class="btn btn-neutral float-right" title="navigate.model.features.update_setting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

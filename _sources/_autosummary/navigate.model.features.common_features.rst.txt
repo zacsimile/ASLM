@@ -19,13 +19,13 @@ navigate.model.features.common\_features
       :toctree:
       :template: custom_class.rst
    
-      ChangeResolution
       FindTissueSimple2D
       LoopByCount
       MoveToNextPositionInMultiPositionTable
       PrepareNextChannel
       Snap
       StackPause
+      WaitForExternalTrigger
       WaitToContinue
       ZStackAcquisition
    

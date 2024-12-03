@@ -20,6 +20,8 @@ navigate.model.features.image\_writer.ImageWriter
       ~ImageWriter.calculate_and_check_disk_space
       ~ImageWriter.close
       ~ImageWriter.generate_image_name
+      ~ImageWriter.get_saving_file_name
+      ~ImageWriter.initialize_saving
       ~ImageWriter.save_image
    
    
@@ -34,13 +36,13 @@ navigate.model.features.image\_writer.ImageWriter
       ~ImageWriter.number_of_frames
       ~ImageWriter.saving_flags
       ~ImageWriter.save_directory
+      ~ImageWriter.mip
+      ~ImageWriter.mip_directory
       ~ImageWriter.sub_dir
       ~ImageWriter.current_time_point
       ~ImageWriter.config_table
       ~ImageWriter.big_tiff
-      ~ImageWriter.mip
-      ~ImageWriter.mip_directory
-      ~ImageWriter.file_type
+      ~ImageWriter.saving_config
       ~ImageWriter.data_source
    
    
